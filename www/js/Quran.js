@@ -336,6 +336,7 @@ var Quran = {
 	        var items = ['start', 'ayahs', 'order', 'rukus', 'arabic_name', 'english_name', 'english_meaning', 'type'];
 	        for (var i = 0; i < items.length; i++)
 	        	data[items[i]] = s[i];
+			data['no'] = surah;
 	        return data;
 	    },
 	    
