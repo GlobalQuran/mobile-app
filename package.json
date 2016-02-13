@@ -15,5 +15,9 @@
     "typescript": "1.7.5"
   },
   "name": "globalquran-mobile-app",
-  "description": "GlobalQuran-mobile-app: An Ionic project"
+  "description": "GlobalQuran-mobile-app: An Ionic project",
+  "cordovaPlugins": [],
+  "cordovaPlatforms": [
+    "ios"
+  ]
 }
