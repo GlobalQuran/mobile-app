@@ -1,0 +1,21 @@
+<ion-navbar *navbar>
+  <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-title>Surah list</ion-title>
+</ion-navbar>
+
+<ion-content>
+  <div *ngIf="selectedSurah" padding>
+    You selected surah <b>{{selectedSurah.english_name}}</b>
+  </div>
+  <ion-list>
+    <button ion-item *ngFor="#surah of surahList" (click)="surahTapped($event, surah)">
+      {{surah.english_name}}
+      <!--<div class="item-note" item-right>-->
+        <!--{{item.note}}-->
+      <!--</div>-->
+    </button>
+  </ion-list>
+
+</ion-content>

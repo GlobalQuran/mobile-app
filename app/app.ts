@@ -1,9 +1,7 @@
 import {App, IonicApp, Platform} from 'ionic-framework/ionic';
 
 import {HelloIonicPage} from './pages/hello-ionic/hello-ionic';
-import {ListPage} from './pages/list/list';
-import {TabsPage} from './pages/tabs/tabs';
-
+import {SurahListPage} from './pages/surah-list/surah-list';
 
 // https://angular.io/docs/ts/latest/api/core/Type-interface.html
 import {Type} from 'angular2/core';
@@ -15,7 +13,7 @@ import {Type} from 'angular2/core';
 })
 class MyApp {
   // make HelloIonicPage the root (or first) page
-  rootPage: Type = HelloIonicPage;
+  rootPage: Type = SurahListPage;
   pages: Array<{title: string, component: Type}>;
 
   constructor(private app: IonicApp, private platform: Platform) {
@@ -24,9 +22,8 @@ class MyApp {
 
     // set our app's pages
     this.pages = [
-      { title: 'Hello Ionic', component: HelloIonicPage },
-      { title: 'My First List', component: ListPage },
-      { title: 'testing tabs', component: TabsPage}
+      { title: 'Surah List', component: SurahListPage },
+      { title: 'About us', component: HelloIonicPage }
     ];
   }
 
