@@ -1,7 +1,7 @@
 {
-  "name": "angular2-seed",
+  "name": "globalquran-mobile-app",
   "version": "1.0.0",
-  "description": "A simple starter Angular2 project",
+  "description": "GlobalQuran Mobile App",
   "scripts": {
     "start": "webpack-dev-server --inline --colors --progress --display-error-details --display-cached --port 8080 --content-base src"
   },
@@ -10,15 +10,18 @@
     "url": "git+https://github.com/angular/angular2-seed.git"
   },
   "keywords": [
-    "Angular2",
-    "angular2-seed"
+    "GlobalQuran",
+    "globalquran-mobile-app"
   ],
-  "author": "Rob Wormald <robwormald@gmail.com>",
+  "contributors": [
+    "Basit <i@basit.me> (http://basit.me)",
+    "M Ali <da1nonly786@gmail.com>"
+  ],
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/angular/angular2-seed/issues"
+    "url": "https://github.com/GlobalQuran/mobile-app/issues"
   },
-  "homepage": "https://github.com/angular/angular2-seed#readme",
+  "homepage": "https://github.com/GlobalQuran/mobile-app#readme",
   "devDependencies": {
     "ts-loader": "^0.7.2",
     "typescript": "^1.7.3",

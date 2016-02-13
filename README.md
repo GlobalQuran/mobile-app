@@ -1,8 +1,30 @@
-## angular2-seed
+## Global Quran mobile app
 
-A simple starter project demonstrating the basic concepts of Angular2.
+This is Quran mobile app using GlobalQuran API service. 
 
-Work in progress! This branch uses Webpack for Development. There is also a SystemJS branch available.
+### List of Features
+
+- [ ] Display splash page
+- [ ] List of surah
+- [ ] Ayah list (by surah)
+- [ ] Settings page
+    - [ ] Change language 
+    - [ ] Change Quran text format
+- [ ] Player
+    - [ ] Settings select recitor   
+    - [ ] Support multiple recitors 
+- [ ] Search Quran 
+
+### Build with
+
+- Angular 2
+- ionic
+- typescript
+- webpack (replace of gulp/grunt and brower)
+
+- GlobalQuran API
+- GlobalQuran Core Library
+
 
 ### Usage
 - Clone or fork this repository
