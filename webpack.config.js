@@ -1,31 +1,48 @@
-var webpack = require('webpack');
 var path = require('path');
 
+
 module.exports = {
-  entry: {
-    'app': './src/app.ts',
-    'vendor': './src/vendor.ts'
-  },
-  output: {
-    path: "./src",
-    filename: "bundle.js"
-  },
-  plugins: [
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js')
+  entry: [
+    path.normalize('es6-shim/es6-shim.min'),
+    'reflect-metadata',
+    path.normalize('zone.js/dist/zone-microtask'),
+    path.resolve('app/app')
   ],
-
-  resolve: {
-    extensions: ['', '.ts', '.js']
+  output: {
+    path: path.resolve('www/build/js'),
+    filename: 'app.bundle.js',
+    pathinfo: false // show module paths in the bundle, handy for debugging
   },
-
   module: {
     loaders: [
-      { test: /\.ts$/, loader: 'ts-loader' },
+      {
+        test: /\.ts$/,
+        loader: 'awesome-typescript',
+        query: {
+          'doTypeCheck': true
+        },
+        include: path.resolve('app'),
+        exclude: /node_modules/
+      },
+      {
+        test: /\.js$/,
+        include: path.resolve('node_modules/angular2'),
+        loader: 'strip-sourcemap'
+      }
     ],
-    noParse: [ path.join(__dirname, 'node_modules', 'angular2', 'bundles') ]
+    noParse: [
+      /es6-shim/,
+      /reflect-metadata/,
+      /zone\.js(\/|\\)dist(\/|\\)zone-microtask/
+    ]
   },
-
-  devServer: {
-    historyApiFallback: true
+  resolve: {
+    root: [
+      'app'
+    ],
+    alias: {
+      'angular2': path.resolve('node_modules/angular2')
+    },
+    extensions: ["", ".js", ".ts"]
   }
 };
