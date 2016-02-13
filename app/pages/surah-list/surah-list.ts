@@ -1,6 +1,8 @@
 import {Page, NavController, NavParams} from 'ionic-framework/ionic';
 
-import {Quran} from '../../GQ/Quran/Quran';
+import {SurahDetailPage} from '../surah-detail/surah-detail';
+
+declare var Quran:any;
 
 @Page({
   templateUrl: 'build/pages/surah-list/surah-list.html'
@@ -23,7 +25,7 @@ export class SurahListPage {
   }
 
   surahTapped(event, surah) {
-    this.nav.push(SurahListPage, {
+    this.nav.push(SurahDetailPage, {
       surah: surah
     });
   }
