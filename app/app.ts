@@ -1,5 +1,8 @@
 import {App, IonicApp, Platform} from 'ionic-framework/ionic';
 
+import {gq} from './GlobalQuran/gq';
+import {Api} from './GlobalQuran/Api/Api';
+
 import {HelloIonicPage} from './pages/hello-ionic/hello-ionic';
 import {SurahListPage} from './pages/surah-list/surah-list';
 
@@ -9,6 +12,7 @@ import {Type} from 'angular2/core';
 
 @App({
   templateUrl: 'build/app.html',
+  providers: [gq, Api],
   config: {} // http://ionicframework.com/docs/v2/api/config/Config/
 })
 class MyApp {
