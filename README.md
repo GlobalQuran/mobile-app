@@ -6,6 +6,15 @@ This is Quran mobile app using GlobalQuran API service.
 
 - [ ] Display splash page
 - [x] List of surah
+- [ ] List class
+    - [ ] Api call to fetch list, if not already fetched
+    - [ ] List of Quran
+    - [ ] List of translation
+    - [ ] List of Recitors
+    - [ ] selected list items for each one of them
+- [ ] Quran data ayahs class to support selected 
+- [ ] show list of ayahs based on the selected Quran or Translation
+    - [ ] Pull new selected Quran or Translation, if not already in the array
 - [ ] Ayah list (by surah)
 - [ ] Settings page
     - [ ] Change language 
@@ -33,9 +42,4 @@ This is Quran mobile app using GlobalQuran API service.
 - Make sure you have [node.js](https://nodejs.org/) installed
 - run `npm install` to install dependencies
 - install ionic `npm install -g ionic@beta`
-- run `npm start` to fire up dev server
-- open browser to `http://localhost:8080`
-
-### Known Issues
-- angular2-polyfills.js is currently being handled manually. 
-- bundle size is large, due to inline sourcemaps from angular2 npm source.
+- run `ionic serve` to fire up dev server - this will open app in the browser
