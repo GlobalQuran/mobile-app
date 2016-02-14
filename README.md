@@ -29,11 +29,6 @@ This is Quran mobile app using GlobalQuran API service.
 - Angular 2
 - ionic
 - typescript
-- webpack (replace of gulp/grunt and brower)
-
-- GlobalQuran API
-- GlobalQuran Core Library
-
 
 
 
