@@ -9,6 +9,7 @@ import 'rxjs/operator/delay';
 import 'rxjs/operator/mergeMap';
 import 'rxjs/operator/switchMap';
 
+
 @Pipe({ name: 'values',  pure: false })
 export class ValuesPipe implements PipeTransform {
   transform(value: any, args: any[] = null): any {
@@ -25,15 +26,18 @@ export class ValuesPipe implements PipeTransform {
 export class SurahDetailPage {
 
   selectedSurah:any;
-  ayahs: any;
+  content: any;
 
-  constructor(private nav: NavController, navParams: NavParams, gq: gq) {
+  constructor(private nav: NavController, navParams: NavParams, private gq: gq) {
 
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedSurah = navParams.get('surah');
+  }
 
-    gq.getAyahs(1).subscribe(
-        data => this.ayahs = data
-    );
+  onPageWillEnter()
+  {
+    this.gq.listen('content').subscribe(list => this.content = list);
+    this.gq.select(this.selectedSurah.no, 1);
+    this.gq.getContent(this.selectedSurah.no);
   }
 }

@@ -3,11 +3,13 @@ import {App, IonicApp, Platform} from 'ionic-framework/ionic';
 import {gq} from './GlobalQuran/gq';
 import {Api} from './GlobalQuran/Api/Api';
 
+
 import {HelloIonicPage} from './pages/hello-ionic/hello-ionic';
 import {SurahListPage} from './pages/surah-list/surah-list';
 
 // https://angular.io/docs/ts/latest/api/core/Type-interface.html
 import {Type} from 'angular2/core';
+
 
 
 @App({
@@ -17,18 +19,20 @@ import {Type} from 'angular2/core';
 })
 class MyApp {
   // make HelloIonicPage the root (or first) page
-  rootPage: Type = SurahListPage;
-  pages: Array<{title: string, component: Type}>;
+  rootPage:Type = SurahListPage;
+  pages:Array<{title: string, component: Type}>;
 
-  constructor(private app: IonicApp, private platform: Platform) {
+  constructor(private app:IonicApp, private platform:Platform, private gq:gq) {
 
     this.initializeApp();
 
     // set our app's pages
     this.pages = [
-      { title: 'Surah List', component: SurahListPage },
-      { title: 'About us', component: HelloIonicPage }
+      {title: 'Surah List', component: SurahListPage},
+      {title: 'About us', component: HelloIonicPage}
     ];
+
+    this.gq.getAllContent();
   }
 
   initializeApp() {

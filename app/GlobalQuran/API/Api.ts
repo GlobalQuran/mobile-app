@@ -4,26 +4,20 @@ import {Http} from 'angular2/http'
 @Injectable()
 export class Api {
 
-    protected http;
+    constructor(private http: Http) {}
 
-    constructor(Http: Http)
+    getAll (surahNo, quranBy)
     {
-        this.http = Http;
+        return this.http.get(`http://api.globalquran.com/all/surah/${surahNo}/${quranBy}`).map(res => res.json());
     }
 
-    public logError (error)
+    getList ()
     {
-        console.log(error);
+        return this.http.get(`http://api.globalquran.com/quran`).map(res => res.json());
     }
 
-    getAyahs (surah, quranById)
+    getSurahContent (surah, quranById)
     {
-        return this.fetch(`http://api.globalquran.com/surah/${surah}/${quranById}`);
-    }
-
-
-    protected fetch (url)
-    {
-        return this.http.get(url);
+        return this.http.get(`http://api.globalquran.com/surah/${surah}/${quranById}`).map(res => res.json());
     }
 }

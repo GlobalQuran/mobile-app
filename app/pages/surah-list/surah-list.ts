@@ -1,30 +1,26 @@
 import {Page, NavController, NavParams} from 'ionic-framework/ionic';
+import {gq} from '../../GlobalQuran/gq';
 
 import {SurahDetailPage} from '../surah-detail/surah-detail';
 
-declare var Quran:any;
 
 @Page({
   templateUrl: 'build/pages/surah-list/surah-list.html'
 })
 export class SurahListPage {
-  selectedSurah: any;
-  surahList: any;
 
-  constructor(private nav: NavController, navParams: NavParams) {
-    // If we navigated to this page, we will have an item available as a nav param
-    this.selectedSurah = navParams.get('surah');
+  surahList = [];
 
-    this.surahList = [];
+  constructor(private nav: NavController, navParams: NavParams, private gq: gq) {}
 
-    for(let i=1;i<=114;i++)
-    {
-      this.surahList.push(Quran.surah.detail(i));
-    }
-
+  onPageWillEnter()
+  {
+    this.gq.listen('list.surah').subscribe(list => this.surahList = list);
+    this.gq.getSurahList();
   }
 
-  surahTapped(event, surah) {
+  surahTapped(event, surah)
+  {
     this.nav.push(SurahDetailPage, {
       surah: surah
     });

@@ -13,31 +13,28 @@
             <div dir="ltr">Ali Lam Meem</div>
         </ion-col>
     </ion-row>
-    <ion-row>
-        <ion-col class="ayahNo" width-10>[1]</ion-col>
-        <ion-col>
-            <div dir="rtl">Bismillah</div>
-            <div dir="ltr">Ali Lam Meem</div>
-        </ion-col>
-    </ion-row>
 
-    <div *ngIf="ayahs">
-        <ion-row *ngFor="#quran of ayahs | values">
-            <div>Quran: {{ quran['quran-simple'][1].verse }}</div>
+
+    <div *ngIf="content">
+        <ion-row *ngFor="#quran of content">
+            <ion-col class="ayahNo" width-10>[1]</ion-col>
+            <ion-col>
+                <div *ngFor="#ayah of quran">
+                    {{ayah.verse}}
+                </div>
+            </ion-col>
         </ion-row>
     </div>
 
+    {{ ayahs| json }}
 
-    <p>
-        <span class="text" dir="rtl">Bismillah</span>
-        <span class="text" dir="ltr">Ali Lam Meem</span>
-    </p>
-    <p>
-        <span class="text" dir="rtl">Bismillah</span>
-        <span class="text" dir="ltr">Ali Lam Meem</span>
-    </p>
-    <p>
-        <span class="text" dir="rtl">Bismillah</span>
-        <span class="text" dir="ltr">Ali Lam Meem</span>
-    </p>
+    <ion-list>
+        <button ion-item *ngFor="#surah of surahList" (click)="surahTapped($event, surah)">
+            {{surah.english_name}}
+            <!--<div class="item-note" item-right>-->
+            <!--{{item.note}}-->
+            <!--</div>-->
+        </button>
+    </ion-list>
+
 </ion-content>
