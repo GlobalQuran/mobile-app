@@ -14,10 +14,11 @@
         </ion-col>
     </ion-row>
 
+    {{ content }}
 
     <div *ngIf="content">
-        <ion-row *ngFor="#quran of content">
-            <ion-col class="ayahNo" width-10>[1]</ion-col>
+        <ion-row *ngFor="#quran of content; #verseNo=index">
+            <ion-col class="ayahNo" width-10>[{{ verseNo + 1 }}]</ion-col>
             <ion-col>
                 <div *ngFor="#ayah of quran">
                     {{ayah.verse}}

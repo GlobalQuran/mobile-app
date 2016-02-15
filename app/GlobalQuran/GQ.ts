@@ -165,7 +165,7 @@ export class gq {
      */
     getAllContent ()
     {
-        this.api.getAll(1, 'quran-simple')
+        this.api.getAll(1, 'quran-simple|en.pickthall')
             .subscribe(data => this._buildAllContent(data));
     }
 
@@ -314,10 +314,12 @@ export class gq {
                 let singleAyah = data[quranById][verseNo];
                 singleAyah['quranById'] = quranById;
 
-                if (!quranAyahs[verseNo])
-                    quranAyahs[verseNo] = [];
+                let ayah = singleAyah.ayah - 1; // minus 1 because js array add extra, if we skip 0
 
-                quranAyahs[verseNo].push(singleAyah);
+                if (!quranAyahs[ayah])
+                    quranAyahs[ayah] = [];
+
+                quranAyahs[ayah].push(singleAyah);
             }
         }
 
@@ -337,10 +339,12 @@ export class gq {
                 let singleAyah = data[quranById][verseNo];
                 singleAyah['quranById'] = quranById;
 
-                if (!translationAyahs[verseNo])
-                    translationAyahs[verseNo] = [];
+                let ayah = singleAyah.ayah - 1; // minus 1 because js array add extra, if we skip 0
 
-                translationAyahs[verseNo].push(singleAyah);
+                if (!translationAyahs[ayah])
+                    translationAyahs[ayah] = [];
+
+                translationAyahs[ayah].push(singleAyah);
             }
         }
 
@@ -372,10 +376,11 @@ export class gq {
         if (!this._dataStore.dataBySurah[surah] || !this._isSelectedContentExist())
         {
             this.api.getSurahContent(surah, 'quran-simple')
-                .subscribe(data => this._buildQuranContent(data));
+                .subscribe(data => this._buildQuranContent(data.quran))
+                .add(() => this._trggerChange('content'));
         }
-
-        this._trggerChange('content');
+        else
+            this._trggerChange('content');
     }
 
     /**

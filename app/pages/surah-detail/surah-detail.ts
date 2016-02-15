@@ -10,18 +10,9 @@ import 'rxjs/operator/mergeMap';
 import 'rxjs/operator/switchMap';
 
 
-@Pipe({ name: 'values',  pure: false })
-export class ValuesPipe implements PipeTransform {
-  transform(value: any, args: any[] = null): any {
-    console.log(value);
-    return Object.keys(value).map(key => value[key]);
-  }
-}
 
 @Page({
-  templateUrl: 'build/pages/surah-detail/surah-detail.html',
-  pipes: [ValuesPipe]
-
+  templateUrl: 'build/pages/surah-detail/surah-detail.html'
 })
 export class SurahDetailPage {
 
@@ -36,8 +27,14 @@ export class SurahDetailPage {
 
   onPageWillEnter()
   {
-    this.gq.listen('content').subscribe(list => this.content = list);
+    this.gq.listen('content').subscribe(list => this.setContent(list));
     this.gq.select(this.selectedSurah.no, 1);
     this.gq.getContent(this.selectedSurah.no);
+  }
+
+  setContent (list)
+  {
+    this.content = list;
+    console.log(list);
   }
 }
