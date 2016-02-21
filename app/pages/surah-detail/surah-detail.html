@@ -1,20 +1,12 @@
 <ion-navbar *navbar>
-  <button menuToggle *ngIf="!selectedItem">
-    <ion-icon name="menu"></ion-icon>
-  </button>
-  <ion-title>{{selectedSurah.english_name}}</ion-title>
+    <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{selectedSurah.english_name}}</ion-title>
+
 </ion-navbar>
 
 <ion-content>
-    <ion-row>
-        <ion-col class="ayahNo" width-10>[1]</ion-col>
-        <ion-col>
-            <div dir="rtl">Bismillah</div>
-            <div dir="ltr">Ali Lam Meem</div>
-        </ion-col>
-    </ion-row>
-
-    {{ content }}
 
     <div *ngIf="content">
         <ion-row *ngFor="#quran of content; #verseNo=index">
@@ -27,15 +19,8 @@
         </ion-row>
     </div>
 
-    {{ ayahs| json }}
-
-    <ion-list>
-        <button ion-item *ngFor="#surah of surahList" (click)="surahTapped($event, surah)">
-            {{surah.english_name}}
-            <!--<div class="item-note" item-right>-->
-            <!--{{item.note}}-->
-            <!--</div>-->
-        </button>
-    </ion-list>
+    <div *ngIf="!content">
+        loading...
+    </div>
 
 </ion-content>
