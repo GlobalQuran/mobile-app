@@ -6,10 +6,10 @@ import {test} from '../../GlobalQuran/test';
 
 
 @Page({
-  templateUrl: 'build/pages/hello-ionic/hello-ionic.html'
+  templateUrl: 'build/pages/about-us/about-us.html'
 })
 @Injectable()
-export class HelloIonicPage {
+export class AboutUs {
 
   show;
 
