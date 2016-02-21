@@ -28,7 +28,8 @@ This is Quran mobile app using GlobalQuran API service.
 
 - Angular 2
 - ionic
-- typescript
+- TypeScript
+- RxJS
 
 
 
