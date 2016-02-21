@@ -4,7 +4,7 @@ import {gq} from './GlobalQuran/gq';
 import {Api} from './GlobalQuran/Api/Api';
 
 
-import {HelloIonicPage} from './pages/hello-ionic/hello-ionic';
+import {AboutUs} from './pages/about-us/about-us';
 import {SurahListPage} from './pages/surah-list/surah-list';
 
 // https://angular.io/docs/ts/latest/api/core/Type-interface.html
@@ -29,7 +29,7 @@ class MyApp {
     // set our app's pages
     this.pages = [
       {title: 'Surah List', component: SurahListPage},
-      {title: 'About us', component: HelloIonicPage}
+      {title: 'About us', component: AboutUs}
     ];
 
     this.gq.getAllContent();
