@@ -6,9 +6,10 @@ export class Api {
 
     constructor(private http: Http) {}
 
-    getAll (surahNo, quranBy)
+    getAll (surahNo, quranBy?:string)
     {
-        return this.http.get(`http://api.globalquran.com/all/surah/${surahNo}/${quranBy}`).map(res => res.json());
+        let ifQuranBy = quranBy ? `/${quranBy}` : '';
+        return this.http.get(`http://api.globalquran.com/all/surah/${surahNo}${ifQuranBy}`).map(res => res.json());
     }
 
     getList ()
