@@ -18,7 +18,7 @@ import {Type} from 'angular2/core';
   config: {} // http://ionicframework.com/docs/v2/api/config/Config/
 })
 class MyApp {
-  // make HelloIonicPage the root (or first) page
+  // make surah list home page
   rootPage:Type = SurahListPage;
   pages:Array<{title: string, component: Type}>;
 
