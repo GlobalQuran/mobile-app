@@ -531,3 +531,4 @@ var Quran = {
         return listArray;
     }
 };
+Quran.init();

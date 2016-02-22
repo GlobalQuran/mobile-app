@@ -1,14 +1,18 @@
 import {Injectable, Injector} from 'angular2/core';
 
-import {Api} from './Api/Api';
+/*
+ import 'rxjs/add/operator/map';
+ import 'rxjs/operator/delay';
+ import 'rxjs/operator/mergeMap';
+ import 'rxjs/operator/switchMap';
+ import 'rxjs/add/operator/share';
+ import {Observable} from 'rxjs/Observable'
+ */
+import {Observable} from 'rxjs/Rx';
 
-import 'rxjs/add/operator/map';
-import 'rxjs/operator/delay';
-import 'rxjs/operator/mergeMap';
-import 'rxjs/operator/switchMap';
-import 'rxjs/add/operator/share';
-import {Observable} from 'rxjs/Observable'
+import {Api} from './Api/Api';
 import {surahDetail} from "./interface/surahDetail";
+
 
 declare let Quran:any;
 
@@ -79,7 +83,6 @@ export class gq {
         this._dataStore.list.countryLanguages = data.languageCountryList;
         //this._dataStore.dataBySurah[1] = data.quran;
 
-
         // build selected list from the quran data
         for (let quranById in data.quran)
         {
@@ -89,31 +92,7 @@ export class gq {
         //this._buildQuranContent(data.quran); // TODO
     }
 
-    /**
-     * check if selected content exist or not
-     *
-     * @returns {boolean}
-     * @private
-     */
-    private _isSelectedContentExist()
-    {
-        if (!this._dataStore.content)
-            return false;
 
-        let selected = this._dataStore.selected.quran;
-
-        let found = [];
-
-        for (let verseNo in this._dataStore.content) {
-            for (let index in this._dataStore.content[verseNo]) {
-                let quranById = this._dataStore.content[verseNo][index].quranById;
-
-                found[quranById] = quranById;
-            }
-        }
-
-        return (found.length == selected.length);
-    }
 
     /**
      * Get content of the surah
@@ -123,39 +102,18 @@ export class gq {
      */
     getContent(surah?:number)
     {
-        return new Observable(obverser => {
+        if (!surah)
+            surah = this._dataStore.selected.surah.no;
 
-            if (!surah)
-                surah = this._dataStore.selected.surah.no;
+        if (!this._isSelectedContentExist())
 
-            // if not already exist, then get it from api
-            if (!this._dataStore.dataBySurah[surah] || !this._isSelectedContentExist()) {
-                this.api.getSurahContent(surah, this.getSelectedQuranTextArray().join('|'))
-                    .map(data => this._dataStore.dataBySurah[surah] = this._rebuildQuranContent(data.quran))
-                    .subscribe(data => obverser.next(data));
-            }
-            else {
-                obverser.next(this._dataStore.dataBySurah[surah]);
-            }
-        }).share();
-    }
+            return this.api.getSurahContent(surah, this.getSelectedQuranTextArray().join('|'))
+                .map(data => this._dataStore.dataBySurah[surah] = this._rebuildQuranContent(data.quran))
+                .flatMap(data => Observable.from(data))
+                .share();
 
-    private getSelectedQuranTextArray()
-    {
-        if (!this._dataStore.selected.quran)
-            return [];
-
-        let list = [];
-
-        for (let quranById in this._dataStore.selected.quran)
-        {
-            let detail = this.getQuranByDetail(quranById);
-
-            if (detail.format == 'text')
-                list.push(quranById);
-        }
-
-        return list;
+        else
+            return Observable.from(this._dataStore.dataBySurah[surah]);
     }
 
     /**
@@ -201,6 +159,53 @@ export class gq {
         }
 
         return ayahs;
+    }
+
+    /**
+     * check if selected content exist or not
+     *
+     * @returns {boolean}
+     * @private
+     */
+    private _isSelectedContentExist()
+    {
+        if (!this._dataStore.dataBySurah['surah']) //FIXME
+            return false;
+
+        if (!this._dataStore.content)
+            return false;
+
+        let selected = this._dataStore.selected.quran;
+
+        let found = [];
+
+        for (let verseNo in this._dataStore.content) {
+            for (let index in this._dataStore.content[verseNo]) {
+                let quranById = this._dataStore.content[verseNo][index].quranById;
+
+                found[quranById] = quranById;
+            }
+        }
+
+        return (found.length == selected.length);
+    }
+
+    private getSelectedQuranTextArray()
+    {
+        if (!this._dataStore.selected.quran)
+            return [];
+
+        let list = [];
+
+        for (let quranById in this._dataStore.selected.quran)
+        {
+            let detail = this.getQuranByDetail(quranById);
+
+            if (detail.format == 'text')
+                list.push(quranById);
+        }
+
+        return list;
     }
 
     /**
