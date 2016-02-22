@@ -17,6 +17,7 @@ This is Quran mobile app using GlobalQuran API service.
 - [x] show list of ayahs based on the selected Quran or Translation
     - [ ] Show content which is on scroll only, else it will consume memory and loading of app, because of rendering
     - [ ] Pull new selected Quran or Translation, if not already in the array
+    - [ ] Data content bind with required parsers functions - dynamic, so more data can easily be added on it.
     
 - [x] Settings page
     - [x] Change Quran text format
