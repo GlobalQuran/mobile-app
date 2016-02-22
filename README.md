@@ -7,21 +7,28 @@ This is Quran mobile app using GlobalQuran API service.
 - [ ] Display splash page
 - [x] List of surah
 - [ ] List class
-    - [ ] Api call to fetch list, if not already fetched
-    - [ ] List of Quran
-    - [ ] List of translation
-    - [ ] List of Recitors
-    - [ ] selected list items for each one of them
-- [ ] Quran data ayahs class to support selected 
-- [ ] show list of ayahs based on the selected Quran or Translation
+    - [x] Api call to fetch list, if not already fetched
+    - [x] List of Quran
+    - [x] List of translation
+    - [x] List of Recitors
+    - [x] selected list items for each one of them
+    - [ ] refactor list by Observables
+- [x] Quran data ayahs class to support selected 
+- [x] show list of ayahs based on the selected Quran or Translation
+    - [ ] Show content which is on scroll only, else it will consume memory and loading of app, because of rendering
     - [ ] Pull new selected Quran or Translation, if not already in the array
-- [ ] Ayah list (by surah)
-- [ ] Settings page
-    - [ ] Change language 
-    - [ ] Change Quran text format
+    
+- [x] Settings page
+    - [x] Change Quran text format
+    - [x] change translations
+    - [x] change transliteration
+    - [ ] change recitor
+    - [ ] save selected changes in localstorage 
+    
 - [ ] Player
     - [ ] Settings select recitor   
     - [ ] Support multiple recitors 
+    
 - [ ] Search Quran 
 
 ### Build with
