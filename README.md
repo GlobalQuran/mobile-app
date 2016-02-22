@@ -6,7 +6,7 @@ This is Quran mobile app using GlobalQuran API service.
 
 - [ ] Display splash page
 - [x] List of surah
-- [ ] List class
+- [x] List class
     - [x] Api call to fetch list, if not already fetched
     - [x] List of Quran
     - [x] List of translation
