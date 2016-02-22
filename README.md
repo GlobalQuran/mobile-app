@@ -29,6 +29,12 @@ This is Quran mobile app using GlobalQuran API service.
     - [ ] Settings select recitor   
     - [ ] Support multiple recitors 
     
+- [ ] Designs
+    - [x] design new mobile & table design
+    - [ ] css new design to ionic version
+    - [ ] check if it works fine with tablet
+    - [ ] implement new design on the system
+    
 - [ ] Search Quran 
 
 ### Build with
