@@ -1,0 +1,85 @@
+.surah-list-page {
+  .toolbar.show-navbar {
+    padding: 0px;
+  }
+
+  .toolbar-background:after, .surah-col-header:after, .juz-col-header:after {
+    content: " ";
+    z-index: 10;
+    display: block;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: color(primary-s3);
+  }
+
+}
+
+.content-area {
+  background-color: color(primary-s2);
+
+  scroll-content {
+    position: initial;
+  }
+
+}
+
+.option-column {
+  position: relative;
+
+  h2 {
+    color: color(light);
+  }
+
+  p {
+    color: color(secondary-s1);
+  }
+}
+
+.surah-col-header {
+  position: relative;
+  background: color(secondary);
+}
+
+.page-col {
+  background: color(secondary);
+}
+
+.juz-col-header {
+  background: color(primary-s1);
+  position: relative;
+
+}
+.juz-col {
+  background: color(primary-s1);
+}
+
+.toolbar-background {
+  background: color(primary-s1);
+  border-bottom-width: 0px;
+}
+.surah-background {
+  color: color(light);
+  background: color(primary-s2);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.surah-item-list {
+  color: color(light);
+  background-color: color(primary-s2);
+}
+
+.nav-col-buttons {
+  margin: 1.5rem 0;
+    z-index: 13;
+    display: block;
+    pointer-events: none;
+    -webkit-transform: translateZ(0px);
+    transform: translateZ(0px);
+}
