@@ -1,27 +1,59 @@
-<ion-navbar *navbar>
-    <button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Surah list {{ show }}</ion-title>
-
-    <ion-buttons end>
-        <button dark (click)="openSetting()">
-            <ion-icon name="cog"></ion-icon>
+<ion-navbar primary-s2  *navbar>
+  <ion-row  class="no-padding custom-navbar">
+    <ion-col width-70>
+      <ion-buttons start>
+        <button class="nav-col-buttons">
+          <ion-icon name="search"></ion-icon>
         </button>
-    </ion-buttons>
+      </ion-buttons>
+    </ion-col>
+
+    <ion-col width-15 class="juz-col-header">
+      <object light clear block class="svg-icon" data="img/svg/juz-icon.svg" type="image/svg+xml"></object>
+    </ion-col>
+
+    <ion-col width-15 class="surah-col-header">
+      <object light clear block class="svg-icon" data="img/svg/page-icon.svg" type="image/svg+xml"></object>
+    </ion-col>
+  </ion-row>
 </ion-navbar>
 
-<ion-content>
-    <div *ngIf="selectedSurah" padding>
-        You selected surah <b>{{selectedSurah.english_name}}</b>
-    </div>
-    <ion-list>
-        <button ion-item *ngFor="#surah of surahList" (click)="surahTapped($event, surah)">
-            {{surah.english_name}}
-            <!--<div class="item-note" item-right>-->
-            <!--{{item.note}}-->
-            <!--</div>-->
-        </button>
-    </ion-list>
+<ion-content class="content-area">
+  <ion-row  class="no-padding surah-background">
+    <ion-col width-70 class="option-column surah-name-col">
+      <div *ngIf="selectedSurah">
+        You selected surah
+        <b>{{selectedSurah.english_name}}</b>
+      </div>
+      <ion-list no-lines class="no-margin scroll-inner-content">
+        <ion-item  class="surah-item-list" *ngFor="#surah of surahList" (click)="surahTapped($event, surah)">
+          <ion-avatar class="bookmark-enabled fa-stack" item-left>
+            <ion-icon name="bookmark" class="icon-image fa-stack-2x" ></ion-icon>
+            <span class="icon-text fa-stack-1x">{{ surah.no }}</span>
+          </ion-avatar>
+          <h2>{{surah.english_name}}</h2>
+          <p>{{surah.english_meaning}}</p>
 
+        </ion-item>
+
+      </ion-list>
+    </ion-col>
+
+    <ion-col width-15 class="option-column juz-col">
+      <ion-list no-lines class="scroll-inner-content">
+        <button clear block secondary class="scroll-button" *ngFor="#juzNumber of juzNumbers" (click)="surahTapped($event, surah)">
+          {{ juzNumber }}
+        </button>
+      </ion-list>
+    </ion-col>
+
+    <ion-col width-15 class="option-column page-col">
+      <ion-list no-lines class="scroll-inner-content">
+        <button clear block class="scroll-button" *ngFor="#pageNumber of pageNumbers"  (click)="openPage(pageNumber)">
+          {{ pageNumber }}
+        </button>
+      </ion-list>
+    </ion-col>
+
+  </ion-row>
 </ion-content>

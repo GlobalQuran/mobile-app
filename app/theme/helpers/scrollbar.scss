@@ -1,0 +1,63 @@
+// Scroll custom bar
+// scroll bar for inner content
+.scroll-inner-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  will-change: scroll-position;
+  margin: 0;
+
+  .scroll-button {
+    margin-left: 3px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  &::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+  }
+
+   ::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background: color(secondary-s1);
+    border: 0 none color(light);
+    transition: background 0.2s ease-in-out;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: color(secondary-s1);
+  }
+
+  &::-webkit-scrollbar-thumb:active {
+    background: color(secondary-s1);
+  }
+
+  &::-webkit-scrollbar-track {
+    border: 0 none color(light);
+  }
+
+  &::-webkit-scrollbar-track:hover {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-track:active {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
