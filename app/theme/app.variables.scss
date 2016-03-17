@@ -34,6 +34,7 @@ $colors: (
   favorite:      #69BB7B
 );
 
-@import 'helpers/override';
-@import 'helpers/scrollbar';
-@import 'helpers/icons';
+@import  'helpers/override';
+@import  'helpers/scrollbar';
+@import  'helpers/icons';
+@import  'helpers/loader.scss';

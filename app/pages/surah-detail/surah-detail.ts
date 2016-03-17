@@ -26,4 +26,9 @@ export class SurahDetailPage {
                 this.content.push(list);
             });
     }
+
+    openSetting()
+    {
+        this.nav.push(SettingPage);
+    }
 }
