@@ -1,0 +1,13 @@
+<ion-row class="no-padding" *ngFor="#quran of content; #verseNo=index">
+    <ion-col class="ayahNo page-col" width-10>
+        <div class="fa-stack">
+            <object light clear block class="svg-icon" data="img/svg/ayah-icon.svg" type="image/svg+xml"></object>
+            <span class="icon-text fa-stack-1x">{{ verseNo + 1 }}</span>
+        </div>
+    </ion-col>
+    <ion-col>
+        <div *ngFor="#ayah of quran">
+            {{ayah.verse}}
+        </div>
+    </ion-col>
+</ion-row>

@@ -9,18 +9,40 @@
 <ion-content>
 
     <div *ngIf="content.length">
-        <ion-row *ngFor="#quran of content; #verseNo=index">
-            <ion-col class="ayahNo" width-10>[{{ verseNo + 1 }}]</ion-col>
+        <ion-row class="no-padding" *ngFor="#quran of content; #verseNo=index">
+            <ion-col class="ayahNo page-col" width-10>
+                <div class="fa-stack">
+                    <object light clear block class="svg-icon" data="img/svg/ayah-icon.svg" type="image/svg+xml"></object>
+                    <span class="icon-text fa-stack-1x">{{ verseNo + 1 }}</span>
+                </div>
+            </ion-col>
             <ion-col>
                 <div *ngFor="#ayah of quran">
                     {{ayah.verse}}
+                    <div class="fa-stack">
+                        <object dark clear block class="svg-icon fa-stack-2x" data="img/svg/ayah-icon.svg" type="image/svg+xml"></object>
+                        <span class="icon-text fa-stack-1x">{{ verseNo + 1 }}</span>
+                    </div>
                 </div>
+
             </ion-col>
         </ion-row>
+        <ion-toolbar light position="bottom">
+            <ion-buttons start>
+                <button dark>
+                    <ion-icon name="play"></ion-icon>
+                </button>
+            </ion-buttons>
+            <ion-buttons end>
+                <button dark (click)="openSetting()">
+                    <ion-icon name="cog"></ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-toolbar>
     </div>
 
-    <div *ngIf="!content.length">
-        loading...
+    <div class="load-container load8" *ngIf="!content.length">
+        <div class="loader">Loading...</div>
     </div>
 
 </ion-content>
