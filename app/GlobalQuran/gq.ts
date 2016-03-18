@@ -289,7 +289,7 @@ export class gq {
     getSurahList()
     {
         return new Observable(observer => {
-
+//TODO redo Observable.fromArray()
             for (let i = 1; i <= 114; i++) {
                 observer.next(this.getSurahDetail(i));
             }
