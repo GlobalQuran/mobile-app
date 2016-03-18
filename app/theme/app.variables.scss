@@ -21,10 +21,20 @@
 // are different per mode.
 
 $colors: (
-  primary:    #daa520,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222,
-  favorite:   #69BB7B
+  primary:       #232323,
+  primary-s1:    #343333,
+  primary-s2:    #4a4a4a,
+  primary-s3:    rgba(41,41,41,0.4),
+  secondary:     #ffdc75,
+  secondary-s1:  #e1b65a,
+  danger:        #f53d3d,
+  light:         #ffffff,
+  light-s1:      #f4f4f4,
+  dark:          #222,
+  favorite:      #69BB7B
 );
+
+@import  'helpers/override';
+@import  'helpers/scrollbar';
+@import  'helpers/icons';
+@import  'helpers/loader.scss';

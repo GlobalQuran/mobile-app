@@ -1,0 +1,28 @@
+@function color($key) {
+  @if map-has-key($colors, $key) {
+    @return map-get($colors, $key);
+  }
+
+  @warn "Unknown `#{$key}` in $colors.";
+  @return null;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.no-scroll{
+  pointer-events: none;
+}
+
+ion-col[width-15] {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 15%;
+    -ms-flex: 0 0 15%;
+    flex: 0 0 15%;
+    max-width: 15%;
+}

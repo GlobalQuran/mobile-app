@@ -1,0 +1,61 @@
+.fa-stack {
+  position: relative;
+  display: inline-block;
+}
+
+.fa-lg {
+  font-size: 1.33333333em;
+  line-height : 0.75em;
+  vertical-align: -15%;
+}
+
+.icon_size {
+  font-size: 1.1em;
+  line-height: 0.75em;
+  vertical-align: -15%;
+  margin: 8px 0 5px;
+}
+
+.fa-stack-1x,
+.fa-stack-2x {
+  position  : absolute;
+  left      : 0;
+  width     : 100%;
+  text-align: center;
+  top: -9px;
+}
+
+.fa-stack-1x {
+  font-size: 0.9em;
+  line-height: 2.5em;
+}
+
+.fa-stack-2x {
+  color: color(secondary);
+  font-size: 3em;
+}
+
+.icon-image {
+  color: transparent;
+}
+.icon-text {
+  color: color(light);
+}
+
+.bookmark-enabled {
+  .icon-image {
+    color: color(secondary);
+  }
+  .icon-text {
+    color: color(primary-s1);
+  }
+}
+
+.svg-icon {
+  z-index: 13;
+  display: block;
+  margin: 1.5em auto;
+  position: relative;
+  width: 100%;
+  max-width: 2.5em;
+}

@@ -10,7 +10,9 @@ import {SettingPage} from "../setting/setting";
 })
 export class SurahListPage {
 
-    surahList = [];
+    surahList   = [];
+    pageNumbers = this.arrayNumber(604);
+    juzNumbers  = this.arrayNumber(30);
 
     constructor(private nav:NavController, private gq:gq)
     {
@@ -26,8 +28,15 @@ export class SurahListPage {
         });
     }
 
+    arrayNumber(number)
+    {
+        return Array(number).fill('').map((x,i) => i + 1);
+    }
+
     openSetting()
     {
         this.nav.push(SettingPage);
     }
+
+
 }
