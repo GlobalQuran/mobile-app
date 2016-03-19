@@ -1,4 +1,4 @@
-import {App, IonicApp, Platform} from 'ionic-framework/ionic';
+import {App, IonicApp, Platform} from 'ionic-angular';
 
 import {gq} from './GlobalQuran/gq';
 import {Api} from './GlobalQuran/Api/Api';

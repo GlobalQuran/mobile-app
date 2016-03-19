@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core';
-import {Page} from 'ionic-framework/ionic';
+import {Page} from 'ionic-angular';
 
 import {test} from '../../GlobalQuran/test';
 

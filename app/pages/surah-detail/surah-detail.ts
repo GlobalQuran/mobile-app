@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams} from 'ionic-framework/ionic';
+import {Page, NavController, NavParams} from 'ionic-angular';
 import {gq} from '../../GlobalQuran/gq';
 import {SettingPage} from "../setting/setting";
 
