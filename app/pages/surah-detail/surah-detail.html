@@ -1,44 +1,29 @@
-<ion-navbar *navbar>
+<ion-navbar primary-s2 *navbar>
     <button menuToggle>
-        <ion-icon name="menu"></ion-icon>
+        <ion-icon light name="menu"></ion-icon>
     </button>
-    <ion-title>{{selectedSurah.english_name}}</ion-title>
+    <ion-title light>{{selectedSurah.english_name}}</ion-title>
 
 </ion-navbar>
 
 <ion-content>
 
     <div *ngIf="content.length">
-        <ion-row class="no-padding" *ngFor="#quran of content; #verseNo=index">
-            <ion-col class="ayahNo page-col" width-10>
+        <ion-row class="no-padding ayah-by-ayah" *ngFor="#quran of content; #verseNo=index">
+            <ion-col class="ayahNo option-column page-col" width-10>
                 <div class="fa-stack">
                     <object light clear block class="svg-icon" data="img/svg/ayah-icon.svg" type="image/svg+xml"></object>
-                    <span class="icon-text fa-stack-1x">{{ verseNo + 1 }}</span>
+                    <span class="icon-text fa-stack-1x ayah-number">{{ verseNo + 1 }}</span>
                 </div>
             </ion-col>
-            <ion-col>
-                <div *ngFor="#ayah of quran">
+            <ion-col class="ayahText">
+                <div class="arabic-text" *ngFor="#ayah of quran">
                     {{ayah.verse}}
-                    <div class="fa-stack">
-                        <object dark clear block class="svg-icon fa-stack-2x" data="img/svg/ayah-icon.svg" type="image/svg+xml"></object>
-                        <span class="icon-text fa-stack-1x">{{ verseNo + 1 }}</span>
-                    </div>
                 </div>
 
             </ion-col>
         </ion-row>
-        <ion-toolbar light position="bottom">
-            <ion-buttons start>
-                <button dark>
-                    <ion-icon name="play"></ion-icon>
-                </button>
-            </ion-buttons>
-            <ion-buttons end>
-                <button dark (click)="openSetting()">
-                    <ion-icon name="cog"></ion-icon>
-                </button>
-            </ion-buttons>
-        </ion-toolbar>
+
     </div>
 
     <div class="load-container load8" *ngIf="!content.length">
@@ -46,3 +31,15 @@
     </div>
 
 </ion-content>
+<ion-toolbar primary-s2 position="bottom">
+    <ion-buttons start>
+        <button dark>
+            <ion-icon name="play"></ion-icon>
+        </button>
+    </ion-buttons>
+    <ion-buttons end>
+        <button dark (click)="openSetting()">
+            <ion-icon name="cog"></ion-icon>
+        </button>
+    </ion-buttons>
+</ion-toolbar>
