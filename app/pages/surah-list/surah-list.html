@@ -1,11 +1,7 @@
 <ion-navbar primary-s2  *navbar>
   <ion-row  class="no-padding custom-navbar">
     <ion-col width-70>
-      <ion-buttons start>
-        <button class="nav-col-buttons">
-          <ion-icon name="search"></ion-icon>
-        </button>
-      </ion-buttons>
+      <object light clear block class="logo-2" data="img/svg/logo2.svg" type="image/svg+xml"></object>
     </ion-col>
 
     <ion-col width-15 class="juz-col-header">
@@ -28,7 +24,7 @@
       <ion-list no-lines class="no-margin scroll-inner-content">
         <ion-item  class="surah-item-list" *ngFor="#surah of surahList" (click)="surahTapped($event, surah)">
           <ion-avatar class="bookmark-enabled fa-stack" item-left>
-            <ion-icon name="bookmark" class="icon-image fa-stack-2x" ></ion-icon>
+            <ion-icon name="ios-bookmark" class="icon-image fa-stack-2x" ></ion-icon>
             <span class="icon-text fa-stack-1x">{{ surah.no }}</span>
           </ion-avatar>
           <h2>{{surah.english_name}}</h2>
@@ -57,3 +53,16 @@
 
   </ion-row>
 </ion-content>
+
+<ion-toolbar primary-s2 position="bottom">
+    <ion-buttons start>
+        <button dark (click)="surahTapped($event, 1)">
+            <div class="title">1. Al-Fatihah - The Opening</div>
+        </button>
+    </ion-buttons>
+    <ion-buttons end>
+        <button dark (click)="openSetting()">
+            <ion-icon name="cog"></ion-icon>
+        </button>
+    </ion-buttons>
+</ion-toolbar>

@@ -1,6 +1,6 @@
 .fa-stack {
   position: relative;
-  display: inline-block;
+  display: block;
 }
 
 .fa-lg {
@@ -44,6 +44,7 @@
 
 .bookmark-enabled {
   .icon-image {
+    transform: scale(1.2,1);
     color: color(secondary);
   }
   .icon-text {
@@ -58,4 +59,13 @@
   position: relative;
   width: 100%;
   max-width: 2.5em;
+}
+
+.logo-2 {
+  z-index: 13;
+  display: block;
+  margin: 1.5em auto;
+  position: relative;
+  width: 100%;
+  max-width: 7.5em;
 }
