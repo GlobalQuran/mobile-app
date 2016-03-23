@@ -16,8 +16,23 @@ export class SettingPage {
     transliterationListSelected;
     transliterationList = [];
 
+    private _pageByPage: boolean;
+
+    set pageByPage(value:boolean) {
+        this._pageByPage = value;
+
+        localStorage.setItem('_view', value ? 'pageByPage' : 'ayahByAyah');
+    }
+
+    get pageByPage():boolean {
+        return this._pageByPage;
+    }
+
     constructor(private nav:NavController, public gq: gq)
     {
+        let _view = localStorage.getItem('_view');
+        this._pageByPage = (_view == 'pageByPage');
+
         this.gq
             .getQuranList()
             .subscribe(data => this.quranList.push(data));

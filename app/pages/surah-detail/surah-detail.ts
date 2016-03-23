@@ -4,8 +4,10 @@ import {SettingPage} from "../setting/setting";
 
 import 'rxjs/add/operator/take';
 
+let _view = localStorage.getItem('_view');
+
 @Page({
-    templateUrl: 'build/pages/surah-detail/surah-detail.html'
+    templateUrl: (_view == 'pageByPage') ? 'build/pages/surah-detail/surah-detail-page-by-page-view.html' : 'build/pages/surah-detail/surah-detail.html'
 })
 export class SurahDetailPage {
 
