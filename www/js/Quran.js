@@ -1,7 +1,7 @@
 ﻿/**
  * This Quran object has everything for developer to navigate easily on surah and ayah selection.
  * you can use this to develop anything related quran project (ex: audio verse by verse with text and so on..)
- * 
+ *
  * @author Basit (i@basit.me || http://Basit.me)
  *
  * Online Quran Project
@@ -10,16 +10,132 @@
  * Copyright 2011, imegah.com
  * Simple Public License (Simple-2.0)
  * http://www.opensource.org/licenses/Simple-2.0
- * 
+ *
  */
 var Quran = {
-		
+
 	/**
 	 * array of quran information
 	 * @todo update surah array for support to multi-language
 	 */
 	_data: {
-		Surah: [[],[0,7,5,1,'الفاتحة',"Al-Faatiha",'The Opening','Meccan'],[7,286,87,40,'البقرة',"Al-Baqara",'The Cow','Medinan'],[293,200,89,20,'آل عمران',"Aal-i-Imraan",'The Family of Imraan','Medinan'],[493,176,92,24,'النساء',"An-Nisaa",'The Women','Medinan'],[669,120,112,16,'المائدة',"Al-Maaida",'The Table','Medinan'],[789,165,55,20,'الأنعام',"Al-An'aam",'The Cattle','Meccan'],[954,206,39,24,'الأعراف',"Al-A'raaf",'The Heights','Meccan'],[1160,75,88,10,'الأنفال',"Al-Anfaal",'The Spoils of War','Medinan'],[1235,129,113,16,'التوبة',"At-Tawba",'The Repentance','Medinan'],[1364,109,51,11,'يونس',"Yunus",'Jonas','Meccan'],[1473,123,52,10,'هود',"Hud",'Hud','Meccan'],[1596,111,53,12,'يوسف',"Yusuf",'Joseph','Meccan'],[1707,43,96,6,'الرعد',"Ar-Ra'd",'The Thunder','Medinan'],[1750,52,72,7,'ابراهيم',"Ibrahim",'Abraham','Meccan'],[1802,99,54,6,'الحجر',"Al-Hijr",'The Rock','Meccan'],[1901,128,70,16,'النحل',"An-Nahl",'The Bee','Meccan'],[2029,111,50,12,'الإسراء',"Al-Israa",'The Night Journey','Meccan'],[2140,110,69,12,'الكهف',"Al-Kahf",'The Cave','Meccan'],[2250,98,44,6,'مريم',"Maryam",'Mary','Meccan'],[2348,135,45,8,'طه',"Taa-Haa",'Taa-Haa','Meccan'],[2483,112,73,7,'الأنبياء',"Al-Anbiyaa",'The Prophets','Meccan'],[2595,78,103,10,'الحج',"Al-Hajj",'The Pilgrimage','Medinan'],[2673,118,74,6,'المؤمنون',"Al-Muminoon",'The Believers','Meccan'],[2791,64,102,9,'النور',"An-Noor",'The Light','Medinan'],[2855,77,42,6,'الفرقان',"Al-Furqaan",'The Criterion','Meccan'],[2932,227,47,11,'الشعراء',"Ash-Shu'araa",'The Poets','Meccan'],[3159,93,48,7,'النمل',"An-Naml",'The Ant','Meccan'],[3252,88,49,8,'القصص',"Al-Qasas",'The Stories','Meccan'],[3340,69,85,7,'العنكبوت',"Al-Ankaboot",'The Spider','Meccan'],[3409,60,84,6,'الروم',"Ar-Room",'The Romans','Meccan'],[3469,34,57,3,'لقمان',"Luqman",'Luqman','Meccan'],[3503,30,75,3,'السجدة',"As-Sajda",'The Prostration','Meccan'],[3533,73,90,9,'الأحزاب',"Al-Ahzaab",'The Clans','Medinan'],[3606,54,58,6,'سبإ',"Saba",'Sheba','Meccan'],[3660,45,43,5,'فاطر',"Faatir",'The Originator','Meccan'],[3705,83,41,5,'يس',"Yaseen",'Yaseen','Meccan'],[3788,182,56,5,'الصافات',"As-Saaffaat",'Those drawn up in Ranks','Meccan'],[3970,88,38,5,'ص',"Saad",'The letter Saad','Meccan'],[4058,75,59,8,'الزمر',"Az-Zumar",'The Groups','Meccan'],[4133,85,60,9,'غافر',"Al-Ghaafir",'The Forgiver','Meccan'],[4218,54,61,6,'فصلت',"Fussilat",'Explained in detail','Meccan'],[4272,53,62,5,'الشورى',"Ash-Shura",'Consultation','Meccan'],[4325,89,63,7,'الزخرف',"Az-Zukhruf",'Ornaments of gold','Meccan'],[4414,59,64,3,'الدخان',"Ad-Dukhaan",'The Smoke','Meccan'],[4473,37,65,4,'الجاثية',"Al-Jaathiya",'Crouching','Meccan'],[4510,35,66,4,'الأحقاف',"Al-Ahqaf",'The Dunes','Meccan'],[4545,38,95,4,'محمد',"Muhammad",'Muhammad','Medinan'],[4583,29,111,4,'الفتح',"Al-Fath",'The Victory','Medinan'],[4612,18,106,2,'الحجرات',"Al-Hujuraat",'The Inner Apartments','Medinan'],[4630,45,34,3,'ق',"Qaaf",'The letter Qaaf','Meccan'],[4675,60,67,3,'الذاريات',"Adh-Dhaariyat",'The Winnowing Winds','Meccan'],[4735,49,76,2,'الطور',"At-Tur",'The Mount','Meccan'],[4784,62,23,3,'النجم',"An-Najm",'The Star','Meccan'],[4846,55,37,3,'القمر',"Al-Qamar",'The Moon','Meccan'],[4901,78,97,3,'الرحمن',"Ar-Rahmaan",'The Beneficent','Medinan'],[4979,96,46,3,'الواقعة',"Al-Waaqia",'The Inevitable','Meccan'],[5075,29,94,4,'الحديد',"Al-Hadid",'The Iron','Medinan'],[5104,22,105,3,'المجادلة',"Al-Mujaadila",'The Pleading Woman','Medinan'],[5126,24,101,3,'الحشر',"Al-Hashr",'The Exile','Medinan'],[5150,13,91,2,'الممتحنة',"Al-Mumtahana",'She that is to be examined','Medinan'],[5163,14,109,2,'الصف',"As-Saff",'The Ranks','Medinan'],[5177,11,110,2,'الجمعة',"Al-Jumu'a",'Friday','Medinan'],[5188,11,104,2,'المنافقون',"Al-Munaafiqoon",'The Hypocrites','Medinan'],[5199,18,108,2,'التغابن',"At-Taghaabun",'Mutual Disillusion','Medinan'],[5217,12,99,2,'الطلاق',"At-Talaaq",'Divorce','Medinan'],[5229,12,107,2,'التحريم',"At-Tahrim",'The Prohibition','Medinan'],[5241,30,77,2,'الملك',"Al-Mulk",'The Sovereignty','Meccan'],[5271,52,2,2,'القلم',"Al-Qalam",'The Pen','Meccan'],[5323,52,78,2,'الحاقة',"Al-Haaqqa",'The Reality','Meccan'],[5375,44,79,2,'المعارج',"Al-Ma'aarij",'The Ascending Stairways','Meccan'],[5419,28,71,2,'نوح',"Nooh",'Noah','Meccan'],[5447,28,40,2,'الجن',"Al-Jinn",'The Jinn','Meccan'],[5475,20,3,2,'المزمل',"Al-Muzzammil",'The Enshrouded One','Meccan'],[5495,56,4,2,'المدثر',"Al-Muddaththir",'The Cloaked One','Meccan'],[5551,40,31,2,'القيامة',"Al-Qiyaama",'The Resurrection','Meccan'],[5591,31,98,2,'الانسان',"Al-Insaan",'Man','Medinan'],[5622,50,33,2,'المرسلات',"Al-Mursalaat",'The Emissaries','Meccan'],[5672,40,80,2,'النبإ',"An-Naba",'The Announcement','Meccan'],[5712,46,81,2,'النازعات',"An-Naazi'aat",'Those who drag forth','Meccan'],[5758,42,24,1,'عبس',"Abasa",'He frowned','Meccan'],[5800,29,7,1,'التكوير',"At-Takwir",'The Overthrowing','Meccan'],[5829,19,82,1,'الإنفطار',"Al-Infitaar",'The Cleaving','Meccan'],[5848,36,86,1,'المطففين',"Al-Mutaffifin",'Defrauding','Meccan'],[5884,25,83,1,'الإنشقاق',"Al-Inshiqaaq",'The Splitting Open','Meccan'],[5909,22,27,1,'البروج',"Al-Burooj",'The Constellations','Meccan'],[5931,17,36,1,'الطارق',"At-Taariq",'The Morning Star','Meccan'],[5948,19,8,1,'الأعلى',"Al-A'laa",'The Most High','Meccan'],[5967,26,68,1,'الغاشية',"Al-Ghaashiya",'The Overwhelming','Meccan'],[5993,30,10,1,'الفجر',"Al-Fajr",'The Dawn','Meccan'],[6023,20,35,1,'البلد',"Al-Balad",'The City','Meccan'],[6043,15,26,1,'الشمس',"Ash-Shams",'The Sun','Meccan'],[6058,21,9,1,'الليل',"Al-Lail",'The Night','Meccan'],[6079,11,11,1,'الضحى',"Ad-Dhuhaa",'The Morning Hours','Meccan'],[6090,8,12,1,'الشرح',"Ash-Sharh",'The Consolation','Meccan'],[6098,8,28,1,'التين',"At-Tin",'The Fig','Meccan'],[6106,19,1,1,'العلق',"Al-Alaq",'The Clot','Meccan'],[6125,5,25,1,'القدر',"Al-Qadr",'The Power, Fate','Meccan'],[6130,8,100,1,'البينة',"Al-Bayyina",'The Evidence','Medinan'],[6138,8,93,1,'الزلزلة',"Az-Zalzala",'The Earthquake','Medinan'],[6146,11,14,1,'العاديات',"Al-Aadiyaat",'The Chargers','Meccan'],[6157,11,30,1,'القارعة',"Al-Qaari'a",'The Calamity','Meccan'],[6168,8,16,1,'التكاثر',"At-Takaathur",'Competition','Meccan'],[6176,3,13,1,'العصر',"Al-Asr",'The Declining Day, Epoch','Meccan'],[6179,9,32,1,'الهمزة',"Al-Humaza",'The Traducer','Meccan'],[6188,5,19,1,'الفيل',"Al-Fil",'The Elephant','Meccan'],[6193,4,29,1,'قريش',"Quraish",'Quraysh','Meccan'],[6197,7,17,1,'الماعون',"Al-Maa'un",'Almsgiving','Meccan'],[6204,3,15,1,'الكوثر',"Al-Kawthar",'Abundance','Meccan'],[6207,6,18,1,'الكافرون',"Al-Kaafiroon",'The Disbelievers','Meccan'],[6213,3,114,1,'النصر',"An-Nasr",'Divine Support','Medinan'],[6216,5,6,1,'المسد',"Al-Masad",'The Palm Fibre','Meccan'],[6221,4,22,1,'الإخلاص',"Al-Ikhlaas",'Sincerity','Meccan'],[6225,5,20,1,'الفلق',"Al-Falaq",'The Dawn','Meccan'],[6230,6,21,1,'الناس',"An-Naas",'Mankind','Meccan'],[6236,1]],
+        Surah: [
+          [],
+          [0, 7, 5, 1, 'الفاتحة', "Al-Fatihah", 'The Opening', 'Meccan'],
+          [7, 286, 87, 40, 'البقرة', "Al-Baqarah", 'The Cow', 'Medinan'],
+          [293, 200, 89, 20, 'آل عمران', "Al-Imran", 'The Family of Imraan', 'Medinan'],
+          [493, 176, 92, 24, 'النساء', "An-Nisa", 'The Women', 'Medinan'],
+          [669, 120, 112, 16, 'المائدة', "Al-Ma'idah", 'The Table', 'Medinan'],
+          [789, 165, 55, 20, 'الأنعام', "Al-An'aam", 'The Cattle', 'Meccan'],
+          [954, 206, 39, 24, 'الأعراف', "Al-A'raaf", 'The Heights', 'Meccan'],
+          [1160, 75, 88, 10, 'الأنفال', "Al-Anfaal", 'The Spoils of War', 'Medinan'],
+          [1235, 129, 113, 16, 'التوبة', "At-Tawba", 'The Repentance', 'Medinan'],
+          [1364, 109, 51, 11, 'يونس', "Yunus", 'Jonah', 'Meccan'],
+          [1473, 123, 52, 10, 'هود', "Hud", 'Hud', 'Meccan'],
+          [1596, 111, 53, 12, 'يوسف', "Yusuf", 'Joseph', 'Meccan'],
+          [1707, 43, 96, 6, 'الرعد', "Ar-Ra'd", 'The Thunder', 'Medinan'],
+          [1750, 52, 72, 7, 'ابراهيم', "Ibrahim", 'Abraham', 'Meccan'],
+          [1802, 99, 54, 6, 'الحجر', "Al-Hijr", 'The Rocky Tract', 'Meccan'],
+          [1901, 128, 70, 16, 'النحل', "An-Nahl", 'The Bee', 'Meccan'],
+          [2029, 111, 50, 12, 'الإسراء', "Al-Israa", 'The Night Journey', 'Meccan'],
+          [2140, 110, 69, 12, 'الكهف', "Al-Kahf", 'The Cave', 'Meccan'],
+          [2250, 98, 44, 6, 'مريم', "Maryam", 'Mary', 'Meccan'],
+          [2348, 135, 45, 8, 'طه', "Taa-Haa", 'Taa-Haa', 'Meccan'],
+          [2483, 112, 73, 7, 'الأنبياء', "Al-Anbiya", 'The Prophets', 'Meccan'],
+          [2595, 78, 103, 10, 'الحج', "Al-Hajj", 'The Pilgrimage', 'Medinan'],
+          [2673, 118, 74, 6, 'المؤمنون', "Al-Muminoon", 'The Believers', 'Meccan'],
+          [2791, 64, 102, 9, 'النور', "An-Noor", 'The Light', 'Medinan'],
+          [2855, 77, 42, 6, 'الفرقان', "Al-Furqaan", 'The Criterion', 'Meccan'],
+          [2932, 227, 47, 11, 'الشعراء', "Ash-Shu'araa", 'The Poets', 'Meccan'],
+          [3159, 93, 48, 7, 'النمل', "An-Naml", 'The Ant', 'Meccan'],
+          [3252, 88, 49, 8, 'القصص', "Al-Qasas", 'The Stories', 'Meccan'],
+          [3340, 69, 85, 7, 'العنكبوت', "Al-Ankabut", 'The Spider', 'Meccan'],
+          [3409, 60, 84, 6, 'الروم', "Ar-Room", 'The Romans', 'Meccan'],
+          [3469, 34, 57, 3, 'لقمان', "Luqman", 'Luqman', 'Meccan'],
+          [3503, 30, 75, 3, 'السجدة', "As-Sajda", 'The Prostration', 'Meccan'],
+          [3533, 73, 90, 9, 'الأحزاب', "Al-Ahzaab", 'The Confederates', 'Medinan'],
+          [3606, 54, 58, 6, 'سبإ', "Saba", 'Sheba', 'Meccan'],
+          [3660, 45, 43, 5, 'فاطر', "Fatir", 'The Originator', 'Meccan'],
+          [3705, 83, 41, 5, 'يس', "Yaseen", 'Yaseen', 'Meccan'],
+          [3788, 182, 56, 5, 'الصافات', "As-Saaffaat", 'Those Ranging in Ranks', 'Meccan'],
+          [3970, 88, 38, 5, 'ص', "Saad", 'Saad', 'Meccan'],
+          [4058, 75, 59, 8, 'الزمر', "Az-Zumar", 'The Troops', 'Meccan'],
+          [4133, 85, 60, 9, 'غافر', "Al-Ghaafir", 'The Forgiver', 'Meccan'],
+          [4218, 54, 61, 6, 'فصلت', "Fussilat", 'Explained in detail', 'Meccan'],
+          [4272, 53, 62, 5, 'الشورى', "Ash-Shura", 'Consultation', 'Meccan'],
+          [4325, 89, 63, 7, 'الزخرف', "Az-Zukhruf", 'Ornaments of gold', 'Meccan'],
+          [4414, 59, 64, 3, 'الدخان', "Ad-Dukhan", 'The Smoke', 'Meccan'],
+          [4473, 37, 65, 4, 'الجاثية', "Al-Jaathiya", 'Crouching', 'Meccan'],
+          [4510, 35, 66, 4, 'الأحقاف', "Al-Ahqaf", 'The Sand Dunes', 'Meccan'],
+          [4545, 38, 95, 4, 'محمد', "Muhammad", 'Muhammad', 'Medinan'],
+          [4583, 29, 111, 4, 'الفتح', "Al-Fath", 'The Victory', 'Medinan'],
+          [4612, 18, 106, 2, 'الحجرات', "Al-Hujuraat", 'The Apartments', 'Medinan'],
+          [4630, 45, 34, 3, 'ق', "Qaaf", 'Qaaf', 'Meccan'],
+          [4675, 60, 67, 3, 'الذاريات', "Ad-Dhariyat", 'The Scatterers', 'Meccan'],
+          [4735, 49, 76, 2, 'الطور', "At-Tur", 'The Mountain', 'Meccan'],
+          [4784, 62, 23, 3, 'النجم', "An-Najm", 'The Star', 'Meccan'],
+          [4846, 55, 37, 3, 'القمر', "Al-Qamar", 'The Moon', 'Meccan'],
+          [4901, 78, 97, 3, 'الرحمن', "Ar-Rahmaan", 'The Beneficent', 'Medinan'],
+          [4979, 96, 46, 3, 'الواقعة', "Al-Waaqia", 'The Event', 'Meccan'],
+          [5075, 29, 94, 4, 'الحديد', "Al-Hadid", 'The Iron', 'Medinan'],
+          [5104, 22, 105, 3, 'المجادلة', "Al-Mujaadila", 'The Pleading Woman', 'Medinan'],
+          [5126, 24, 101, 3, 'الحشر', "Al-Hashr", 'The Gathering', 'Medinan'],
+          [5150, 13, 91, 2, 'الممتحنة', "Al-Mumtahanah", 'The Woman who is Examined', 'Medinan'],
+          [5163, 14, 109, 2, 'الصف', "As-Saff", 'The Ranks', 'Medinan'],
+          [5177, 11, 110, 2, 'الجمعة', "Al-Jumu'ah", 'The Congregation', 'Medinan'],
+          [5188, 11, 104, 2, 'المنافقون', "Al-Munafiqoon", 'The Hypocrites', 'Medinan'],
+          [5199, 18, 108, 2, 'التغابن', "At-Taghaabun", 'The Manifestation of Losses', 'Medinan'],
+          [5217, 12, 99, 2, 'الطلاق', "At-Talaaq", 'Divorce', 'Medinan'],
+          [5229, 12, 107, 2, 'التحريم', "At-Tahrim", 'The Prohibition', 'Medinan'],
+          [5241, 30, 77, 2, 'الملك', "Al-Mulk", 'The Kingdom', 'Meccan'],
+          [5271, 52, 2, 2, 'القلم', "Al-Qalam", 'The Pen', 'Meccan'],
+          [5323, 52, 78, 2, 'الحاقة', "Al-Haqqah", 'The Reality', 'Meccan'],
+          [5375, 44, 79, 2, 'المعارج', "Al-Ma'aarij", 'The Ways of Ascent', 'Meccan'],
+          [5419, 28, 71, 2, 'نوح', "Nooh", 'Noah', 'Meccan'],
+          [5447, 28, 40, 2, 'الجن', "Al-Jinn", 'The Jinn', 'Meccan'],
+          [5475, 20, 3, 2, 'المزمل', "Al-Muzzammil", 'The Enshrouded One', 'Meccan'],
+          [5495, 56, 4, 2, 'المدثر', "Al-Muddaththir", 'The Cloaked One', 'Meccan'],
+          [5551, 40, 31, 2, 'القيامة', "Al-Qiyaama", 'The Resurrection', 'Meccan'],
+          [5591, 31, 98, 2, 'الانسان', "Al-Insaan", 'The Man', 'Medinan'],
+          [5622, 50, 33, 2, 'المرسلات', "Al-Mursalaat", 'The Emissaries', 'Meccan'],
+          [5672, 40, 80, 2, 'النبإ', "An-Naba", 'The Announcement', 'Meccan'],
+          [5712, 46, 81, 2, 'النازعات', "An-Naazi'aat", 'Those who drag forth', 'Meccan'],
+          [5758, 42, 24, 1, 'عبس', "Abasa", 'He frowned', 'Meccan'],
+          [5800, 29, 7, 1, 'التكوير', "At-Takwir", 'The Folding Up', 'Meccan'],
+          [5829, 19, 82, 1, 'الإنفطار', "Al-Infitaar", 'The Cleaving', 'Meccan'],
+          [5848, 36, 86, 1, 'المطففين', "Al-Mutaffifin", 'The Dealers in Fraud', 'Meccan'],
+          [5884, 25, 83, 1, 'الإنشقاق', "Al-Inshiqaaq", 'The Splitting Open', 'Meccan'],
+          [5909, 22, 27, 1, 'البروج', "Al-Burooj", 'The Stars', 'Meccan'],
+          [5931, 17, 36, 1, 'الطارق', "At-Taariq", 'The Morning Star', 'Meccan'],
+          [5948, 19, 8, 1, 'الأعلى', "Al-A'laa", 'The Most High', 'Meccan'],
+          [5967, 26, 68, 1, 'الغاشية', "Al-Ghaashiya", 'The Overwhelming Event', 'Meccan'],
+          [5993, 30, 10, 1, 'الفجر', "Al-Fajr", 'The Dawn', 'Meccan'],
+          [6023, 20, 35, 1, 'البلد', "Al-Balad", 'The City', 'Meccan'],
+          [6043, 15, 26, 1, 'الشمس', "Ash-Shams", 'The Sun', 'Meccan'],
+          [6058, 21, 9, 1, 'الليل', "Al-Lail", 'The Night', 'Meccan'],
+          [6079, 11, 11, 1, 'الضحى', "Ad-Dhuhaa", 'The Brightness of the Day', 'Meccan'],
+          [6090, 8, 12, 1, 'الشرح', "Ash-Sharh", 'The Explanation', 'Meccan'],
+          [6098, 8, 28, 1, 'التين', "At-Tin", 'The Fig', 'Meccan'],
+          [6106, 19, 1, 1, 'العلق', "Al-Alaq", 'The Clot', 'Meccan'],
+          [6125, 5, 25, 1, 'القدر', "Al-Qadr", 'The Decree, Fate', 'Meccan'],
+          [6130, 8, 100, 1, 'البينة', "Al-Bayyinah", 'The Clear Evidence', 'Medinan'],
+          [6138, 8, 93, 1, 'الزلزلة', "Az-Zalzala", 'The Earthquake', 'Medinan'],
+          [6146, 11, 14, 1, 'العاديات', "Al-Aadiyaat", 'The Chargers', 'Meccan'],
+          [6157, 11, 30, 1, 'القارعة', "Al-Qaari'a", 'The Calamity', 'Meccan'],
+          [6168, 8, 16, 1, 'التكاثر', "At-Takaathur", 'The Abundance of Wealth', 'Meccan'],
+          [6176, 3, 13, 1, 'العصر', "Al-Asr", 'The Time, Epoch', 'Meccan'],
+          [6179, 9, 32, 1, 'الهمزة', "Al-Humaza", 'The Slanderer', 'Meccan'],
+          [6188, 5, 19, 1, 'الفيل', "Al-Fil", 'The Elephant', 'Meccan'],
+          [6193, 4, 29, 1, 'قريش', "Quraish", 'The Quraish', 'Meccan'],
+          [6197, 7, 17, 1, 'الماعون', "Al-Maa'un", 'Acts of Kindness', 'Meccan'],
+          [6204, 3, 15, 1, 'الكوثر', "Al-Kawthar", 'The Abundance of Good', 'Meccan'],
+          [6207, 6, 18, 1, 'الكافرون', "Al-Kaafiroon", 'The Disbelievers', 'Meccan'],
+          [6213, 3, 114, 1, 'النصر', "An-Nasr", 'The Help', 'Medinan'],
+          [6216, 5, 6, 1, 'المسد', "Al-Masad", 'The Palm Fibre', 'Meccan'],
+          [6221, 4, 22, 1, 'الإخلاص', "Al-Ikhlas", 'The Unity', 'Meccan'],
+          [6225, 5, 20, 1, 'الفلق', "Al-Falaq", 'The Dawn', 'Meccan'],
+          [6230, 6, 21, 1, 'الناس', "An-Naas", 'Mankind', 'Meccan'],
+          [6236, 1]],
 		Juz: [[],[1,1],[2,142],[2,253],[3,93],[4,24],[4,148],[5,82],[6,111],[7,88],[8,41],[9,93],[11,6],[12,53],[15,1],[17,1],[18,75],[21,1],[23,1],[25,21],[27,56],[29,46],[33,31],[36,28],[39,32],[41,47],[46,1],[51,31],[58,1],[67,1],[78,1],[115,1]],
 		HizbQuarter: [[],[1,1],[2,26],[2,44],[2,60],[2,75],[2,92],[2,106],[2,124],[2,142],[2,158],[2,177],[2,189],[2,203],[2,219],[2,233],[2,243],[2,253],[2,263],[2,272],[2,283],[3,15],[3,33],[3,52],[3,75],[3,93],[3,113],[3,133],[3,153],[3,171],[3,186],[4,1],[4,12],[4,24],[4,36],[4,58],[4,74],[4,88],[4,100],[4,114],[4,135],[4,148],[4,163],[5,1],[5,12],[5,27],[5,41],[5,51],[5,67],[5,82],[5,97],[5,109],[6,13],[6,36],[6,59],[6,74],[6,95],[6,111],[6,127],[6,141],[6,151],[7,1],[7,31],[7,47],[7,65],[7,88],[7,117],[7,142],[7,156],[7,171],[7,189],[8,1],[8,22],[8,41],[8,61],[9,1],[9,19],[9,34],[9,46],[9,60],[9,75],[9,93],[9,111],[9,122],[10,11],[10,26],[10,53],[10,71],[10,90],[11,6],[11,24],[11,41],[11,61],[11,84],[11,108],[12,7],[12,30],[12,53],[12,77],[12,101],[13,5],[13,19],[13,35],[14,10],[14,28],[15,1],[15,50],[16,1],[16,30],[16,51],[16,75],[16,90],[16,111],[17,1],[17,23],[17,50],[17,70],[17,99],[18,17],[18,32],[18,51],[18,75],[18,99],[19,22],[19,59],[20,1],[20,55],[20,83],[20,111],[21,1],[21,29],[21,51],[21,83],[22,1],[22,19],[22,38],[22,60],[23,1],[23,36],[23,75],[24,1],[24,21],[24,35],[24,53],[25,1],[25,21],[25,53],[26,1],[26,52],[26,111],[26,181],[27,1],[27,27],[27,56],[27,82],[28,12],[28,29],[28,51],[28,76],[29,1],[29,26],[29,46],[30,1],[30,31],[30,54],[31,22],[32,11],[33,1],[33,18],[33,31],[33,51],[33,60],[34,10],[34,24],[34,46],[35,15],[35,41],[36,28],[36,60],[37,22],[37,83],[37,145],[38,21],[38,52],[39,8],[39,32],[39,53],[40,1],[40,21],[40,41],[40,66],[41,9],[41,25],[41,47],[42,13],[42,27],[42,51],[43,24],[43,57],[44,17],[45,12],[46,1],[46,21],[47,10],[47,33],[48,18],[49,1],[49,14],[50,27],[51,31],[52,24],[53,26],[54,9],[55,1],[56,1],[56,75],[57,16],[58,1],[58,14],[59,11],[60,7],[62,1],[63,4],[65,1],[66,1],[67,1],[68,1],[69,1],[70,19],[72,1],[73,20],[75,1],[76,19],[78,1],[80,1],[82,1],[84,1],[87,1],[90,1],[94,1],[100,9],[115,1]],
 		Manzil: [[],[1,1],[5,1],[10,1],[17,1],[26,1],[37,1],[50,1]],
@@ -40,8 +156,8 @@ var Quran = {
         surahStarts: [],// build by Quran.init();
         pageStarts: [],	// build by Quran.init();
         juzStarts: []	// build by Quran.init();
-	},    
-    
+	},
+
 	/**
 	 * must run this method on start, it works like constructor and builds the left out arrays
 	 * good for feature update, which you might want to run on start.
@@ -53,15 +169,15 @@ var Quran = {
         	Quran._data.pageStarts[i] = Quran.verseNo.page(i);
         for (var i = 1; i < Quran._data.Juz.length; i++)
         	Quran._data.juzStarts[i] = Quran.verseNo.juz(i);
-        
+
         Quran.initBuck();
     },
-    
+
     /**
      * builds the buck and arabic chars for use in GQ.quran.parse for converting buck to arabic and arabic to buck
      */
     initBuck: function()
-    {    	
+    {
     //  var stopletters = "ۚۖۛۗۙ";
         var chars='آ ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن ه و ي';
        	var buck = 'A A b t v j H x d * r z s $ S D T Z E g f q k l m n h w y';
@@ -71,7 +187,7 @@ var Quran = {
         buckArr  = buck.split(' ');
         transArr = trans.split(' ');
         //mISSING CHARACTERS:       // أ إ ئ ء ة ؤ
-        charsArr.push( 'ى' ); 		buckArr.push( 'Y' );	transArr.push( 'ā' ); 	
+        charsArr.push( 'ى' ); 		buckArr.push( 'Y' );	transArr.push( 'ā' );
         charsArr.push( 'أ' ); 		buckArr.push( '>' );	transArr.push( '' );
         charsArr.push( 'إ' ); 		buckArr.push( '<' );	transArr.push( '' );
         charsArr.push( 'ئ' ); 		buckArr.push( '}' );	transArr.push( '' );
@@ -105,18 +221,18 @@ var Quran = {
         charsArr.push( ' ' ); 		buckArr.push( ' ' );	transArr.push( ' ' );
         charsArr.push( ';' ); 		buckArr.push( ';' );	transArr.push( '' );
         charsArr.push( '\n' ); 		buckArr.push( '\n' );	transArr.push( '' );
-        
+
         Quran._data.char = charsArr;
         Quran._data.buck = buckArr;
         Quran._data.tran = transArr;
     },
-    
+
     /**
-     * This object has all the functions you need to get the verse number, which you can 
+     * This object has all the functions you need to get the verse number, which you can
      * use to get the query from the database.
      */
     verseNo: {
-    	
+
     	/**
     	 * gets the verse number by word number
     	 * @param integer word
@@ -125,7 +241,7 @@ var Quran = {
     		word = Quran.ayah.fromWord(word);
     		return Quran.verseNo.ayah(word.surah, word.ayah);
     	},
-    	
+
     	/**
     	 * gets the verse number by surah & ayah
     	 * @param integer surah
@@ -135,7 +251,7 @@ var Quran = {
     		ayah = ayah || 1;
 	        return Quran.surah.detail(surah).start + ayah;
     	},
-    	
+
     	/**
     	 * gets the verse number by surah
     	 * @param integer surah
@@ -143,7 +259,7 @@ var Quran = {
     	surah: function (surah) {
     		return Quran.verseNo.ayah(surah);
     	},
-    	
+
     	/**
     	 * gets the verse number by page
     	 * @param integer page
@@ -151,23 +267,23 @@ var Quran = {
     	page: function (page) {
     		return Quran.verseNo.ayah(Quran.ayah.fromPage(page).surah, Quran.ayah.fromPage(page).ayah);
     	},
-    	
+
     	/**
     	 * gets the verse number by juz
     	 * @param integer juz
     	 */
     	juz: function (juz) {
     		 return Quran.verseNo.ayah(Quran.ayah.fromJuz(juz).surah, Quran.ayah.fromJuz(juz).ayah);
-    	} 	
+    	}
     },
-    
-    
+
+
     /**
 	 * This object has all the functions to get surah and ayah number as objects
 	 * this method is very useful for selection of surah&ayah, getting list of surah&ayah and so on
 	 */
 	ayah: {
-    	
+
     	/**
     	 * gets the next surah & ayah, from current surah & ayah
     	 * @param integer surah
@@ -184,13 +300,13 @@ var Quran = {
     				surah++;
     			}
 	        }
-    	
+
     		return {
 	            surah: surah,
 	            ayah: ayah
 	        };
-    	}, 
-    	
+    	},
+
     	/**
     	 * gets the prev surah & ayah, from current surah & ayah
     	 * @param integer surah
@@ -199,24 +315,24 @@ var Quran = {
     	prev: function (surah, ayah)
     	{
     		--ayah;
-    		
+
     		if (ayah <= 0)
     		{
     			if (surah <= 0)
     				surah = 1;
-    			
+
     			if (surah <= 1)
     				ayah = 1;
     			else
     				ayah = Quran.surah.detail(--surah).ayahs;
     		}
-    		
+
 	        return {
 	        	surah: surah,
 	        	ayah: ayah
 	        };
     	},
-    	
+
     	/**
     	 * gets the page number from surah&ayah
     	 * @param integer surah
@@ -233,24 +349,24 @@ var Quran = {
     	 */
         juz: function(surah, ayah) {
             return Quran._arraySearch(Quran._data.juzStarts, Quran.verseNo.ayah(surah, ayah));
-        },        
+        },
 
     	/**
     	 * gets the surah&ayah number from word number
     	 * @param integer word
     	 */
     	fromWord: function(word) {
-    		
+
     		word = Math.min(Math.max(word, 1), Quran._data.numWords); // fix word number
-    		
+
     		for (var surah = 1; surah <= 114; surah++)
     		{
     			ayahs = Quran._data.Word[surah];
-    			
+
     			for (var ayah = 1; ayah <= ayahs.length; ayah++)
     			{
     				ayahStartIndex = ayahs[ayah];
-    				
+
     				if (word > 77426)
     					return {surah: 114, ayah: 6};
     				else if (ayahStartIndex > word)
@@ -258,7 +374,7 @@ var Quran = {
     			}
     		}
 	    },
-        
+
     	/**
     	 * gets the surah&ayah number from verse number
     	 * @param integer verse
@@ -271,7 +387,7 @@ var Quran = {
 	        	ayah: ayah
 	        };
 	    },
-        
+
 	    /**
     	 * gets the surah&ayah number from juz number
     	 * @param integer juz
@@ -282,8 +398,8 @@ var Quran = {
             	surah: juz[0],
             	ayah: juz[1]
             };
-    	},  
-	    
+    	},
+
 	    /**
     	 * gets the surah&ayah number from page number
     	 * @param integer page
@@ -295,7 +411,7 @@ var Quran = {
 	            ayah: page[1]
 	        };
     	},
-    	
+
     	/**
     	 * gets the list of surah&ayah numbers for a given page
     	 * @param integer page
@@ -303,7 +419,7 @@ var Quran = {
     	listFromPage: function(page) {
             return Quran._listFrom('page', page);
         },
-        
+
         /**
     	 * gets the list of surah&ayah numbers for a given surah
     	 * @param integer surah
@@ -311,7 +427,7 @@ var Quran = {
     	listFromSurah: function(surah) {
             return Quran._listFrom('surah', surah);
         },
-        
+
         /**
     	 * gets the list of surah&ayah numbers for a given juz
     	 * @param integer juz
@@ -320,12 +436,12 @@ var Quran = {
             return Quran._listFrom('juz', juz);
         }
     },
-    
+
     /**
      * This object as methods related surah
      */
     surah: {
-    	
+
     	/**
     	 * gets the surah detail object
     	 * @param integer surah
@@ -339,7 +455,7 @@ var Quran = {
 			data['no'] = surah;
 	        return data;
 	    },
-	    
+
 	    /**
     	 * gets the name of the surah
     	 * @param integer surah
@@ -349,7 +465,7 @@ var Quran = {
 	        nameType = nameType || 'arabic_name';
 	        return Quran.surah.detail(surah)[nameType];
 	    },
-	    
+
 	    /**
     	 * gets the surah number of the surah from a surah name
     	 * @param string name pass surah name here
@@ -363,12 +479,12 @@ var Quran = {
 	        return 0;
 	    }
     },
-    
+
     /**
      * This object as methods related each word of complete Quran
      */
     word: {
-    	
+
     	/**
 		 * gets the word location
 		 * @param integer surah
@@ -382,7 +498,7 @@ var Quran = {
     		position   =  wordDetail[Quran._fixAyahNum(surah, ayah)];
 			return (position+word)-1;
 		},
-    
+
 		/**
 		 * number of words for an ayah
 		 * @param integer surah
@@ -399,7 +515,7 @@ var Quran = {
         	return nextPosition-position;
     	}
     },
-    
+
     /**
 	 * internal method use
 	 * fix the word number, if pass invalid word number
@@ -415,7 +531,7 @@ var Quran = {
     	nextPosition = (surah == 114 && ayah == 6) ? Quran._data.numWords+1 : Quran._data.Word[next.surah][next.ayah];
     	return Math.min(Math.max(word, 1), nextPosition-position);
     },
-    
+
     /**
 	 * internal method use
 	 * fix the ayah number, if pass invalid ayah number
@@ -425,7 +541,7 @@ var Quran = {
     _fixAyahNum: function(surah, ayah){
         return Math.min(Math.max(ayah, 1), Quran.surah.detail(surah).ayahs);
     },
-    
+
     /**
 	 * internal method use
 	 * fix the surah number, if pass invalid surah number
@@ -434,7 +550,7 @@ var Quran = {
     _fixSurahNum: function(surah){
         return Math.min(Math.max(surah, 1), Quran._data.numSurahs);
     },
-    
+
     /**
 	 * internal method use
 	 * fix the page number, if pass invalid page number
@@ -443,7 +559,7 @@ var Quran = {
     _fixPageNum: function(page){
         return Math.min(Math.max(page, 1), Quran._data.numPages);
     },
-    
+
     /**
 	 * internal method use
 	 * fix the juz number, if pass invalid juz number
@@ -452,7 +568,7 @@ var Quran = {
     _fixJuzNum: function(juz){
         return Math.min(Math.max(juz, 1), Quran._data.numJuzs);
     },
-    
+
     /**
 	 * internal method use
 	 * search the array and returns the required item
@@ -472,14 +588,14 @@ var Quran = {
         return up - 1;
         return up;
     },
-    
+
     /**
 	 * internal method use
 	 * gets the list of ayahs from given range
 	 * @param integer surah
 	 * @param integer fromAyah
 	 * @param integer toAyah
-	 */    
+	 */
     _getAyahRange: function(surah, fromAyah, toAyah){
         var outArray = [];
         for (i = fromAyah; i <= toAyah; i++)
@@ -490,7 +606,7 @@ var Quran = {
         });
         return outArray;
     },
-    
+
     /**
      * internal method use
 	 * gets the list of surah&ayah numbers for a given page, surah, juz
@@ -500,7 +616,7 @@ var Quran = {
 	_listFrom: function(forWhat, number) {
         var listArray = [];
         var from, to;
-        
+
         if (forWhat == 'juz')
         {
         	from = Quran.ayah.fromJuz(number);
@@ -518,7 +634,7 @@ var Quran = {
             to = Quran.ayah.fromPage(number + 1);
             to = Quran.ayah.prev(to.surah, to.ayah);
         }
-                
+
         if (from.surah == to.surah)
         	listArray = listArray.concat(Quran._getAyahRange(from.surah, from.ayah, to.ayah));
         else{
@@ -527,7 +643,7 @@ var Quran = {
             	listArray = listArray.concat(Quran._getAyahRange(i, 1, Quran.surah.detail(i).ayahs));
             listArray = listArray.concat(Quran._getAyahRange(to.surah, 1, to.ayah));
         }
-        
+
         return listArray;
     }
 };
