@@ -1,45 +1,71 @@
 <ion-navbar primary-s2 *navbar>
-    <button menuToggle>
-        <ion-icon light name="menu"></ion-icon>
-    </button>
-    <ion-title light>{{selectedSurah.english_name}} - Page By Page</ion-title>
+  <button menuToggle>
+    <ion-icon light name="menu"></ion-icon>
+  </button>
+  <ion-title light>{{selectedSurah.english_name}}
+    - Page By Page</ion-title>
 
 </ion-navbar>
 
 <ion-content>
 
-    <div *ngIf="content.length">
-        <ion-row class="no-padding ayah-by-ayah" *ngFor="#quran of content; #verseNo=index">
-            <ion-col class="ayahNo option-column page-col" width-10>
-                <div class="fa-stack">
-                    <object light clear block class="svg-icon" data="img/svg/ayah-icon.svg" type="image/svg+xml"></object>
-                    <span class="icon-text fa-stack-1x ayah-number">{{ verseNo + 1 }}</span>
-                </div>
-            </ion-col>
+  <div *ngIf="content.length">
+    <div class="page-by-page">
+      <main id=quran>
+        <div class="page-headers juz-number">Juz 1</div>
+        <div class="page-headers page-number">Page 1</div>
+        <section class=surah id="s1">
+          <ion-row class="no-padding" *ngFor="#quran of content; #verseNo=index">
+
             <ion-col class="ayahText">
-                <div class="arabic-text" *ngFor="#ayah of quran">
-                    {{ayah.verse}}
+              <div class="arabic-text" *ngFor="#ayah of quran">
+
+
+                <svg width="33" height="34" viewBox="0 0 33 34">
+                  <path class="ayah-icon svg-icon" fill="none" stroke="#ffffff" stroke-width="3" d="M16.5 2l14.29 7.5v15L16.5 32 2.21 24.5v-15z"/>
+
+                  <text class="ayah-number" x="17" y="22" fill="red">
+                    {{ verseNo + 1 }}
+                  </text>
+                </svg>
+
+                {{ayah.verse}}
+              </div>
+
+              <!-- <span class="ayahNo">
+                <div class="fa-stack1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="33" height="34" viewBox="0 0 33 34">
+                    <path class="ayah-icon svg-icon" fill="none" stroke="#ffffff" stroke-width="3" d="M16.5 2l14.29 7.5v15L16.5 32 2.21 24.5v-15z"/>
+                  </svg>
+
+                  <span class="icon-text fa-stack-1x ayah-number">
+                    {{ verseNo + 1 }}
+                  </span>
                 </div>
+              </span> -->
 
             </ion-col>
-        </ion-row>
 
+          </ion-row>
+        </section>
+      </main>
     </div>
+  </div>
 
-    <div class="load-container load8" *ngIf="!content.length">
-        <div class="loader">Loading...</div>
-    </div>
+  <div class="load-container load8" *ngIf="!content.length">
+    <div class="loader">Loading...</div>
+  </div>
 
 </ion-content>
 <ion-toolbar primary-s2 position="bottom">
-    <ion-buttons start>
-        <button dark>
-            <ion-icon name="play"></ion-icon>
-        </button>
-    </ion-buttons>
-    <ion-buttons end>
-        <button dark (click)="openSetting()">
-            <ion-icon name="cog"></ion-icon>
-        </button>
-    </ion-buttons>
+  <ion-buttons start>
+    <button dark>
+      <ion-icon name="play"></ion-icon>
+    </button>
+  </ion-buttons>
+  <ion-buttons end>
+    <button dark (click)="openSetting()">
+      <ion-icon name="cog"></ion-icon>
+    </button>
+  </ion-buttons>
 </ion-toolbar>
