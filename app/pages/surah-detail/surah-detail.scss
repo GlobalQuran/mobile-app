@@ -1,47 +1,77 @@
 .surah-detail-page {
-  .toolbar-title, .bar-button-default {
-      color: color(light);
+  .toolbar-title,
+  .bar-button-default {
+    color: color(light);
   }
-
-  .toolbar-background:after{
-    content: " ";
-    z-index: 10;
-    display: block;
-    position: absolute;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
+  .toolbar-background:after {
+    content   : " ";
+    z-index   : 10;
+    display   : block;
+    position  : absolute;
+    height    : 100%;
+    top       : 0;
+    left      : 0;
+    right     : 0;
     background: color(primary-s3);
   }
-
-  .ayah-number{
+  .ayah-number {
+    font-size: 12px;
     line-height: 4em;
+    text-anchor: middle;
   }
 }
-
 .ayahNo {
   background-color: color(light);
 }
-
 .ayahText {
   border-bottom: 1px solid lighten(color(primary-s3), 50);
 }
-
 // Diffrent layouts
-
 .ayah-by-ayah {
-    .arabic-text {
-      color: color(primary-s1);
-      line-height: 2em;
-      font-size: 2em;
-      text-align: right;
-    }
-
-}
-
-.mushaf {
-  .arabic-text{
-    text-align: justify;
+  .arabic-text {
+    color      : color(primary-s1);
+    line-height: 2em;
+    font-size  : 2em;
+    text-align : right;
   }
+}
+.page-by-page {
+  .page-headers {
+    display   : inline-block;
+    font-size : medium;
+    color     : color(primary-s2);
+    margin: -39px 5px 0;
+    &.juz-number {
+      float: left;
+    }
+    &.page-number {
+      float: right;
+    }
+  }
+  main {
+    color      : color(primary-s4);
+    font-size  : 26px;
+    text-align : center;
+    line-height: 40px;
+    max-width  : 980px;
+    margin     : 40px auto;
+  }
+  section {
+    background   : #FFF;
+    padding      : 38px 96px;
+    margin-bottom: 32px;
+    border       : 1px solid #CCC;
+    border-top   : 1px solid #DDD;
+    border-bottom: 1px solid #BBB;
+    box-shadow   : 0 10px 26px -10px #999;
+  }
+  span:hover {
+    background: rgba(0, 178, 255, 0.35);
+  }
+  .arabic-text {
+    text-align: right;
+  }
+}
+.ayah-icon {
+  stroke: color(primary-s1);
 }
