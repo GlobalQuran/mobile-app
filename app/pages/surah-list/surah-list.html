@@ -22,7 +22,7 @@
         <b>{{selectedSurah.english_name}}</b>
       </div>
       <ion-list no-lines class="no-margin scroll-inner-content">
-        <ion-item  class="surah-item-list" *ngFor="#surah of surahList" (click)="surahTapped($event, surah)">
+        <ion-item  class="surah-item-list" *ngFor="#surah of surahList" (click)="goToSurah(surah.no)">
           <ion-avatar class="bookmark-enabled fa-stack" item-left>
             <ion-icon name="ios-bookmark" class="icon-image fa-stack-2x" ></ion-icon>
             <span class="icon-text fa-stack-1x">{{ surah.no }}</span>
@@ -38,7 +38,7 @@
 
     <ion-col width-15 class="option-column juz-col">
       <ion-list no-lines class="scroll-inner-content">
-        <button clear block secondary class="scroll-button" *ngFor="#juzNumber of juzNumbers" (click)="surahTapped($event, surah)">
+        <button clear block secondary class="scroll-button" *ngFor="#juzNumber of juzNumbers" (click)="goToJuz(juzNumber)">
           {{ juzNumber }}
         </button>
       </ion-list>
@@ -46,7 +46,7 @@
 
     <ion-col width-15 class="option-column page-col">
       <ion-list no-lines class="scroll-inner-content">
-        <button clear block class="scroll-button" *ngFor="#pageNumber of pageNumbers"  (click)="openPage(pageNumber)">
+        <button clear block class="scroll-button" *ngFor="#pageNumber of pageNumbers"  (click)="goToPage(pageNumber)">
           {{ pageNumber }}
         </button>
       </ion-list>
@@ -58,7 +58,7 @@
 <ion-toolbar primary-s2 position="bottom">
     <ion-buttons start>
         <button dark (click)="surahTapped($event, 1)">
-            <div class="title">1. Al-Fatihah - The Opening</div>
+            <div class="title">1. Al-Fatihah - The... gear hides</div>
         </button>
     </ion-buttons>
     <ion-buttons end>

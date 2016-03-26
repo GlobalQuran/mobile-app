@@ -21,10 +21,34 @@ export class SurahListPage {
             .subscribe(list => this.surahList.push(list));
     }
 
-    surahTapped(event, surah)
+    goToSurah(surah:number)
     {
         this.nav.push(SurahDetailPage, {
-            surah: surah
+            surah: surah,
+            ayah: 1,
+            eventBy: 'surah'
+        });
+    }
+
+    goToJuz (juz:number)
+    {
+        let quran = this.gq.getAyahNumberByJuz(juz);
+
+        this.nav.push(SurahDetailPage, {
+            surah: quran.surah,
+            ayah: quran.ayah,
+            eventBy: 'juz'
+        });
+    }
+
+    goToPage (page:number)
+    {
+        let quran = this.gq.getAyahNumberByPage(page);
+
+        this.nav.push(SurahDetailPage, {
+            surah: quran.surah,
+            ayah: quran.ayah,
+            eventBy: 'page'
         });
     }
 

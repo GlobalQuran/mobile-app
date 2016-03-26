@@ -4,6 +4,11 @@
     </button>
     <ion-title light> <object class="surah-title" data="img/surah/{{ getSurahTitleNumber() }}.svg" type="image/svg+xml"></object> {{selectedSurah.english_name}}</ion-title>
 
+    <ion-buttons end>
+        <button dark>
+            <ion-icon name="play"></ion-icon>
+        </button>
+    </ion-buttons>
 </ion-navbar>
 
 <ion-content>
@@ -35,10 +40,3 @@
     </ion-infinite-scroll>
 
 </ion-content>
-<ion-toolbar primary-s2 position="bottom">
-    <ion-buttons start>
-        <button dark>
-            <ion-icon name="play"></ion-icon>
-        </button>
-    </ion-buttons>
-</ion-toolbar>

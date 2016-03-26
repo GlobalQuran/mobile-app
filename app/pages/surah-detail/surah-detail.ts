@@ -13,6 +13,11 @@ let _view = localStorage.getItem('_view');
 })
 export class SurahDetailPage {
 
+    surah: number;
+    ayah:  number;
+
+    eventBy: string;
+
     selectedSurah: surahDetail;
     content:Array<any>;
 
@@ -23,15 +28,20 @@ export class SurahDetailPage {
 
     constructor(private nav:NavController, navParams:NavParams, private gq:gq)
     {
+        this.surah = navParams.get('surah');
+        this.ayah  = navParams.get('ayah');
+        this.eventBy = navParams.get('eventBy');
+
+
         // If we navigated to this page, we will have an item available as a nav param
-        this.selectedSurah = navParams.get('surah');
+        this.selectedSurah = this.gq.getSurahDetail(this.surah);
         this.content = [];
 
         this.totalAyahs = this.selectedSurah.ayahs;
-        this.startAyah = 1;
+        this.startAyah = this.ayah;
 
         this.gq
-            .select(this.selectedSurah.no, this.startAyah)
+            .select(this.surah, this.startAyah)
             .getContent()
             .take(10)
             .subscribe(

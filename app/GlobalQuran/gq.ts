@@ -221,9 +221,31 @@ export class gq {
      * @param surah
      * @returns {surahDetail}
      */
-    getSurahDetail(surahNo:number)
+    getSurahDetail(surahNo:number):surahDetail
     {
         return Quran.surah.detail(surahNo);
+    }
+
+    /**
+     * get starting ayah & surah number from juz number
+     *
+     * @param juz
+     * @returns {any}
+     */
+    getAyahNumberByJuz (juz:number):{surah:number, ayah:number}
+    {
+        return Quran.ayah.fromJuz(juz);
+    }
+
+    /**
+     * get starting ayah & surah number from page number
+     *
+     * @param page
+     * @returns {any}
+     */
+    getAyahNumberByPage (page:number):{surah:number, ayah:number}
+    {
+        return Quran.ayah.fromPage(page);
     }
 
     getQuranByDetail(quranBy:string)
