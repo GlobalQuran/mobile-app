@@ -17,7 +17,7 @@
                 </div>
             </ion-col>
             <ion-col class="ayahText">
-                <div class="arabic-text" *ngFor="#ayah of quran">
+                <div [ngClass]="{'arabic-text': isQuran(ayah)}" *ngFor="#ayah of quran">
                     {{ayah.verse}}
                 </div>
 

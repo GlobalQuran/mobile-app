@@ -75,6 +75,11 @@ export class SurahDetailPage {
             return this.selectedSurah.no;
     }
 
+    isQuran (ayah):boolean
+    {
+        return (ayah.type == 'quran');
+    }
+
     openSetting()
     {
         this.nav.push(SettingPage);
