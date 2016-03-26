@@ -2,7 +2,7 @@
     <button menuToggle>
         <ion-icon light name="menu"></ion-icon>
     </button>
-    <ion-title light>{{selectedSurah.english_name}}</ion-title>
+    <ion-title light>{{selectedSurah.english_name}} <object light clear block class="surah-title" data="img/surah/{{ getSurahTitleNumber() }}.svg" type="image/svg+xml"></object></ion-title>
 
 </ion-navbar>
 
@@ -12,7 +12,7 @@
         <ion-row class="no-padding ayah-by-ayah" *ngFor="#quran of content; #verseNo=index">
             <ion-col class="ayahNo option-column page-col" width-10>
                 <div class="fa-stack">
-                    <object light clear block class="svg-icon" data="img/svg/ayah-icon.svg" type="image/svg+xml"></object>
+                    <object class="svg-icon" data="img/svg/ayah-icon.svg" type="image/svg+xml"></object>
                     <span class="icon-text fa-stack-1x ayah-number">{{ verseNo + 1 }}</span>
                 </div>
             </ion-col>

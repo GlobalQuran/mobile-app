@@ -3,6 +3,7 @@ import {gq} from '../../GlobalQuran/gq';
 import {SettingPage} from "../setting/setting";
 
 import 'rxjs/add/operator/take';
+import {surahDetail} from "../../GlobalQuran/interface/surahDetail";
 
 let _view = localStorage.getItem('_view');
 
@@ -11,7 +12,7 @@ let _view = localStorage.getItem('_view');
 })
 export class SurahDetailPage {
 
-    selectedSurah:any;
+    selectedSurah: surahDetail;
     content:Array<any>;
 
     constructor(private nav:NavController, navParams:NavParams, private gq:gq)
@@ -27,6 +28,16 @@ export class SurahDetailPage {
             .subscribe(list => {
                 this.content.push(list);
             });
+    }
+
+    getSurahTitleNumber ()
+    {
+        if (this.selectedSurah.no < 10)
+            return '00'+this.selectedSurah.no;
+        else if (this.selectedSurah.no < 100)
+            return '0'+this.selectedSurah.no;
+        else
+            return this.selectedSurah.no;
     }
 
     openSetting()
