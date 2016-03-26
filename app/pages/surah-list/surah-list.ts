@@ -11,8 +11,8 @@ import {SettingPage} from "../setting/setting";
 export class SurahListPage {
 
     surahList   = [];
-    pageNumbers = this.arrayNumber(604);
-    juzNumbers  = this.arrayNumber(30);
+    pageNumbers = this._arrayFill(604);
+    juzNumbers  = this._arrayFill(30);
 
     constructor(private nav:NavController, private gq:gq)
     {
@@ -28,9 +28,9 @@ export class SurahListPage {
         });
     }
 
-    arrayNumber(number)
+    _arrayFill (length): Array<any>
     {
-        return Array(number).fill('').map((x,i) => i + 1);
+        return new Array(length).fill('').map((x,i) => i + 1);
     }
 
     openSetting()

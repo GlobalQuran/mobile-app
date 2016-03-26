@@ -73,6 +73,7 @@ export class gq {
      */
     private _buildAllContent(data) {
         // selected values
+        let surah = 1;
         this._dataStore.selected.surah = this.getSurahDetail(1);
         this._dataStore.selected.ayah = 1;
         //data.languageSelected
@@ -81,7 +82,6 @@ export class gq {
         this._dataStore.list.quran = data.quranList;
         this._dataStore.list.language = data.languageList;
         this._dataStore.list.countryLanguages = data.languageCountryList;
-        //this._dataStore.dataBySurah[1] = data.quran;
 
         // build selected list from the quran data
         for (let quranById in data.quran)
@@ -89,7 +89,7 @@ export class gq {
             this._dataStore.selected.quran[quranById] = quranById;
         }
 
-        //this._buildQuranContent(data.quran); // TODO
+        this._dataStore.dataBySurah[surah] = this._rebuildQuranContent(data.quran);
     }
 
 
@@ -105,7 +105,7 @@ export class gq {
         if (!surah)
             surah = this._dataStore.selected.surah.no;
 
-        if (!this._isSelectedContentExist())
+        if (!this._isContentExist(surah))
 
             return this.api.getSurahContent(surah, this.getSelectedQuranTextArray().join('|'))
                 .map(data => this._dataStore.dataBySurah[surah] = this._rebuildQuranContent(data.quran))
@@ -167,33 +167,40 @@ export class gq {
      * @returns {boolean}
      * @private
      */
-    private _isSelectedContentExist()
+    private _isContentExist(surah:number)
     {
-        if (!this._dataStore.dataBySurah['surah']) //FIXME
-            return false;
-
-        if (!this._dataStore.content)
+        if (!this._dataStore.dataBySurah[surah])
             return false;
 
         let selected = this._dataStore.selected.quran;
 
         let found = [];
 
-        for (let verseNo in this._dataStore.content) {
-            for (let index in this._dataStore.content[verseNo]) {
-                let quranById = this._dataStore.content[verseNo][index].quranById;
+        for (let verseNo in this._dataStore.dataBySurah[surah])
+        {
+            for (let index in this._dataStore.dataBySurah[surah][verseNo])
+            {
+                let quranById = this._dataStore.dataBySurah[surah][verseNo][index].quranById;
 
                 found[quranById] = quranById;
             }
         }
 
-        return (found.length == selected.length);
+        let notFound = 0;
+
+        for (let id in selected)
+        {
+            if (!found[id])
+                notFound++;
+        }
+
+        return !notFound;
     }
 
     private getSelectedQuranTextArray()
     {
-        if (!this._dataStore.selected.quran)
-            return [];
+        if (!this._dataStore.selected.quran || !this._dataStore.selected.quran.length)
+            return ['quran-uthmani'];
 
         let list = [];
 
@@ -288,14 +295,12 @@ export class gq {
      */
     getSurahList()
     {
-        return new Observable(observer => {
-//TODO redo Observable.fromArray()
-            for (let i = 1; i <= 114; i++) {
-                observer.next(this.getSurahDetail(i));
-            }
+        let surahs = [];
+        for (let i = 1; i <= 114; i++) {
+            surahs.push(this.getSurahDetail(i));
+        }
 
-            observer.complete();
-        });
+        return Observable.fromArray(surahs);
     }
 
     select(surah, ayah)
