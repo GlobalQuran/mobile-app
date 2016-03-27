@@ -18,7 +18,7 @@ export class SurahDetailPage {
 
     eventBy: string;
 
-    selectedSurah: surahDetail;
+    surahDetail: surahDetail;
     content:Array<any>;
 
     startAyah: number;
@@ -34,14 +34,14 @@ export class SurahDetailPage {
 
 
         // If we navigated to this page, we will have an item available as a nav param
-        this.selectedSurah = this.gq.getSurahDetail(this.surah);
+        this.surahDetail = this.gq.getSurahDetail(this.surah);
         this.content = [];
 
-        this.totalAyahs = this.selectedSurah.ayahs;
+        this.totalAyahs = this.surahDetail.ayahs;
         this.startAyah = this.ayah;
 
         this.gq
-            .select(this.surah, this.startAyah)
+            .selectSurah(this.surah, this.startAyah)
             .getContent()
             .take(10)
             .subscribe(
@@ -77,12 +77,12 @@ export class SurahDetailPage {
 
     getSurahTitleNumber ():any
     {
-        if (this.selectedSurah.no < 10)
-            return '00'+this.selectedSurah.no;
-        else if (this.selectedSurah.no < 100)
-            return '0'+this.selectedSurah.no;
+        if (this.surahDetail.no < 10)
+            return '00'+this.surahDetail.no;
+        else if (this.surahDetail.no < 100)
+            return '0'+this.surahDetail.no;
         else
-            return this.selectedSurah.no;
+            return this.surahDetail.no;
     }
 
     isQuran (ayah):boolean

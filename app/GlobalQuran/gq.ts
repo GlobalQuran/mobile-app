@@ -23,15 +23,12 @@ export class gq {
     private _dataStore = {
 
         selected: {
-            surah: {no: 0}, // surah detail has more then no (number)
+            surah: 0,
             ayah: 0,
 
-            quran: [],
+            data: {},
 
-            translation: [],
-            translationLanguage: [],
-            transliteration: [],
-            recitor: []
+            recitor: {}
         },
 
         list: {
@@ -54,14 +51,17 @@ export class gq {
     };
 
 
-    constructor(private api:Api) {
+    constructor(private api:Api)
+    {
+        this.loadLocalSorage();
     }
 
     /**
      * get all the content in one ajax call - http://docs.globalquran.com/API:Data/Getting_All_With_One_Call
      */
-    getAllContent() {
-        this.api.getAll(1, this.getSelectedQuranTextArray().join('|'))
+    getAllContent()
+    {
+        this.api.getAll(1, this.getSelectedDataArray().join('|'))
             .subscribe(data => this._buildAllContent(data));
     }
 
@@ -71,11 +71,15 @@ export class gq {
      * @param data
      * @private
      */
-    private _buildAllContent(data) {
+    private _buildAllContent(data)
+    {
         // selected values
         let surah = 1;
-        this._dataStore.selected.surah = this.getSurahDetail(1);
-        this._dataStore.selected.ayah = 1;
+        if (this._dataStore.selected.surah == 0)
+        {
+            this._dataStore.selected.surah = surah;
+            this._dataStore.selected.ayah = 1;
+        }
         //data.languageSelected
 
         // populate data in data store object
@@ -86,7 +90,7 @@ export class gq {
         // build selected list from the quran data
         for (let quranById in data.quran)
         {
-            this._dataStore.selected.quran[quranById] = quranById;
+            this._dataStore.selected.data[quranById] = quranById;
         }
 
         this._dataStore.dataBySurah[surah] = this._rebuildQuranContent(data.quran);
@@ -103,11 +107,11 @@ export class gq {
     getContent(surah?:number)
     {
         if (!surah)
-            surah = this._dataStore.selected.surah.no;
+            surah = this._dataStore.selected.surah;
 
         if (!this._isContentExist(surah))
 
-            return this.api.getSurahContent(surah, this.getSelectedQuranTextArray().join('|'))
+            return this.api.getSurahContent(surah, this.getSelectedDataArray().join('|'))
                 .map(data => this._dataStore.dataBySurah[surah] = this._rebuildQuranContent(data.quran))
                 .flatMap(data => Observable.from(data))
                 .share();
@@ -172,7 +176,7 @@ export class gq {
         if (!this._dataStore.dataBySurah[surah])
             return false;
 
-        let selected = this._dataStore.selected.quran;
+        let selected = this._dataStore.selected.data;
 
         let found = [];
 
@@ -197,22 +201,34 @@ export class gq {
         return !notFound;
     }
 
-    private getSelectedQuranTextArray()
+    private getSelectedDataArray()
     {
-        if (!this._dataStore.selected.quran || !this._dataStore.selected.quran.length)
+        if (!this.getSelectedDataCount())
             return ['quran-uthmani'];
 
         let list = [];
 
-        for (let quranById in this._dataStore.selected.quran)
+        for (let quranById in this._dataStore.selected.data)
         {
-            let detail = this.getQuranByDetail(quranById);
-
-            if (detail.format == 'text')
-                list.push(quranById);
+            list.push(quranById);
         }
 
         return list;
+    }
+
+    private getSelectedDataCount ():number
+    {
+        if (!this._dataStore.selected.data)
+            return 0;
+
+        let count = 0;
+
+        for (let quranById in this._dataStore.selected.data)
+        {
+            count++;
+        }
+
+        return count;
     }
 
     /**
@@ -325,24 +341,45 @@ export class gq {
         return Observable.fromArray(surahs);
     }
 
-    select(surah, ayah)
+    selectSurah (surah, ayah)
     {
-        this._dataStore.selected.surah = this.getSurahDetail(surah);
+        this._dataStore.selected.surah = surah;
         this._dataStore.selected.ayah = ayah;
+
+        this.saveLocalStorage();
+
         return this;
     }
 
     /**
-     * toggle quran selection
+     * check if its data is selected or not
+     *
+     * @param quranById
+     * @returns {boolean}
+     */
+    isSelected (quranById:string)
+    {
+        return (this._dataStore.selected.data[quranById]) ? true : false;
+    }
+
+    /**
+     * toggle data selection
      *
      * @param quranById
      */
-    toggleSelectListQuran (quranById:string)
+    toggleSelect (quranById:string)
     {
         if (this.isSelected(quranById))
-            delete this._dataStore.selected.quran[quranById];
+            delete this._dataStore.selected.data[quranById];
         else
-            this._dataStore.selected.quran[quranById] = quranById;
+            this._dataStore.selected.data[quranById] = quranById;
+
+        this.saveLocalStorage();
+    }
+
+    getSelectedData ()
+    {
+        return this._dataStore.selected.data;
     }
 
     /**
@@ -352,28 +389,28 @@ export class gq {
      * @param type quran|translation|transletiration
      * @param format text|audio
      */
-    private setSelectListData (quranByIds: Array<any>, type?:string, format?:string)
+    private setSelectListData (quranByIds: Array<any>, type?:string)
     {
-        if (!type && !format)
+        if (!type)
         {
-            let list = [];
+            let list = {};
 
-            this._dataStore.selected.quran = [];
+            this._dataStore.selected.data = {};
             quranByIds.forEach((x,y) => list[x] = x);
 
-            this._dataStore.selected.quran = list;
+            this._dataStore.selected.data = list;
         }
         else
         {
 
-            let list = this._dataStore.selected.quran;
+            let list = this._dataStore.selected.data;
 
             // first remove same type from the selected list
             for (let quranById in list)
             {
                 let detail = this.getQuranByDetail(quranById);
 
-                if ((!detail.type || detail.type == type) && detail.format == format)
+                if ((!detail.type || detail.type == type))
                     delete list[quranById];
             }
 
@@ -382,8 +419,10 @@ export class gq {
                 list[x] = x;
             });
 
-            this._dataStore.selected.quran = list;
+            this._dataStore.selected.data = list;
         }
+
+        this.saveLocalStorage();
     }
 
     /**
@@ -393,7 +432,7 @@ export class gq {
      */
     setSelectListQuran (quranByIds: Array<any>)
     {
-        this.setSelectListData(quranByIds, 'quran', 'text');
+        this.setSelectListData(quranByIds, 'quran');
     }
 
     /**
@@ -403,7 +442,7 @@ export class gq {
      */
     setSelectListTranslation (quranByIds: Array<any>)
     {
-        this.setSelectListData(quranByIds, 'translation', 'text');
+        this.setSelectListData(quranByIds, 'translation');
     }
 
     /**
@@ -413,7 +452,7 @@ export class gq {
      */
     setSelectListTransliteration (quranByIds: Array<any>)
     {
-        this.setSelectListData(quranByIds, 'transliteration', 'text');
+        this.setSelectListData(quranByIds, 'transliteration');
     }
 
     /**
@@ -423,17 +462,35 @@ export class gq {
      */
     setSelectListRecitor (quranByIds: Array<any>)
     {
-        this.setSelectListData(quranByIds, null, 'audio');
+        //TODO dont use same function, store in _datastore.selected.recitor and not in data
+        //this.setSelectListData(quranByIds, null, 'audio');
+    }
+
+
+    /**
+     * save local storage data
+     */
+    saveLocalStorage ()
+    {
+        localStorage.setItem('_selected', JSON.stringify(this._dataStore.selected));
     }
 
     /**
-     * check if its quran data is selected or not
-     *
-     * @param quranById
-     * @returns {boolean}
+     * load local storage data
      */
-    isSelected (quranById:string)
+    loadLocalSorage ()
     {
-        return (this._dataStore.selected.quran[quranById]) ? true : false;
+        let selected = localStorage.getItem('_selected');
+
+        if (selected)
+            this._dataStore.selected = JSON.parse(selected);
+    }
+
+    /**
+     * useful to reset local storage
+     */
+    clearLocalStorage ()
+    {
+        localStorage.clear();
     }
 }
