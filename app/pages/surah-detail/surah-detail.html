@@ -39,4 +39,10 @@
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>
 
+    <ion-buttons *ngIf="isShowNextSurahButton()">
+        <button secondary block (click)="getNextSurah()">
+            Next Surah
+        </button>
+    </ion-buttons>
+
 </ion-content>

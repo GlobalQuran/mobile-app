@@ -33,7 +33,11 @@ export class SurahDetailPage {
         this.eventBy = navParams.get('eventBy');
 
 
-        // If we navigated to this page, we will have an item available as a nav param
+        this.loadContent();
+    }
+
+    private loadContent ()
+    {
         this.surahDetail = this.gq.getSurahDetail(this.surah);
         this.content = [];
 
@@ -88,6 +92,24 @@ export class SurahDetailPage {
     isQuran (ayah):boolean
     {
         return (ayah.type == 'quran');
+    }
+
+    isAyahEnded ():boolean
+    {
+        return (this.totalAyahs <= this.endAyah)
+    }
+
+    isShowNextSurahButton ():boolean
+    {
+        return (this.isAyahEnded() && this.surah < 114);
+    }
+
+    getNextSurah ()
+    {
+        this.surah++;
+        this.ayah = 1;
+
+        this.loadContent();
     }
 
     openSetting()
