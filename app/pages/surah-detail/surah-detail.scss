@@ -29,13 +29,17 @@
 .ayahText {
   border-bottom: 1px solid lighten(color(primary-s3), 50);
 }
+
+@include font-face(GlobalQuran, fonts/GlobalQuran-Bold);
 // Diffrent layouts
 .ayah-by-ayah {
   .arabic-text {
     color      : color(primary-s1);
     line-height: 2em;
-    font-size  : 2em;
+    font-size  : 3em;
     text-align : right;
+    font-family: "GlobalQuran";
+    @include antialiasing(antialiased);
   }
 }
 .page-by-page {
