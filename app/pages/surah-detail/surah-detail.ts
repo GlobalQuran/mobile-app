@@ -26,6 +26,8 @@ export class SurahDetailPage {
 
     totalAyahs: number;
 
+    loading: boolean;
+
     constructor(private nav:NavController, navParams:NavParams, private gq:gq)
     {
         this.surah = navParams.get('surah');
@@ -38,6 +40,8 @@ export class SurahDetailPage {
 
     private loadContent ()
     {
+        let self = this;
+
         this.surahDetail = this.gq.getSurahDetail(this.surah);
         this.content = [];
 
@@ -52,9 +56,31 @@ export class SurahDetailPage {
                 list => this.content.push(list),
                 (error) => '',
                 ()   => {
-                    this.endAyah = this.startAyah + 9;
+                    self.endAyah = self.startAyah + 9;
+
+                    if (self.totalAyahs > self.endAyah)
+                    {
+                        self.loading = true;
+                    }
+
+                    setTimeout(() => {
+                        if (self.totalAyahs > self.endAyah)
+                        {
+                            self.gq
+                                .getContent()
+                                .skip(10)
+                                .subscribe(
+                                    list => self.content.push(list),
+                                    (error) => '',
+                                    () => {
+                                        self.endAyah = self.totalAyahs;
+                                        self.loading = false;
+                                    }
+                                );
+                        }
+                    }, 500);
                 }
-            );
+            )
     }
 
     loadMore (infiniteScroll)

@@ -31,13 +31,13 @@
 
     </div>
 
-    <div class="load-container load8" *ngIf="!content.length">
+    <div class="load-container load8" *ngIf="!content.length || loading">
         <div class="loader">Loading...</div>
     </div>
 
-    <ion-infinite-scroll (infinite)="loadMore($event)">
-        <ion-infinite-scroll-content></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+    <!--<ion-infinite-scroll (infinite)="loadMore($event)">-->
+        <!--<ion-infinite-scroll-content></ion-infinite-scroll-content>-->
+    <!--</ion-infinite-scroll>-->
 
     <ion-buttons *ngIf="isShowNextSurahButton()">
         <button secondary block (click)="getNextSurah()">
