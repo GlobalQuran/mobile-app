@@ -31,7 +31,7 @@
 }
 
 .fa-stack-2x {
-  color: color(secondary);
+  color: getColor(secondary);
   font-size: 3em;
 }
 
@@ -39,16 +39,16 @@
   color: transparent;
 }
 .icon-text {
-  color: color(light);
+  color: getColor(light);
 }
 
 .bookmark-enabled {
   .icon-image {
     transform: scale(1.2,1);
-    color: color(secondary);
+    color: getColor(secondary);
   }
   .icon-text {
-    color: color(primary-s1);
+    color: getColor(primary-s1);
   }
 }
 

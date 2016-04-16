@@ -1,4 +1,4 @@
-@function color($key) {
+@function getColor($key) {
   @if map-has-key($colors, $key) {
     @return map-get($colors, $key);
   }

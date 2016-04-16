@@ -1,4 +1,4 @@
-$foreground: color(secondary);
+$foreground: getColor(secondary);
 
 .loader {
   margin: 60px auto;

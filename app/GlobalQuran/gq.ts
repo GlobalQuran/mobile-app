@@ -113,11 +113,11 @@ export class gq {
 
             return this.api.getSurahContent(surah, this.getSelectedDataArray().join('|'))
                 .map(data => this._dataStore.dataBySurah[surah] = this._rebuildQuranContent(data.quran))
-                .flatMap(data => Observable.from(data))
+                .flatMap(data => Observable.fromArray(data))
                 .share();
 
         else
-            return Observable.from(this._dataStore.dataBySurah[surah]);
+            return Observable.fromArray(this._dataStore.dataBySurah[surah]);
     }
 
     /**

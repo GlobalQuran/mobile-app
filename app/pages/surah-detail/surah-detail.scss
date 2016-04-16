@@ -4,7 +4,7 @@
 .surah-detail-page {
   .toolbar-title,
   .bar-button-default {
-    color: color(light);
+    color: getColor(light);
   }
   .toolbar-background:after {
     content   : " ";
@@ -15,7 +15,7 @@
     top       : 0;
     left      : 0;
     right     : 0;
-    background: color(primary-s3);
+    background: getColor(primary-s3);
   }
   .ayah-number {
     font-size: 12px;
@@ -24,15 +24,15 @@
   }
 }
 .ayahNo {
-  background-color: color(light);
+  background-color: getColor(light);
 }
 .ayahText {
-  border-bottom: 1px solid lighten(color(primary-s3), 50);
+  border-bottom: 1px solid lighten(getColor(primary-s3), 50);
 }
 // Diffrent layouts
 .ayah-by-ayah {
   .arabic-text {
-    color      : color(primary-s1);
+    color      : getColor(primary-s1);
     line-height: 2em;
     font-size  : 2em;
     text-align : right;
@@ -42,7 +42,7 @@
   .page-headers {
     display   : inline-block;
     font-size : medium;
-    color     : color(primary-s2);
+    color     : getColor(primary-s2);
     margin: -39px 5px 0;
     &.juz-number {
       float: left;
@@ -52,7 +52,7 @@
     }
   }
   main {
-    color      : color(primary-s4);
+    color      : getColor(primary-s4);
     font-size  : 26px;
     text-align : center;
     line-height: 40px;
@@ -76,5 +76,5 @@
   }
 }
 .ayah-icon {
-  stroke: color(primary-s1);
+  stroke: getColor(primary-s1);
 }

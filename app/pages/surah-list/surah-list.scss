@@ -12,13 +12,13 @@
     top: 0;
     left: 0;
     right: 0;
-    background: color(primary-s3);
+    background: getColor(primary-s3);
   }
 
 }
 
 .content-area {
-  background-color: color(primary-s2);
+  background-color: getColor(primary-s2);
 
   scroll-content {
     position: initial;
@@ -30,39 +30,39 @@
   position: relative;
 
   h2 {
-    color: color(light);
+    color: getColor(light);
   }
 
   p {
-    color: color(secondary-s1);
+    color: getColor(secondary-s1);
   }
 }
 
 .surah-col-header {
   position: relative;
-  background: color(secondary);
+  background: getColor(secondary);
 }
 
 .page-col {
-  background: color(secondary);
+  background: getColor(secondary);
 }
 
 .juz-col-header {
-  background: color(primary-s1);
+  background: getColor(primary-s1);
   position: relative;
 
 }
 .juz-col {
-  background: color(primary-s1);
+  background: getColor(primary-s1);
 }
 
 .toolbar-background {
-  background: color(primary-s1);
+  background: getColor(primary-s1);
   border-bottom-width: 0px;
 }
 .surah-background {
-  color: color(light);
-  background: color(primary-s2);
+  color: getColor(light);
+  background: getColor(primary-s2);
   position: absolute;
   top: 0;
   bottom: 0;
@@ -71,8 +71,8 @@
 }
 
 .surah-item-list {
-  color: color(light);
-  background-color: color(primary-s2);
+  color: getColor(light);
+  background-color: getColor(primary-s2);
 }
 
 .nav-col-buttons {

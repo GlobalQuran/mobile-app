@@ -1,4 +1,7 @@
-import {App, IonicApp, Platform} from 'ionic-angular';
+import 'es6-shim';
+import {App, IonicApp, Platform, MenuController} from 'ionic-angular';
+import {StatusBar} from 'ionic-native';
+
 
 import {gq} from './GlobalQuran/gq';
 import {Api} from './GlobalQuran/Api/Api';
@@ -8,7 +11,7 @@ import {AboutUs} from './pages/about-us/about-us';
 import {SurahListPage} from './pages/surah-list/surah-list';
 
 // https://angular.io/docs/ts/latest/api/core/Type-interface.html
-import {Type} from 'angular2/core';
+//import {Type} from 'angular2/core';
 
 
 
@@ -19,10 +22,15 @@ import {Type} from 'angular2/core';
 })
 class MyApp {
   // make surah list home page
-  rootPage:Type = SurahListPage;
-  pages:Array<{title: string, component: Type}>;
+  rootPage: any = SurahListPage;
+  pages: Array<{title: string, component: any}>;
 
-  constructor(private app:IonicApp, private platform:Platform, private gq:gq) {
+  constructor(
+      private app:IonicApp,
+      private platform:Platform,
+      private menu: MenuController,
+      private gq:gq
+  ) {
 
     this.initializeApp();
 
@@ -37,26 +45,15 @@ class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // The platform is now ready. Note: if this callback fails to fire, follow
-      // the Troubleshooting guide for a number of possible solutions:
-      //
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      //
-      // First, let's hide the keyboard accessory bar (only works natively) since
-      // that's a better default:
-      //
-      // Keyboard.setAccessoryBarVisible(false);
-      //
-      // For example, we might change the StatusBar color. This one below is
-      // good for dark backgrounds and light text:
-      // StatusBar.setStyle(StatusBar.LIGHT_CONTENT)
+      StatusBar.styleDefault();
     });
   }
 
   openPage(page) {
     // close the menu when clicking a link from the menu
-    this.app.getComponent('leftMenu').close();
+    this.menu.close();
     // navigate to the new page if it is not the current page
     let nav = this.app.getComponent('nav');
     nav.setRoot(page.component);

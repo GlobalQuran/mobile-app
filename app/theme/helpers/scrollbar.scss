@@ -15,21 +15,21 @@
 }
 
 :hover::-webkit-scrollbar-thumb {
-  background: color(secondary-s1);
-  border: 0 none color(light);
+  background: getColor(secondary-s1);
+  border: 0 none getColor(light);
   transition: background 0.2s ease-in-out;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: color(secondary-s1);
+  background: getColor(secondary-s1);
 }
 
 ::-webkit-scrollbar-thumb:active {
-  background: color(secondary-s1);
+  background: getColor(secondary-s1);
 }
 
 ::-webkit-scrollbar-track {
-  border: 0 none color(light);
+  border: 0 none getColor(light);
 }
 
 ::-webkit-scrollbar-track:hover {
