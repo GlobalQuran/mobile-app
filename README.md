@@ -58,5 +58,11 @@ This is Quran mobile app using GlobalQuran API service.
 ### Test on IOS Simulator 
 
 ```
-ionic emulate -ls --target="iPhone5S"
+ionic emulate -ls ios --target="iPhone-5s, 9.1"
+```
+
+if you getting error with 9.1, you can check available devices with following command
+
+```
+ios-sim showdevicetypes
 ```
