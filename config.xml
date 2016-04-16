@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.globalquran" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <allow-intent href="itms:*"/>
   <name>GlobalQuran</name>
   <description>Read, Listen and Learn Quran</description>
   <author email="info@globalquran.com" href="http://blog.globalquran.com/about-us/">GlobalQuran Team</author>
   <content src="index.html"/>
   <access origin="*"/>
+  <allow-intent href="itms:*"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
   <allow-intent href="tel:*"/>
