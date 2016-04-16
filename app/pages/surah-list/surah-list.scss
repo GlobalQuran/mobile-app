@@ -21,7 +21,7 @@
   background-color: getColor(primary-s2);
 
   scroll-content {
-    position: initial;
+    overflow-y: auto;
   }
 
 }
