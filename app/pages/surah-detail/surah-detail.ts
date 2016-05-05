@@ -49,7 +49,7 @@ export class SurahDetailPage {
         this.startAyah = this.ayah;
 
         this.gq
-            .selectSurah(this.surah, this.startAyah)
+            .selectSurah(this.surah, this.ayah)
             .getContent()
             .take(10)
             .subscribe(
