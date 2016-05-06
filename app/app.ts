@@ -19,7 +19,7 @@ import {SurahListPage} from './pages/surah-list/surah-list';
 
 @App({
   templateUrl: 'build/app.html',
-  providers: [q, Api],
+  providers: [gq, Api],
   directives: [VsFor],
   config: {} // http://ionicframework.com/docs/v2/api/config/Config/
 })
