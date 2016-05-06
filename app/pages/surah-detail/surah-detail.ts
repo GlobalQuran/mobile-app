@@ -1,4 +1,6 @@
 import {Page, NavController, NavParams} from 'ionic-angular';
+import {VsFor} from '../../../node_modules/ng2-vs-for/src/ng2-vs-for';
+import {Component} from 'angular2/core';
 import {gq} from '../../GlobalQuran/gq';
 import {SettingPage} from "../setting/setting";
 
@@ -20,6 +22,7 @@ export class SurahDetailPage {
 
     surahDetail: surahDetail;
     content:Array<any>;
+    test:Array<any>;
 
     startAyah: number;
     endAyah: number;
@@ -34,8 +37,13 @@ export class SurahDetailPage {
         this.ayah  = navParams.get('ayah');
         this.eventBy = navParams.get('eventBy');
 
-
         this.loadContent();
+    }
+
+    public getItemSize (item, index) {
+        //console.log(item);
+        //console.log(index);
+        return 315;
     }
 
     private loadContent ()
@@ -51,12 +59,13 @@ export class SurahDetailPage {
         this.gq
             .selectSurah(this.surah, this.ayah)
             .getContent()
-            .take(10)
+            //.take(10)
             .subscribe(
                 list => this.content.push(list),
                 (error) => '',
                 ()   => {
-                    self.endAyah = self.startAyah + 9;
+                    self.endAyah = self.totalAyahs;
+                    //self.endAyah = self.startAyah + 9;
 
                     if (self.totalAyahs > self.endAyah)
                     {

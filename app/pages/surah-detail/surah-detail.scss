@@ -31,12 +31,14 @@
 }
 // Diffrent layouts
 .ayah-by-ayah {
-  .arabic-text {
+
+  .quranic-text {
     color      : getColor(primary-s1);
     line-height: 2em;
     font-size  : 2em;
     text-align : right;
   }
+
 }
 .page-by-page {
   .page-headers {
@@ -71,7 +73,7 @@
   span:hover {
     background: rgba(0, 178, 255, 0.35);
   }
-  .arabic-text {
+  .arabic-text, .quranic-text {
     text-align: right;
   }
 }

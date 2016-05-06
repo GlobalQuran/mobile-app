@@ -4,16 +4,34 @@
     </button>
     <ion-title light> <object class="surah-title" data="img/surah/{{ getSurahTitleNumber() }}.svg" type="image/svg+xml"></object> {{surahDetail.english_name}}</ion-title>
 
-    <ion-buttons end>
-        <button dark>
-            <ion-icon name="play"></ion-icon>
-        </button>
-    </ion-buttons>
+    <!--<ion-buttons end>-->
+        <!--<button dark>-->
+            <!--<ion-icon name="play"></ion-icon>-->
+        <!--</button>-->
+    <!--</ion-buttons>-->
 </ion-navbar>
 
-<ion-content>
+<ion-content class="container">
 
     <div *ngIf="content.length">
+
+        <div *vsFor="content; size:getItemSize; tagName:'ion-row'; offsetBefore:0; offsetAfter: 10; excess: 10; scrollParent:'scroll-content'; #_visible_content = vsCollection; #_startIndex = vsStartIndex">
+            <ion-row class="no-padding ayah-by-ayah" *ngFor="#quran of _visible_content;">
+                <ion-col class="ayahNo option-column page-col" width-10>
+                    <div class="fa-stack">
+                        <object class="svg-icon" data="img/svg/ayah-icon.svg" type="image/svg+xml"></object>
+                        <span class="icon-text fa-stack-1x ayah-number">{{ quran['0'].ayah }}</span>
+                    </div>
+                </ion-col>
+                <ion-col class="ayahText">
+                    <div [ngClass]="{'quranic-text': isQuran(ayah)}" class="{{ayah.type}}" *ngFor="#ayah of quran">
+                        {{ayah.verse}}
+                    </div>
+                </ion-col>
+            </ion-row>
+        </div>
+
+        <!--
         <ion-row class="no-padding ayah-by-ayah" *ngFor="#quran of content;">
             <ion-col class="ayahNo option-column page-col" width-10>
                 <div class="fa-stack">
@@ -28,6 +46,9 @@
 
             </ion-col>
         </ion-row>
+        -->
+
+
 
     </div>
 

@@ -1,6 +1,8 @@
 import 'es6-shim';
 import {App, IonicApp, Platform, MenuController} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
+import {VsFor} from '../node_modules/ng2-vs-for/src/ng2-vs-for';
+
 
 
 import {gq} from './GlobalQuran/gq';
@@ -17,7 +19,8 @@ import {SurahListPage} from './pages/surah-list/surah-list';
 
 @App({
   templateUrl: 'build/app.html',
-  providers: [gq, Api],
+  providers: [q, Api],
+  directives: [VsFor],
   config: {} // http://ionicframework.com/docs/v2/api/config/Config/
 })
 class MyApp {
