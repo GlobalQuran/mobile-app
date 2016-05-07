@@ -43,6 +43,8 @@ $colors: (
 );
 
 @import  'helpers/override';
-@import  'helpers/scrollbar';
+
+@import  'helpers/font';
 @import  'helpers/icons';
-@import  'helpers/loader.scss';
+@import  'helpers/loader';
+@import  'helpers/scrollbar';
