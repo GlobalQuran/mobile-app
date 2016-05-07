@@ -1,0 +1,22 @@
+<ion-navbar *navbar>
+    <ion-buttons>
+        <button nav-pop dark>
+            <span class="button-inner"><span class="button-inner"><ion-icon class="back-button-icon ion-ios-arrow-back" role="img" aria-label="arrow back"></ion-icon><span class="back-button-text" style="transform: translateX(0px);"><span class="back-default">Back</span></span></span><ion-button-effect></ion-button-effect></span>
+        </button>
+    </ion-buttons>
+
+    <ion-title>Translation</ion-title>
+</ion-navbar>
+
+<ion-content>
+    <ion-item-group *ngFor="#language of gq.getTranslationLanguageList()">
+        <ion-item-divider light-s2>{{language.native_name}}</ion-item-divider>
+        <ion-item
+                *ngFor="#row of gq.getTranslationListByLanguage(language.language_code)"
+                [ngClass]="{'translationSelected': gq.isSelected(row.id)}"
+                (click)="gq.toggleSelect(row.id)">
+            {{row.native_name}}
+            <ion-icon name="checkmark-circle-outline" *ngIf="gq.isSelected(row.id)" item-right></ion-icon>
+        </ion-item>
+    </ion-item-group>
+</ion-content>

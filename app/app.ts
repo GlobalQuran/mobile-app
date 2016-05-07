@@ -26,7 +26,7 @@ import {SurahListPage} from './pages/surah-list/surah-list';
 class MyApp {
   // make surah list home page
   rootPage: any = SurahListPage;
-  pages: Array<{title: string, component: any}>;
+  //pages: Array<{title: string, component: any}>;
 
   constructor(
       private app:IonicApp,
@@ -38,10 +38,10 @@ class MyApp {
     this.initializeApp();
 
     // set our app's pages
-    this.pages = [
-      {title: 'Surah List', component: SurahListPage},
-      {title: 'About us', component: AboutUs}
-    ];
+    //this.pages = [
+    //  {title: 'Surah List', component: SurahListPage},
+    //  {title: 'About us', component: AboutUs}
+    //];
 
     this.gq.getAllContent();
   }

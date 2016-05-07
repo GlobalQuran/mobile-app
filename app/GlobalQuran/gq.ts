@@ -51,16 +51,14 @@ export class gq {
     };
 
 
-    constructor(private api:Api)
-    {
+    constructor(private api:Api) {
         this.loadLocalSorage();
     }
 
     /**
      * get all the content in one ajax call - http://docs.globalquran.com/API:Data/Getting_All_With_One_Call
      */
-    getAllContent()
-    {
+    getAllContent() {
         this.api.getAll(1, this.getSelectedDataArray().join('|'))
             .subscribe(data => this._buildAllContent(data));
     }
@@ -71,12 +69,10 @@ export class gq {
      * @param data
      * @private
      */
-    private _buildAllContent(data)
-    {
+    private _buildAllContent(data) {
         // selected values
         let surah = 1;
-        if (this._dataStore.selected.surah == 0)
-        {
+        if (this._dataStore.selected.surah == 0) {
             this._dataStore.selected.surah = surah;
             this._dataStore.selected.ayah = 1;
         }
@@ -88,14 +84,12 @@ export class gq {
         this._dataStore.list.countryLanguages = data.languageCountryList;
 
         // build selected list from the quran data
-        for (let quranById in data.quran)
-        {
+        for (let quranById in data.quran) {
             this._dataStore.selected.data[quranById] = quranById;
         }
 
         this._dataStore.dataBySurah[surah] = this._rebuildQuranContent(data.quran);
     }
-
 
 
     /**
@@ -104,8 +98,7 @@ export class gq {
      * @param surah
      * @returns {Observable}
      */
-    getContent(surah?:number)
-    {
+    getContent(surah?:number) {
         if (!surah)
             surah = this._dataStore.selected.surah;
 
@@ -130,8 +123,7 @@ export class gq {
      * @returns {Array}
      * @private
      */
-    private _rebuildQuranContent(data)
-    {
+    private _rebuildQuranContent(data) {
         // if coming from ajax, then get data.quran
         if (data && data.quran)
             data = data.quran;
@@ -139,13 +131,19 @@ export class gq {
         let ayahs = []; // quran only ayahs
 
         // first build quran ayahs, to keep them on top
-        for (let quranById in data)
-        {
-            for (let verseNo in data[quranById])
-            {
+        for (let quranById in data) {
+            for (let verseNo in data[quranById]) {
                 let singleAyah = data[quranById][verseNo];
                 singleAyah['quranById'] = quranById;
                 singleAyah['type'] = this.getQuranByDetail(quranById).type;
+
+                if (verseNo == 1 && singleAyah.type == 'quran') {
+                    //singleAyah.verse = singleAyah.verse.replace('\u0628\u0650\u0633\u0652\u0645\u0650 \u0671\u0644\u0644\u0651\u064e\u0647\u0650 \u0671\u0644\u0631\u0651\u064e\u062d\u0652\u0645\u064e\u0670\u0646\u0650 \u0671\u0644\u0631\u0651\u064e\u062d\u0650\u064a\u0645\u0650 \u0627\u0644\u0653\u0645\u0653', '');
+                    //singleAyah.verse = singleAyah.verse.replace('بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ', '');
+                    //singleAyah.verse = singleAyah.verse.replace(singleAyah.verse, '');
+                    singleAyah.verse = singleAyah.verse.replace('/﻿بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ/gi', '');
+                    console.log("singleAyah.verse = singleAyah.verse.replace('/" + singleAyah.verse + "/gi', '')");
+                }
 
                 let ayah = singleAyah.ayah - 1; // minus 1 because js array add extra, if we skip
                 //let ayah = singleAyah.ayah;
@@ -171,8 +169,7 @@ export class gq {
      * @returns {boolean}
      * @private
      */
-    private _isContentExist(surah:number)
-    {
+    private _isContentExist(surah:number) {
         if (!this._dataStore.dataBySurah[surah])
             return false;
 
@@ -180,10 +177,8 @@ export class gq {
 
         let found = [];
 
-        for (let verseNo in this._dataStore.dataBySurah[surah])
-        {
-            for (let index in this._dataStore.dataBySurah[surah][verseNo])
-            {
+        for (let verseNo in this._dataStore.dataBySurah[surah]) {
+            for (let index in this._dataStore.dataBySurah[surah][verseNo]) {
                 let quranById = this._dataStore.dataBySurah[surah][verseNo][index].quranById;
 
                 found[quranById] = quranById;
@@ -192,8 +187,7 @@ export class gq {
 
         let notFound = 0;
 
-        for (let id in selected)
-        {
+        for (let id in selected) {
             if (!found[id])
                 notFound++;
         }
@@ -201,30 +195,26 @@ export class gq {
         return !notFound;
     }
 
-    private getSelectedDataArray()
-    {
+    private getSelectedDataArray() {
         if (!this.getSelectedDataCount())
             return ['quran-uthmani'];
 
         let list = [];
 
-        for (let quranById in this._dataStore.selected.data)
-        {
+        for (let quranById in this._dataStore.selected.data) {
             list.push(quranById);
         }
 
         return list;
     }
 
-    private getSelectedDataCount ():number
-    {
+    private getSelectedDataCount():number {
         if (!this._dataStore.selected.data)
             return 0;
 
         let count = 0;
 
-        for (let quranById in this._dataStore.selected.data)
-        {
+        for (let quranById in this._dataStore.selected.data) {
             count++;
         }
 
@@ -237,8 +227,7 @@ export class gq {
      * @param surah
      * @returns {surahDetail}
      */
-    getSurahDetail(surahNo:number):surahDetail
-    {
+    getSurahDetail(surahNo:number):surahDetail {
         return Quran.surah.detail(surahNo);
     }
 
@@ -248,8 +237,7 @@ export class gq {
      * @param juz
      * @returns {any}
      */
-    getAyahNumberByJuz (juz:number):{surah:number, ayah:number}
-    {
+    getAyahNumberByJuz(juz:number):{surah:number, ayah:number} {
         return Quran.ayah.fromJuz(juz);
     }
 
@@ -259,42 +247,35 @@ export class gq {
      * @param page
      * @returns {any}
      */
-    getAyahNumberByPage (page:number):{surah:number, ayah:number}
-    {
+    getAyahNumberByPage(page:number):{surah:number, ayah:number} {
         return Quran.ayah.fromPage(page);
     }
 
-    getQuranByDetail(quranBy:string)
-    {
+    getQuranByDetail(quranBy:string) {
         return this._dataStore.list.quran[quranBy];
     }
 
-    isQuranText(quranBy:string)
-    {
+    isQuranText(quranBy:string) {
         let detail = this.getQuranByDetail(quranBy).type;
         return (detail.format == 'text' && detail.type == 'quran');
     }
 
-    isTranslationText(quranBy:string)
-    {
+    isTranslationText(quranBy:string) {
         let detail = this.getQuranByDetail(quranBy).type;
         return (detail.format == 'text' && detail.type == 'translation');
     }
 
-    isTransliterationText(quranBy:string)
-    {
+    isTransliterationText(quranBy:string) {
         let detail = this.getQuranByDetail(quranBy).type;
         return (detail.format == 'text' && detail.type == 'translation');
     }
 
-    private getQuranByList (type:string, format:string)
-    {
+    private getQuranByList(type:string, format:string) {
         return new Observable(obverser => {
 
             let quranList = this._dataStore.list.quran;
 
-            for (let quranById in quranList)
-            {
+            for (let quranById in quranList) {
                 let detail = quranList[quranById];
                 detail['id'] = quranById;
 
@@ -306,24 +287,74 @@ export class gq {
         });
     }
 
-    getQuranList()
-    {
+    getQuranList() {
         return this.getQuranByList('quran', 'text');
     }
 
-    getTranslationList()
-    {
+    getTranslationList() {
         return this.getQuranByList('translation', 'text');
     }
 
-    getTransliterationList()
-    {
+    getTransliterationList() {
         return this.getQuranByList('transliteration', 'text');
     }
 
-    getRecitorList()
-    {
+    getRecitorList() {
         return this.getQuranByList(null, 'audio');
+    }
+
+    getLangaugeList()
+    {
+        return this._dataStore.list.language;
+    }
+
+    getTranslationLanguageList()
+    {
+        let languageList    = this.getLangaugeList();
+        let translationList = this.getTranslationList();
+
+        let checkList = {};
+        let newList = [];
+
+        translationList.subscribe(data => {
+            let langCode = data['language_code'];
+
+            let language = languageList[langCode];
+
+            language['language_code'] = langCode; // @TODO remove this, once fixed from the api
+
+            if (!language.native_name)
+                language.native_name = language.english_name;
+
+            if (language.english_name == 'Divehi')// @TODO remove this line, once fixed the name from api
+            {
+                language.name = 'Divehi';
+                language.native_name = 'Divehi';
+            }
+
+            if (!checkList[langCode])
+                newList.push(language);
+
+            checkList[langCode] = true;
+        });
+
+
+        return newList;
+    }
+
+    getTranslationListByLanguage (languageCode)
+    {
+        let translationList = this.getTranslationList();
+
+        let filteredList = [];
+
+        translationList.subscribe(data => {
+
+            if (data['language_code'] == languageCode)
+                filteredList.push(data);
+        });
+
+        return filteredList;
     }
 
     /**

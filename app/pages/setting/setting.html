@@ -4,16 +4,20 @@
     </button>
     <ion-title>Settings</ion-title>
 
-
-
 </ion-navbar>
 
-<ion-content>
+<ion-tabs>
+    <ion-tab tabIcon="contact" tabTitle="Translation"  [root]="tab1"></ion-tab>
+    <ion-tab tabIcon="compass" tabTitle="Transliteration"  [root]="tab2"></ion-tab>
+</ion-tabs>
 
-    <ion-item>
-        <ion-label>Page by page view</ion-label>
-        <ion-toggle secondary-s1 [(ngModel)]="pageByPage"></ion-toggle>
-    </ion-item>
+
+<!--<ion-content>-->
+
+    <!--<ion-item>-->
+        <!--<ion-label>Page by page view</ion-label>-->
+        <!--<ion-toggle secondary-s1 [(ngModel)]="pageByPage"></ion-toggle>-->
+    <!--</ion-item>-->
 
     <!--<ion-list>-->
         <!--<ion-item>-->
@@ -24,24 +28,23 @@
         <!--</ion-item>-->
     <!--</ion-list>-->
 
+    <!--<ion-list>-->
+        <!--<ion-item>-->
+            <!--<ion-label>Translation</ion-label>-->
+            <!--<ion-select [(ngModel)]="translationListSelected" multiple="true" (change)="onTranslationChange()"  cancelText="Cancel" okText="Okay!">-->
+                <!--<ion-option *ngFor="#row of translationList;" value="{{row.id}}" checked="{{ gq.isSelected(row.id) }}">{{ row.english_name }}</ion-option>-->
+            <!--</ion-select>-->
+        <!--</ion-item>-->
+    <!--</ion-list>-->
 
-    <ion-list>
-        <ion-item>
-            <ion-label>Translation</ion-label>
-            <ion-select [(ngModel)]="translationListSelected" multiple="true" (change)="onTranslationChange()"  cancelText="Cancel" okText="Okay!">
-                <ion-option *ngFor="#row of translationList;" value="{{row.id}}" checked="{{ gq.isSelected(row.id) }}">{{ row.english_name }}</ion-option>
-            </ion-select>
-        </ion-item>
-    </ion-list>
 
+    <!--<ion-list>-->
+        <!--<ion-item>-->
+            <!--<ion-label>Transliteration</ion-label>-->
+            <!--<ion-select [(ngModel)]="transliterationListSelected" multiple="true" (change)="onTransliterationChange()"  cancelText="Cancel" okText="Okay!">-->
+                <!--<ion-option *ngFor="#row of transliterationList;" value="{{row.id}}" checked="{{ gq.isSelected(row.id) }}">{{ row.english_name }}</ion-option>-->
+            <!--</ion-select>-->
+        <!--</ion-item>-->
+    <!--</ion-list>-->
 
-    <ion-list>
-        <ion-item>
-            <ion-label>Transliteration</ion-label>
-            <ion-select [(ngModel)]="transliterationListSelected" multiple="true" (change)="onTransliterationChange()"  cancelText="Cancel" okText="Okay!">
-                <ion-option *ngFor="#row of transliterationList;" value="{{row.id}}" checked="{{ gq.isSelected(row.id) }}">{{ row.english_name }}</ion-option>
-            </ion-select>
-        </ion-item>
-    </ion-list>
-
-</ion-content>
+<!--</ion-content>-->

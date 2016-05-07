@@ -1,5 +1,7 @@
 import {Page, NavController} from 'ionic-angular';
 import {gq} from "../../GlobalQuran/gq";
+import {SettingTranslationPage} from "../setting-translation/setting-translation";
+import {SettingTransliterationPage} from "../setting-transliteration/setting-transliteration";
 
 
 @Page({
@@ -7,60 +9,28 @@ import {gq} from "../../GlobalQuran/gq";
 })
 export class SettingPage {
 
-    quranListSelected;
-    quranList = [];
+    tab1;
+    tab2;
 
-    translationListSelected;
-    translationList = [];
 
-    transliterationListSelected;
-    transliterationList = [];
+    //private _pageByPage: boolean;
+    //
+    //set pageByPage(value:boolean) {
+    //    this._pageByPage = value;
+    //
+    //    localStorage.setItem('_view', value ? 'pageByPage' : 'ayahByAyah');
+    //}
 
-    private _pageByPage: boolean;
-
-    set pageByPage(value:boolean) {
-        this._pageByPage = value;
-
-        localStorage.setItem('_view', value ? 'pageByPage' : 'ayahByAyah');
-    }
-
-    get pageByPage():boolean {
-        return this._pageByPage;
-    }
+    //get pageByPage():boolean {
+    //    return this._pageByPage;
+    //}
 
     constructor(private nav:NavController, public gq: gq)
     {
-        let _view = localStorage.getItem('_view');
-        this._pageByPage = (_view == 'pageByPage');
+        this.tab1 = SettingTranslationPage;
+        this.tab2 = SettingTransliterationPage;
 
-        this.gq
-            .getQuranList()
-            .subscribe(data => this.quranList.push(data));
-
-        this.gq
-            .getTranslationList()
-            .subscribe(data => this.translationList.push(data));
-
-        this.gq
-            .getTransliterationList()
-            .subscribe(data => this.transliterationList.push(data));
-    }
-
-    onQuranChange ()
-    {
-        this.gq
-            .setSelectListQuran(this.quranListSelected);
-    }
-
-    onTranslationChange ()
-    {
-        this.gq
-            .setSelectListTranslation(this.translationListSelected);
-    }
-
-    onTransliterationChange ()
-    {
-        this.gq
-            .setSelectListTransliteration(this.transliterationListSelected);
+        //let _view = localStorage.getItem('_view');
+        //this._pageByPage = (_view == 'pageByPage');
     }
 }
