@@ -137,14 +137,6 @@ export class gq {
                 singleAyah['quranById'] = quranById;
                 singleAyah['type'] = this.getQuranByDetail(quranById).type;
 
-                if (verseNo == 1 && singleAyah.type == 'quran') {
-                    //singleAyah.verse = singleAyah.verse.replace('\u0628\u0650\u0633\u0652\u0645\u0650 \u0671\u0644\u0644\u0651\u064e\u0647\u0650 \u0671\u0644\u0631\u0651\u064e\u062d\u0652\u0645\u064e\u0670\u0646\u0650 \u0671\u0644\u0631\u0651\u064e\u062d\u0650\u064a\u0645\u0650 \u0627\u0644\u0653\u0645\u0653', '');
-                    //singleAyah.verse = singleAyah.verse.replace('بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ', '');
-                    //singleAyah.verse = singleAyah.verse.replace(singleAyah.verse, '');
-                    singleAyah.verse = singleAyah.verse.replace('/﻿بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ/gi', '');
-                    console.log("singleAyah.verse = singleAyah.verse.replace('/" + singleAyah.verse + "/gi', '')");
-                }
-
                 let ayah = singleAyah.ayah - 1; // minus 1 because js array add extra, if we skip
                 //let ayah = singleAyah.ayah;
 
