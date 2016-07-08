@@ -1,13 +1,5 @@
-import {Injectable, Injector} from 'angular2/core';
+import {Injectable, Injector} from '@angular/core';
 
-/*
- import 'rxjs/add/operator/map';
- import 'rxjs/operator/delay';
- import 'rxjs/operator/mergeMap';
- import 'rxjs/operator/switchMap';
- import 'rxjs/add/operator/share';
- import {Observable} from 'rxjs/Observable'
- */
 import {Observable} from 'rxjs/Rx';
 
 import {Api} from './Api/Api';
@@ -106,11 +98,11 @@ export class gq {
 
             return this.api.getSurahContent(surah, this.getSelectedDataArray().join('|'))
                 .map(data => this._dataStore.dataBySurah[surah] = this._rebuildQuranContent(data.quran))
-                .flatMap(data => Observable.fromArray(data))
+                .flatMap(data => Observable.from(data))
                 .share();
 
         else
-            return Observable.fromArray(this._dataStore.dataBySurah[surah]);
+            return Observable.from(this._dataStore.dataBySurah[surah]);
     }
 
     /**
@@ -361,7 +353,7 @@ export class gq {
             surahs.push(this.getSurahDetail(i));
         }
 
-        return Observable.fromArray(surahs);
+        return Observable.from(surahs);
     }
 
     selectSurah (surah, ayah)

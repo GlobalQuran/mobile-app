@@ -9,10 +9,10 @@
 </ion-navbar>
 
 <ion-content>
-    <ion-item-group *ngFor="#language of gq.getTranslationLanguageList()">
+    <ion-item-group *ngFor="let language of gq.getTranslationLanguageList()">
         <ion-item-divider light-s2>{{language.native_name}}</ion-item-divider>
         <ion-item
-                *ngFor="#row of gq.getTranslationListByLanguage(language.language_code)"
+                *ngFor="let row of gq.getTranslationListByLanguage(language.language_code)"
                 [ngClass]="{'translationSelected': gq.isSelected(row.id)}"
                 (click)="gq.toggleSelect(row.id)">
             {{row.native_name}}

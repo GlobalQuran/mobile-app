@@ -1,28 +1,33 @@
-<ion-navbar primary-s2  *navbar>
-  <ion-row  class="no-padding custom-navbar">
-    <ion-col width-70>
-      <object light clear block class="logo-2" data="img/svg/logo2.svg" type="image/svg+xml"></object>
-    </ion-col>
+<ion-header>
+  <ion-navbar primary-s2>
+    <ion-row  class="no-padding custom-navbar">
+      <ion-col width-70>
+        <object light clear block class="logo-2" data="img/svg/logo2.svg" type="image/svg+xml"></object>
+      </ion-col>
 
-    <ion-col width-15 class="juz-col-header">
-      <object light clear block class="svg-icon" data="img/svg/juz-icon.svg" type="image/svg+xml"></object>
-    </ion-col>
+      <ion-col width-15 class="juz-col-header">
+        <object light clear block class="svg-icon" data="img/svg/juz-icon.svg" type="image/svg+xml"></object>
+      </ion-col>
 
-    <ion-col width-15 class="surah-col-header">
-      <object light clear block class="svg-icon" data="img/svg/page-icon.svg" type="image/svg+xml"></object>
-    </ion-col>
-  </ion-row>
-</ion-navbar>
+      <ion-col width-15 class="surah-col-header">
+        <object light clear block class="svg-icon" data="img/svg/page-icon.svg" type="image/svg+xml"></object>
+      </ion-col>
+    </ion-row>
+  </ion-navbar>
+</ion-header>
 
+<ion-row class="main-content-area">
 <ion-content class="content-area">
+
   <ion-row  class="no-padding surah-background">
+
     <ion-col width-70 class="option-column surah-name-col">
       <div *ngIf="selectedSurah">
         You selected surah
         <b>{{selectedSurah.english_name}}</b>
       </div>
-      <ion-list no-lines class="no-margin scroll-inner-content">
-        <ion-item  class="surah-item-list" *ngFor="#surah of surahList" (click)="goToSurah(surah.no)">
+      <ion-list [virtualScroll]="surahList" no-lines class="no-margin scroll-inner-content">
+        <ion-item  class="surah-item-list" *virtualItem="let surah" (click)="goToSurah(surah.no)">
           <ion-avatar class="bookmark-enabled fa-stack" item-left>
             <ion-icon name="ios-bookmark" class="icon-image fa-stack-2x" ></ion-icon>
             <span class="icon-text fa-stack-1x">{{ surah.no }}</span>
@@ -36,7 +41,7 @@
       </ion-list>
     </ion-col>
 
-    <ion-col width-15 class="option-column juz-col">
+    <!-- <ion-col width-15 class="option-column juz-col">
       <ion-list no-lines class="scroll-inner-content">
         <button clear block secondary class="scroll-button" *ngFor="#juzNumber of juzNumbers" (click)="goToJuz(juzNumber)">
           {{ juzNumber }}
@@ -50,20 +55,45 @@
           {{ pageNumber }}
         </button>
       </ion-list>
-    </ion-col>
+    </ion-col> -->
 
   </ion-row>
 </ion-content>
 
-<ion-toolbar primary-s2 position="bottom">
-    <!--<ion-buttons start>-->
-        <!--<button dark (click)="surahTapped($event, 1)">-->
-            <!--<div class="title">1. Al-Fatihah - The... gear hides</div>-->
-        <!--</button>-->
-    <!--</ion-buttons>-->
+<ion-content width-15 class="content-area juz-col">
+
+  <ion-col class="option-column">
+    <ion-list [virtualScroll]="juzNumbers" no-lines class="scroll-inner-content">
+      <button clear block secondary class="scroll-button" *virtualItem="let juzNumber" (click)="goToJuz(juzNumber)">
+        {{ juzNumber }}
+      </button>
+    </ion-list>
+  </ion-col>
+</ion-content>
+
+<ion-content width-15 class="content-area page-col">
+
+  <ion-col class="option-column">
+    <ion-list [virtualScroll]="pageNumbers" no-lines class="scroll-inner-content">
+      <button clear block class="scroll-button" *virtualItem="let pageNumber"  (click)="goToPage(pageNumber)">
+        {{ pageNumber }}
+      </button>
+    </ion-list>
+  </ion-col>
+</ion-content>
+</ion-row>
+
+<ion-footer>
+  <ion-toolbar primary-s2 position="bottom">
+    <!-- <ion-buttons start>
+        <button dark (click)="surahTapped($event, 1)">
+            <div class="title">1. Al-Fatihah - The Opening</div>
+        </button>
+    </ion-buttons> -->
     <ion-buttons end>
-        <button dark (click)="openSetting()">
-            <ion-icon name="cog"></ion-icon>
+        <button light (click)="openSetting()">
+            <ion-icon ios="ios-settings" md="md-settings"></ion-icon>
         </button>
     </ion-buttons>
-</ion-toolbar>
+  </ion-toolbar>
+</ion-footer>

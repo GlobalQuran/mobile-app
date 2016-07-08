@@ -1,11 +1,11 @@
-import {Injectable} from 'angular2/core';
-import {Page} from 'ionic-angular';
+import {Component, Injectable} from '@angular/core';
+import {NavController, NavParams} from 'ionic-angular';
 
 import {test} from '../../GlobalQuran/test';
 
 
 
-@Page({
+@Component({
   templateUrl: 'build/pages/about-us/about-us.html'
 })
 @Injectable()

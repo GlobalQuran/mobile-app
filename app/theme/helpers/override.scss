@@ -19,10 +19,18 @@
   pointer-events: none;
 }
 
-ion-col[width-15] {
+ion-col[width-15], ion-content[width-15] {
     -webkit-box-flex: 0;
     -webkit-flex: 0 0 15%;
     -ms-flex: 0 0 15%;
     flex: 0 0 15%;
     max-width: 15%;
+}
+
+ion-content {
+    background-color: getColor(primary-s2);
+}
+
+.bar-button-default, .toolbar-title {
+  color: getColor(light);
 }
