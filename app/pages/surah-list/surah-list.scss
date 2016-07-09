@@ -1,6 +1,7 @@
 .surah-list-page {
   .toolbar.show-navbar {
     padding: 0px;
+    max-height: 4em;
   }
 
   .toolbar-background:after, .surah-col-header:after, .juz-col-header:after {
@@ -18,12 +19,15 @@
 }
 
 .main-content-area {
-  padding: 4em 0;
+  padding: 4em 0 3em 0;
   height: 100%;
   flex: 1;
   display: flex;
 }
 
+.sm-toolbar{
+  min-height: 4.6rem;
+}
 .content-area {
   background-color: getColor(primary-s2);
 
