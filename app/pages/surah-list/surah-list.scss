@@ -17,6 +17,13 @@
 
 }
 
+.main-content-area {
+  padding: 4em 0;
+  height: 100%;
+  flex: 1;
+  display: flex;
+}
+
 .content-area {
   background-color: getColor(primary-s2);
 
@@ -27,7 +34,7 @@
 }
 
 .option-column {
-  position: relative;
+  height: 100%;
 
   h2 {
     color: getColor(light);
@@ -63,11 +70,7 @@
 .surah-background {
   color: getColor(light);
   background: getColor(primary-s2);
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  height: 100%;
 }
 
 .surah-item-list {

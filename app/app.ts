@@ -1,64 +1,29 @@
-import 'es6-shim';
-import {App, IonicApp, Platform, MenuController} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {Platform, ionicBootstrap} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
-import {VsFor} from '../node_modules/ng2-vs-for/src/ng2-vs-for';
-
-
 
 import {gq} from './GlobalQuran/gq';
 import {Api} from './GlobalQuran/Api/Api';
 
-
 import {AboutUs} from './pages/about-us/about-us';
 import {SurahListPage} from './pages/surah-list/surah-list';
 
-// https://angular.io/docs/ts/latest/api/core/Type-interface.html
-//import {Type} from 'angular2/core';
-
-
-
-@App({
+@Component({
   templateUrl: 'build/app.html',
-  providers: [gq, Api],
-  directives: [VsFor],
-  config: {} // http://ionicframework.com/docs/v2/api/config/Config/
+  providers: [gq, Api]
 })
-class MyApp {
-  // make surah list home page
+export class MyApp {
   rootPage: any = SurahListPage;
-  //pages: Array<{title: string, component: any}>;
 
   constructor(
-      private app:IonicApp,
-      private platform:Platform,
-      private menu: MenuController,
-      private gq:gq
-  ) {
-
-    this.initializeApp();
-
-    // set our app's pages
-    //this.pages = [
-    //  {title: 'Surah List', component: SurahListPage},
-    //  {title: 'About us', component: AboutUs}
-    //];
-
-    this.gq.getAllContent();
-  }
-
-  initializeApp() {
-    this.platform.ready().then(() => {
+    platform: Platform,
+    private gq:gq) {
+    platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
     });
   }
-
-  openPage(page) {
-    // close the menu when clicking a link from the menu
-    this.menu.close();
-    // navigate to the new page if it is not the current page
-    let nav = this.app.getComponent('nav');
-    nav.setRoot(page.component);
-  }
 }
+
+ionicBootstrap(MyApp);

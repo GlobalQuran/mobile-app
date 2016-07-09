@@ -1,6 +1,6 @@
+import {Component} from '@angular/core';
 import {Page, NavController, NavParams} from 'ionic-angular';
-import {VsFor} from '../../../node_modules/ng2-vs-for/src/ng2-vs-for';
-import {Component} from 'angular2/core';
+
 import {gq} from '../../GlobalQuran/gq';
 import {SettingPage} from "../setting/setting";
 

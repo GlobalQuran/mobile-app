@@ -1,4 +1,4 @@
-import {Injectable, Injector} from 'angular2/core';
+import {Injectable, Injector} from '@angular/core';
 
 import {Ayah} from './Ayah';
 

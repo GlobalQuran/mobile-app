@@ -1,3 +1,11 @@
 .translationSelected {
   background-color: getColor(secondary);
 }
+
+.toolbar-title {
+  color: getColor(light);
+}
+
+ion-content {
+    background-color: getColor(primary-s2);
+}

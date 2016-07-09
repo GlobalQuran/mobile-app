@@ -1,13 +1,15 @@
-import {Page, NavController, NavParams} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {NavController, NavParams} from 'ionic-angular';
 import {gq} from '../../GlobalQuran/gq';
 
 import {SurahDetailPage} from '../surah-detail/surah-detail';
 import {SettingPage} from "../setting/setting";
 
 
-@Page({
+@Component({
     templateUrl: 'build/pages/surah-list/surah-list.html'
 })
+
 export class SurahListPage {
 
     surahList   = [];
@@ -61,6 +63,5 @@ export class SurahListPage {
     {
         this.nav.push(SettingPage);
     }
-
 
 }

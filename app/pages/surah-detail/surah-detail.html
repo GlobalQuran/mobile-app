@@ -1,21 +1,24 @@
-<ion-navbar primary-s2 *navbar>
-    <button menuToggle>
-        <ion-icon light name="menu"></ion-icon>
-    </button>
-    <ion-title light> <object class="surah-title" data="img/surah/{{ getSurahTitleNumber() }}.svg" type="image/svg+xml"></object> {{surahDetail.english_name}}</ion-title>
+<ion-header>
+    <ion-navbar primary-s2 *navbar>
+        <ion-title light>
+            <!-- <object class="surah-title" data="img/surah/{{ getSurahTitleNumber() }}.svg" type="image/svg+xml"></object>
+            {{surahDetail.english_name}} -->
+            Surah
+        </ion-title>
 
-    <!--<ion-buttons end>-->
-        <!--<button dark>-->
-            <!--<ion-icon name="play"></ion-icon>-->
-        <!--</button>-->
-    <!--</ion-buttons>-->
-</ion-navbar>
+        <ion-buttons end>
+            <button light>
+                <ion-icon name="play"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
 
 <ion-content class="container">
 
     <div *ngIf="content.length">
 
-        <div *vsFor="content; size:getItemSize; tagName:'ion-row'; offsetBefore:0; offsetAfter: 10; excess: 10; scrollParent:'scroll-content'; #_visible_content = vsCollection; #_startIndex = vsStartIndex">
+        <!-- <div *vsFor="content; size:getItemSize; tagName:'ion-row'; offsetBefore:0; offsetAfter: 10; excess: 10; scrollParent:'scroll-content'; #_visible_content = vsCollection; #_startIndex = vsStartIndex">
             <ion-row class="no-padding ayah-by-ayah" *ngFor="#quran of _visible_content;">
                 <ion-col class="ayahNo option-column page-col" width-10>
                     <div class="fa-stack">
@@ -29,10 +32,9 @@
                     </div>
                 </ion-col>
             </ion-row>
-        </div>
+        </div> -->
 
-        <!--
-        <ion-row class="no-padding ayah-by-ayah" *ngFor="#quran of content;">
+        <ion-row class="no-padding ayah-by-ayah" *ngFor="let quran of content;">
             <ion-col class="ayahNo option-column page-col" width-10>
                 <div class="fa-stack">
                     <object class="svg-icon" data="img/svg/ayah-icon.svg" type="image/svg+xml"></object>
@@ -40,15 +42,12 @@
                 </div>
             </ion-col>
             <ion-col class="ayahText">
-                <div [ngClass]="{'arabic-text': isQuran(ayah)}" *ngFor="#ayah of quran">
+                <div [ngClass]="{'arabic-text': isQuran(ayah)}" *ngFor="let ayah of quran">
                     {{ayah.verse}}
                 </div>
 
             </ion-col>
         </ion-row>
-        -->
-
-
 
     </div>
 
@@ -57,7 +56,7 @@
     </div>
 
     <!--<ion-infinite-scroll (infinite)="loadMore($event)">-->
-        <!--<ion-infinite-scroll-content></ion-infinite-scroll-content>-->
+    <!--<ion-infinite-scroll-content></ion-infinite-scroll-content>-->
     <!--</ion-infinite-scroll>-->
 
     <ion-buttons *ngIf="isShowNextSurahButton()">
