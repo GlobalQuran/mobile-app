@@ -1,9 +1,8 @@
 <ion-header>
-    <ion-navbar primary-s2 *navbar>
+    <ion-navbar primary-s2>
         <ion-title light>
-            <!-- <object class="surah-title" data="img/surah/{{ getSurahTitleNumber() }}.svg" type="image/svg+xml"></object>
-            {{surahDetail.english_name}} -->
-            Surah
+            <!-- <object class="surah-title" data="img/surah/{{ getSurahTitleNumber() }}.svg" type="image/svg+xml"></object> -->
+            {{surahDetail.english_name}}
         </ion-title>
 
         <ion-buttons end>
@@ -42,10 +41,9 @@
                 </div>
             </ion-col>
             <ion-col class="ayahText">
-                <div [ngClass]="{'arabic-text': isQuran(ayah)}" *ngFor="let ayah of quran">
+                <div [ngClass]="{'quranic-text': isQuran(ayah)}" class="{{ayah.type}}" *ngFor="let ayah of quran">
                     {{ayah.verse}}
                 </div>
-
             </ion-col>
         </ion-row>
 

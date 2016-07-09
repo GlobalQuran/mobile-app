@@ -15,10 +15,10 @@
         <div class="page-headers juz-number">Juz 1</div>
         <div class="page-headers page-number">Page 1</div>
         <section class=surah id="s1">
-          <ion-row class="no-padding" *ngFor="#quran of content; #verseNo=index">
+          <ion-row class="no-padding" *ngFor="let quran of content; let verseNo=index">
 
             <ion-col class="ayahText">
-              <div class="arabic-text" *ngFor="#ayah of quran">
+              <div class="arabic-text" *ngFor="let ayah of quran">
 
 
                 <svg width="33" height="34" viewBox="0 0 33 34">

@@ -4,6 +4,8 @@ import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
+let baseURL = 'http://api.globalquran.com'
+
 @Injectable()
 export class Api {
     static get parameters() {
@@ -11,27 +13,39 @@ export class Api {
     }
 
     constructor(private http: Http) {
-
+        this.http = http;
     }
 
-    getAll (surahNo:number, quranBy?:string)
-    {
-        let ifQuranBy = quranBy ? `/${quranBy}` : '';
-        return this.http.get(`http://api.globalquran.com/all/surah/${surahNo}${ifQuranBy}`).map(res => res.json());
+    getAll(surahNo: number, quranBy?: string) {
+        let url = baseURL + '/all/surah/' + surahNo + ((quranBy) ? '/' + quranBy : '');
+        return this.http.get(url)
+            .map(res => res.json())
+            .catch(this.handleError);
     }
 
-    getList ()
-    {
-        return this.http.get(`http://api.globalquran.com/quran`).map(res => res.json());
+    getList() {
+        let url = baseURL + '/quran';
+        return this.http.get(url)
+            .map(res => res.json())
+            .catch(this.handleError);
     }
 
-    getSurahContent (surah:number, quranById:string)
-    {
-        return this.http.get(`http://api.globalquran.com/surah/${surah}/${quranById}`).map(res => res.json());
+    getSurahContent(surah: number, quranById: string) {
+        let url = baseURL + '/surah/' + surah + '/' + quranById;
+        return this.http.get(url)
+            .map(res => res.json())
+            .catch(this.handleError);
     }
 
-    getPageContent (page:number, quranById:string)
-    {
-        return this.http.get(`http://api.globalquran.com/page/${page}/${quranById}`).map(res => res.json());
+    getPageContent(page: number, quranById: string) {
+        let url = baseURL + '/page/' + page + '/' + quranById;
+        return this.http.get(url)
+            .map(res => res.json())
+            .catch(this.handleError);
+    }
+
+    handleError(error) {
+        console.error(error);
+        return Observable.throw(error.json().error || 'Server error');
     }
 }

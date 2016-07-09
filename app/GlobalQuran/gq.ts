@@ -1,13 +1,11 @@
 import {Injectable, Injector} from '@angular/core';
-
 import {Observable} from 'rxjs/Rx';
 
 import {Api} from './Api/Api';
 import {surahDetail} from "./interface/surahDetail";
 
 
-declare let Quran:any;
-
+declare let Quran: any;
 
 @Injectable()
 export class gq {
@@ -17,33 +15,27 @@ export class gq {
         selected: {
             surah: 0,
             ayah: 0,
-
             data: {},
-
             recitor: {}
         },
 
         list: {
             surah: [],
-
             quran: [],
-
             translation: [],
             transliteration: [],
             recitor: [],
-
             translationLanguage: [],
             language: [],
             countryLanguages: [],
         },
 
         content: [],
-
         dataBySurah: []
     };
 
 
-    constructor(private api:Api) {
+    constructor(private api: Api) {
         this.loadLocalSorage();
     }
 
@@ -90,7 +82,7 @@ export class gq {
      * @param surah
      * @returns {Observable}
      */
-    getContent(surah?:number) {
+    getContent(surah?: number) {
         if (!surah)
             surah = this._dataStore.selected.surah;
 
@@ -114,7 +106,7 @@ export class gq {
      * @param data
      * @returns {Array}
      * @private
-     */
+    */
     private _rebuildQuranContent(data) {
         // if coming from ajax, then get data.quran
         if (data && data.quran)
@@ -138,7 +130,7 @@ export class gq {
                 ayahs[ayah].push(singleAyah);
 
                 // sort and put Quran text on top and then translation and transliteration
-                ayahs[ayah].sort(function (a, b) {
+                ayahs[ayah].sort(function(a, b) {
                     return (a.type == 'quran') ? -1 : 1;
                 });
             }
@@ -153,7 +145,7 @@ export class gq {
      * @returns {boolean}
      * @private
      */
-    private _isContentExist(surah:number) {
+    private _isContentExist(surah: number) {
         if (!this._dataStore.dataBySurah[surah])
             return false;
 
@@ -192,7 +184,7 @@ export class gq {
         return list;
     }
 
-    private getSelectedDataCount():number {
+    private getSelectedDataCount(): number {
         if (!this._dataStore.selected.data)
             return 0;
 
@@ -211,7 +203,7 @@ export class gq {
      * @param surah
      * @returns {surahDetail}
      */
-    getSurahDetail(surahNo:number):surahDetail {
+    getSurahDetail(surahNo: number): surahDetail {
         return Quran.surah.detail(surahNo);
     }
 
@@ -221,7 +213,7 @@ export class gq {
      * @param juz
      * @returns {any}
      */
-    getAyahNumberByJuz(juz:number):{surah:number, ayah:number} {
+    getAyahNumberByJuz(juz: number): { surah: number, ayah: number } {
         return Quran.ayah.fromJuz(juz);
     }
 
@@ -231,30 +223,30 @@ export class gq {
      * @param page
      * @returns {any}
      */
-    getAyahNumberByPage(page:number):{surah:number, ayah:number} {
+    getAyahNumberByPage(page: number): { surah: number, ayah: number } {
         return Quran.ayah.fromPage(page);
     }
 
-    getQuranByDetail(quranBy:string) {
+    getQuranByDetail(quranBy: string) {
         return this._dataStore.list.quran[quranBy];
     }
 
-    isQuranText(quranBy:string) {
+    isQuranText(quranBy: string) {
         let detail = this.getQuranByDetail(quranBy).type;
         return (detail.format == 'text' && detail.type == 'quran');
     }
 
-    isTranslationText(quranBy:string) {
+    isTranslationText(quranBy: string) {
         let detail = this.getQuranByDetail(quranBy).type;
         return (detail.format == 'text' && detail.type == 'translation');
     }
 
-    isTransliterationText(quranBy:string) {
+    isTransliterationText(quranBy: string) {
         let detail = this.getQuranByDetail(quranBy).type;
         return (detail.format == 'text' && detail.type == 'translation');
     }
 
-    private getQuranByList(type:string, format:string) {
+    private getQuranByList(type: string, format: string) {
         return new Observable(obverser => {
 
             let quranList = this._dataStore.list.quran;
@@ -287,14 +279,12 @@ export class gq {
         return this.getQuranByList(null, 'audio');
     }
 
-    getLangaugeList()
-    {
+    getLangaugeList() {
         return this._dataStore.list.language;
     }
 
-    getTranslationLanguageList()
-    {
-        let languageList    = this.getLangaugeList();
+    getTranslationLanguageList() {
+        let languageList = this.getLangaugeList();
         let translationList = this.getTranslationList();
 
         let checkList = {};
@@ -326,8 +316,7 @@ export class gq {
         return newList;
     }
 
-    getTranslationListByLanguage (languageCode)
-    {
+    getTranslationListByLanguage(languageCode) {
         let translationList = this.getTranslationList();
 
         let filteredList = [];
@@ -346,8 +335,7 @@ export class gq {
      *
      * @returns {Observable}
      */
-    getSurahList()
-    {
+    getSurahList() {
         let surahs = [];
         for (let i = 1; i <= 114; i++) {
             surahs.push(this.getSurahDetail(i));
@@ -356,8 +344,7 @@ export class gq {
         return Observable.from(surahs);
     }
 
-    selectSurah (surah, ayah)
-    {
+    selectSurah(surah, ayah) {
         this._dataStore.selected.surah = surah;
         this._dataStore.selected.ayah = ayah;
 
@@ -372,8 +359,7 @@ export class gq {
      * @param quranById
      * @returns {boolean}
      */
-    isSelected (quranById:string)
-    {
+    isSelected(quranById: string) {
         return (this._dataStore.selected.data[quranById]) ? true : false;
     }
 
@@ -382,8 +368,7 @@ export class gq {
      *
      * @param quranById
      */
-    toggleSelect (quranById:string)
-    {
+    toggleSelect(quranById: string) {
         if (this.isSelected(quranById))
             delete this._dataStore.selected.data[quranById];
         else
@@ -392,8 +377,7 @@ export class gq {
         this.saveLocalStorage();
     }
 
-    getSelectedData ()
-    {
+    getSelectedData() {
         return this._dataStore.selected.data;
     }
 
@@ -404,25 +388,21 @@ export class gq {
      * @param type quran|translation|transletiration
      * @param format text|audio
      */
-    private setSelectListData (quranByIds: Array<any>, type?:string)
-    {
-        if (!type)
-        {
+    private setSelectListData(quranByIds: Array<any>, type?: string) {
+        if (!type) {
             let list = {};
 
             this._dataStore.selected.data = {};
-            quranByIds.forEach((x,y) => list[x] = x);
+            quranByIds.forEach((x, y) => list[x] = x);
 
             this._dataStore.selected.data = list;
         }
-        else
-        {
+        else {
 
             let list = this._dataStore.selected.data;
 
             // first remove same type from the selected list
-            for (let quranById in list)
-            {
+            for (let quranById in list) {
                 let detail = this.getQuranByDetail(quranById);
 
                 if ((!detail.type || detail.type == type))
@@ -430,7 +410,7 @@ export class gq {
             }
 
             // then add selected
-            quranByIds.forEach((x,y) => {
+            quranByIds.forEach((x, y) => {
                 list[x] = x;
             });
 
@@ -445,8 +425,7 @@ export class gq {
      *
      * @param quranByIds
      */
-    setSelectListQuran (quranByIds: Array<any>)
-    {
+    setSelectListQuran(quranByIds: Array<any>) {
         this.setSelectListData(quranByIds, 'quran');
     }
 
@@ -455,8 +434,7 @@ export class gq {
      *
      * @param quranByIds
      */
-    setSelectListTranslation (quranByIds: Array<any>)
-    {
+    setSelectListTranslation(quranByIds: Array<any>) {
         this.setSelectListData(quranByIds, 'translation');
     }
 
@@ -465,8 +443,7 @@ export class gq {
      *
      * @param quranByIds
      */
-    setSelectListTransliteration (quranByIds: Array<any>)
-    {
+    setSelectListTransliteration(quranByIds: Array<any>) {
         this.setSelectListData(quranByIds, 'transliteration');
     }
 
@@ -475,8 +452,7 @@ export class gq {
      *
      * @param quranByIds
      */
-    setSelectListRecitor (quranByIds: Array<any>)
-    {
+    setSelectListRecitor(quranByIds: Array<any>) {
         //TODO dont use same function, store in _datastore.selected.recitor and not in data
         //this.setSelectListData(quranByIds, null, 'audio');
     }
@@ -485,16 +461,14 @@ export class gq {
     /**
      * save local storage data
      */
-    saveLocalStorage ()
-    {
+    saveLocalStorage() {
         localStorage.setItem('_selected', JSON.stringify(this._dataStore.selected));
     }
 
     /**
      * load local storage data
      */
-    loadLocalSorage ()
-    {
+    loadLocalSorage() {
         let selected = localStorage.getItem('_selected');
 
         if (selected)
@@ -504,8 +478,7 @@ export class gq {
     /**
      * useful to reset local storage
      */
-    clearLocalStorage ()
-    {
+    clearLocalStorage() {
         localStorage.clear();
     }
 }

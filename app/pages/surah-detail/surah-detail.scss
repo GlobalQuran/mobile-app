@@ -25,8 +25,10 @@
 }
 .ayahNo {
   background-color: getColor(light);
+  height: inherit !important;
 }
 .ayahText {
+  background-color: getColor(light);
   border-bottom: 1px solid lighten(getColor(primary-s3), 50);
 }
 
