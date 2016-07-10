@@ -1,5 +1,5 @@
 import {Page, NavController} from 'ionic-angular';
-import {gq} from "../../GlobalQuran/gq";
+import {GlobalQuran} from "../../providers/GlobalQuran/GQ";
 
 
 @Page({
@@ -9,9 +9,9 @@ export class SettingTransliterationPage
 {
     transliterationList = [];
 
-    constructor(nav: NavController, public gq: gq)
+    constructor(nav: NavController, public globalQuran: GlobalQuran)
     {
-        this.gq
+        this.globalQuran
             .getTransliterationList()
             .subscribe(data => this.transliterationList.push(data));
     }

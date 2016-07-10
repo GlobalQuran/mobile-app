@@ -1,5 +1,5 @@
 import {Injectable, Injector} from '@angular/core';
-import {gq} from "./gq";
+import {GlobalQuran} from "../GlobalQuran";
 
 
 @Injectable()
@@ -11,7 +11,7 @@ export class Player {
 
     next: any;
 
-    constructor(private gq:gq)
+    constructor(private globalQuran:GlobalQuran)
     {
         //this.player = (window.plugins && window.plugins.NativeAudio) ? window.plugins.NativeAudio : false;
     }
