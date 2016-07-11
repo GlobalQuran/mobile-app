@@ -173,7 +173,7 @@ export class GlobalQuran {
 
     private getSelectedDataArray() {
         if (!this.getSelectedDataCount())
-            return ['quran-uthmani'];
+            return ['quran-uthmani-hafs'];
 
         let list = [];
 

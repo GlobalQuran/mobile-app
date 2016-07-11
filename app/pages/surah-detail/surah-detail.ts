@@ -16,13 +16,13 @@ let _view = localStorage.getItem('_view');
 export class SurahDetailPage {
 
     surah: number;
-    ayah:  number;
+    ayah: number;
 
     eventBy: string;
 
     surahDetail: surahDetail;
-    content:Array<any>;
-    test:Array<any>;
+    content: Array<any>;
+    test: Array<any>;
 
     startAyah: number;
     endAyah: number;
@@ -31,23 +31,21 @@ export class SurahDetailPage {
 
     loading: boolean;
 
-    constructor(private nav:NavController, navParams:NavParams, private globalQuran:GlobalQuran)
-    {
+    constructor(private nav: NavController, navParams: NavParams, private globalQuran: GlobalQuran) {
         this.surah = navParams.get('surah');
-        this.ayah  = navParams.get('ayah');
+        this.ayah = navParams.get('ayah');
         this.eventBy = navParams.get('eventBy');
 
         this.loadContent();
     }
 
-    public getItemSize (item, index) {
+    public getItemSize(item, index) {
         //console.log(item);
         //console.log(index);
         return 315;
     }
 
-    private loadContent ()
-    {
+    private loadContent() {
         let self = this;
 
         this.surahDetail = this.globalQuran.getSurahDetail(this.surah);
@@ -61,41 +59,37 @@ export class SurahDetailPage {
             .getContent()
             //.take(10)
             .subscribe(
-                list => this.content.push(list),
-                (error) => '',
-                ()   => {
-                    self.endAyah = self.totalAyahs;
-                    //self.endAyah = self.startAyah + 9;
+            list => this.content.push(list),
+            (error) => '',
+            () => {
+                self.endAyah = self.totalAyahs;
+                //self.endAyah = self.startAyah + 9;
 
-                    if (self.totalAyahs > self.endAyah)
-                    {
-                        self.loading = true;
-                    }
-
-                    setTimeout(() => {
-                        if (self.totalAyahs > self.endAyah)
-                        {
-                            self.GlobalQuran
-                                .getContent()
-                                .skip(10)
-                                .subscribe(
-                                    list => self.content.push(list),
-                                    (error) => '',
-                                    () => {
-                                        self.endAyah = self.totalAyahs;
-                                        self.loading = false;
-                                    }
-                                );
-                        }
-                    }, 500);
+                if (self.totalAyahs > self.endAyah) {
+                    self.loading = true;
                 }
+
+                setTimeout(() => {
+                    if (self.totalAyahs > self.endAyah) {
+                        self.globalQuran
+                            .getContent()
+                            .skip(10)
+                            .subscribe(
+                            list => self.content.push(list),
+                            (error) => '',
+                            () => {
+                                self.endAyah = self.totalAyahs;
+                                self.loading = false;
+                            }
+                            );
+                    }
+                }, 500);
+            }
             )
     }
 
-    loadMore (infiniteScroll)
-    {
-        if (this.totalAyahs <= this.endAyah)
-        {
+    loadMore(infiniteScroll) {
+        if (this.totalAyahs <= this.endAyah) {
             infiniteScroll.enable(false);
             return;
         }
@@ -105,50 +99,44 @@ export class SurahDetailPage {
             .skip(this.endAyah)
             .take(10)
             .subscribe(
-                list => this.content.push(list),
-                (error) => '',
-                () => {
-                    this.endAyah = this.endAyah + 10;
-                    infiniteScroll.complete();
-                }
+            list => this.content.push(list),
+            (error) => '',
+            () => {
+                this.endAyah = this.endAyah + 10;
+                infiniteScroll.complete();
+            }
             );
     }
 
-    getSurahTitleNumber ():any
-    {
+    getSurahTitleNumber(): any {
         if (this.surahDetail.no < 10)
-            return '00'+this.surahDetail.no;
+            return '00' + this.surahDetail.no;
         else if (this.surahDetail.no < 100)
-            return '0'+this.surahDetail.no;
+            return '0' + this.surahDetail.no;
         else
             return this.surahDetail.no;
     }
 
-    isQuran (ayah):boolean
-    {
+    isQuran(ayah): boolean {
         return (ayah.type == 'quran');
     }
 
-    isAyahEnded ():boolean
-    {
+    isAyahEnded(): boolean {
         return (this.totalAyahs <= this.endAyah)
     }
 
-    isShowNextSurahButton ():boolean
-    {
+    isShowNextSurahButton(): boolean {
         return (this.isAyahEnded() && this.surah < 114);
     }
 
-    getNextSurah ()
-    {
+    getNextSurah() {
         this.surah++;
         this.ayah = 1;
 
         this.loadContent();
     }
 
-    openSetting()
-    {
+    openSetting() {
         this.nav.push(SettingPage);
     }
 }
