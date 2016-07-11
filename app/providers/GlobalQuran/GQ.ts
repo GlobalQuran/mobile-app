@@ -2,13 +2,13 @@ import {Injectable, Injector} from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 
 import {Api} from './Api/Api';
-import {surahDetail} from "./interface/surahDetail";
+import {surahDetail} from './interface/surahDetail';
 
 
 declare let Quran: any;
 
 @Injectable()
-export class gq {
+export class GlobalQuran {
 
     private _dataStore = {
 

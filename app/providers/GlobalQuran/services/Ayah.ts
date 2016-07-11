@@ -1,5 +1,3 @@
-
-
 interface ayah {
     id: number;
     surah: number;
@@ -14,8 +12,7 @@ export class Ayah {
     ayahNo: number;
     text: string;
 
-    constructor(ayah: ayah)
-    {
+    constructor(ayah: ayah) {
         this.verseNo = ayah.id;
         this.surahNo = ayah.surah;
         this.ayahNo = ayah.ayah;

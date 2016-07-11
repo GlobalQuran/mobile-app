@@ -1,5 +1,5 @@
 import {Page, NavController} from 'ionic-angular';
-import {gq} from "../../GlobalQuran/gq";
+import {GlobalQuran} from "../../providers/GlobalQuran/GQ";
 import {SettingTranslationPage} from "../setting-translation/setting-translation";
 import {SettingTransliterationPage} from "../setting-transliteration/setting-transliteration";
 
@@ -25,7 +25,7 @@ export class SettingPage {
     //    return this._pageByPage;
     //}
 
-    constructor(private nav:NavController, public gq: gq)
+    constructor(private nav:NavController, public globalQuran: GlobalQuran)
     {
         this.tab1 = SettingTranslationPage;
         this.tab2 = SettingTransliterationPage;
