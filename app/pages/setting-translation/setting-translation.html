@@ -1,7 +1,15 @@
-<ion-navbar *navbar>
+<ion-navbar>
     <ion-buttons>
         <button nav-pop dark>
-            <span class="button-inner"><span class="button-inner"><ion-icon class="back-button-icon ion-ios-arrow-back" role="img" aria-label="arrow back"></ion-icon><span class="back-button-text" style="transform: translateX(0px);"><span class="back-default">Back</span></span></span><ion-button-effect></ion-button-effect></span>
+            <span class="button-inner">
+                <span class="button-inner">
+                    <ion-icon class="back-button-icon ion-ios-arrow-back" role="img" aria-label="arrow back"></ion-icon>
+                    <span class="back-button-text" style="transform: translateX(0px);">
+                        <span class="back-default">Back</span>
+                    </span>
+                </span>
+                <ion-button-effect></ion-button-effect>
+            </span>
         </button>
     </ion-buttons>
 
@@ -9,14 +17,11 @@
 </ion-navbar>
 
 <ion-content>
-    <ion-item-group *ngFor="let language of GlobalQuran.getTranslationLanguageList()">
+    <ion-item-group *ngFor="let language of globalQuran.getTranslationLanguageList()">
         <ion-item-divider light-s2>{{language.native_name}}</ion-item-divider>
-        <ion-item
-                *ngFor="let row of GlobalQuran.getTranslationListByLanguage(language.language_code)"
-                [ngClass]="{'translationSelected': GlobalQuran.isSelected(row.id)}"
-                (click)="GlobalQuran.toggleSelect(row.id)">
+        <ion-item *ngFor="let row of globalQuran.getTranslationListByLanguage(language.language_code)" [ngClass]="{'translationSelected': globalQuran.isSelected(row.id)}" (click)="globalQuran.toggleSelect(row.id)">
             {{row.native_name}}
-            <ion-icon name="checkmark-circle-outline" *ngIf="GlobalQuran.isSelected(row.id)" item-right></ion-icon>
+            <ion-icon name="checkmark-circle-outline" *ngIf="globalQuran.isSelected(row.id)" item-right></ion-icon>
         </ion-item>
     </ion-item-group>
 </ion-content>
