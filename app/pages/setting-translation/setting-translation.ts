@@ -1,5 +1,5 @@
 import {Page, NavController} from 'ionic-angular';
-import {gq} from "../../GlobalQuran/gq";
+import {GlobalQuran} from "../../providers/GlobalQuran/GQ";
 
 
 @Page({
@@ -7,5 +7,5 @@ import {gq} from "../../GlobalQuran/gq";
 })
 export class SettingTranslationPage
 {
-    constructor(nav: NavController, public gq: gq) {}
+    constructor(nav: NavController, public globalQuran: GlobalQuran) {}
 }
