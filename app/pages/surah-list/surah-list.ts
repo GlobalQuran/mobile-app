@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
-import {gq} from '../../GlobalQuran/gq';
+import {GlobalQuran} from '../../providers/GlobalQuran/GQ';
 
 import {SurahDetailPage} from '../surah-detail/surah-detail';
 import {SettingPage} from "../setting/setting";
@@ -12,19 +12,17 @@ import {SettingPage} from "../setting/setting";
 
 export class SurahListPage {
 
-    surahList   = [];
+    surahList = [];
     pageNumbers = this._arrayFill(604);
-    juzNumbers  = this._arrayFill(30);
+    juzNumbers = this._arrayFill(30);
 
-    constructor(private nav:NavController, private gq:gq)
-    {
-        this.gq
+    constructor(private nav: NavController, private globalQuran: GlobalQuran) {
+        this.globalQuran
             .getSurahList()
             .subscribe(list => this.surahList.push(list));
     }
 
-    goToSurah(surah:number)
-    {
+    goToSurah(surah: number) {
         this.nav.push(SurahDetailPage, {
             surah: surah,
             ayah: 1,
@@ -32,9 +30,8 @@ export class SurahListPage {
         });
     }
 
-    goToJuz (juz:number)
-    {
-        let quran = this.gq.getAyahNumberByJuz(juz);
+    goToJuz(juz: number) {
+        let quran = this.globalQuran.getAyahNumberByJuz(juz);
 
         this.nav.push(SurahDetailPage, {
             surah: quran.surah,
@@ -43,9 +40,8 @@ export class SurahListPage {
         });
     }
 
-    goToPage (page:number)
-    {
-        let quran = this.gq.getAyahNumberByPage(page);
+    goToPage(page: number) {
+        let quran = this.globalQuran.getAyahNumberByPage(page);
 
         this.nav.push(SurahDetailPage, {
             surah: quran.surah,
@@ -54,13 +50,11 @@ export class SurahListPage {
         });
     }
 
-    _arrayFill (length): Array<any>
-    {
-        return new Array(length).fill('').map((x,i) => i + 1);
+    _arrayFill(length): Array<any> {
+        return new Array(length).fill('').map((x, i) => i + 1);
     }
 
-    openSetting()
-    {
+    openSetting() {
         this.nav.push(SettingPage);
     }
 

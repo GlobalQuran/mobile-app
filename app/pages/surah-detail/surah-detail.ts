@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 import {Page, NavController, NavParams} from 'ionic-angular';
 
-import {gq} from '../../GlobalQuran/gq';
+import {GlobalQuran} from '../../providers/GlobalQuran/GQ';
 import {SettingPage} from "../setting/setting";
 
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/skip';
-import {surahDetail} from "../../GlobalQuran/interface/surahDetail";
+import {surahDetail} from "../../providers/GlobalQuran/interface/surahDetail";
 
 let _view = localStorage.getItem('_view');
 
@@ -31,7 +31,7 @@ export class SurahDetailPage {
 
     loading: boolean;
 
-    constructor(private nav:NavController, navParams:NavParams, private gq:gq)
+    constructor(private nav:NavController, navParams:NavParams, private globalQuran:GlobalQuran)
     {
         this.surah = navParams.get('surah');
         this.ayah  = navParams.get('ayah');
@@ -50,13 +50,13 @@ export class SurahDetailPage {
     {
         let self = this;
 
-        this.surahDetail = this.gq.getSurahDetail(this.surah);
+        this.surahDetail = this.globalQuran.getSurahDetail(this.surah);
         this.content = [];
 
         this.totalAyahs = this.surahDetail.ayahs;
         this.startAyah = this.ayah;
 
-        this.gq
+        this.globalQuran
             .selectSurah(this.surah, this.ayah)
             .getContent()
             //.take(10)
@@ -75,7 +75,7 @@ export class SurahDetailPage {
                     setTimeout(() => {
                         if (self.totalAyahs > self.endAyah)
                         {
-                            self.gq
+                            self.GlobalQuran
                                 .getContent()
                                 .skip(10)
                                 .subscribe(
@@ -100,7 +100,7 @@ export class SurahDetailPage {
             return;
         }
 
-        this.gq
+        this.globalQuran
             .getContent()
             .skip(this.endAyah)
             .take(10)

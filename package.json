@@ -31,6 +31,7 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
+    "cordova-plugin-insomnia",
     "ionic-plugin-keyboard"
   ],
   "cordovaPlatforms": [

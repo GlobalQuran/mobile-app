@@ -174,7 +174,7 @@ var Quran = {
     },
 
     /**
-     * builds the buck and arabic chars for use in GQ.quran.parse for converting buck to arabic and arabic to buck
+     * builds the buck and arabic chars for use in GlobalQuran.quran.parse for converting buck to arabic and arabic to buck
      */
     initBuck: function()
     {

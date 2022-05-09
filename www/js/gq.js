@@ -1,5 +1,5 @@
 /**
- * gq (Global Quran) object to navigate through quran text, audio and lists of Quran/Recitation/Langauges.
+ * GlobalQuran (Global Quran) object to navigate through quran text, audio and lists of Quran/Recitation/Langauges.
  * @author Basit (i@basit.me || http://Basit.me)
  *
  * Online Quran Project
@@ -10,7 +10,7 @@
  * http://www.opensource.org/licenses/Simple-2.0
  * 
  */
-var gq = {
+var GlobalQuran = {
 	
 	config: {
 		
@@ -30,7 +30,7 @@ var gq = {
 			key: '',
 			
 			/**
-			 * supported version for this gq. this will pull data from the server according to its version. 
+			 * supported version for this GlobalQuran. this will pull data from the server according to its version. 
 			 */
 			version: '4.0',
 			
@@ -230,8 +230,8 @@ var gq = {
 	 */
 	addSetting: function (name, value)
 	{
-		gq.settings[name] = value;
-		gq.save();
+		GlobalQuran.settings[name] = value;
+		GlobalQuran.save();
 	},
 	
 	/**
@@ -240,8 +240,8 @@ var gq = {
 	 */
 	removeSetting: function (name)
 	{
-		delete gq.settings[name];
-		gq.save();
+		delete GlobalQuran.settings[name];
+		GlobalQuran.save();
 	},
 	
 	/**
@@ -249,8 +249,8 @@ var gq = {
 	 */
 	start: function ()
 	{
-		gq.init();						
-		gq.load.onStart();
+		GlobalQuran.init();						
+		GlobalQuran.load.onStart();
 	},
 	
 	/**
@@ -263,17 +263,17 @@ var gq = {
 		
 		list: function ()
 		{
-			return gq.data.languageList;
+			return GlobalQuran.data.languageList;
 		},
 		
 		countryList: function ()
 		{
-			return gq.data.languageCountryList;
+			return GlobalQuran.data.languageCountryList;
 		},
 		
 		selected: function ()
 		{
-			return gq.settings.selectedLanguage;
+			return GlobalQuran.settings.selectedLanguage;
 		}
 	},
 	
@@ -288,21 +288,21 @@ var gq = {
 		 */
 		init: function ()
 		{
-			if (gq.settings.selectedBy && typeof(gq.settings.selectedBy) == 'object' && this.length() > 0)
+			if (GlobalQuran.settings.selectedBy && typeof(GlobalQuran.settings.selectedBy) == 'object' && this.length() > 0)
 				return false;
 			
 			//backward compatibility
-			if (gq.settings.selectedBy && typeof(gq.settings.selectedBy) != 'object')
+			if (GlobalQuran.settings.selectedBy && typeof(GlobalQuran.settings.selectedBy) != 'object')
 			{
-				by = gq.settings.selectedBy;
-				gq.quran.reset();
+				by = GlobalQuran.settings.selectedBy;
+				GlobalQuran.quran.reset();
 				var selectedArray = by.split('|');
 				$.each(selectedArray, function(a, quranBy) {
-					gq.quran.add(quranBy);					
+					GlobalQuran.quran.add(quranBy);					
 				});
 			}
 			else
-				gq.quran.reset();
+				GlobalQuran.quran.reset();
 		},
 		
 		/**
@@ -310,7 +310,7 @@ var gq = {
 		 * @return {void}
 		 */
 		load: function () {
-			gq.load.get(gq.settings.surah, gq.settings.ayah);
+			GlobalQuran.load.get(GlobalQuran.settings.surah, GlobalQuran.settings.ayah);
 		},
 		
 		/**
@@ -325,11 +325,11 @@ var gq = {
 			var fromVerseNo, toVerseNo, 
 			text = {}, 
 			selected = this.selected(), selectedSorted,
-			byList = gq.quran.list('text'),
+			byList = GlobalQuran.quran.list('text'),
 			verseObject;
 			
-			dataBy = dataBy || gq.config.data.by;
-			byNumber = byNumber || gq.load._defaultByNumber();
+			dataBy = dataBy || GlobalQuran.config.data.by;
+			byNumber = byNumber || GlobalQuran.load._defaultByNumber();
 			
 			if (dataBy == 'juz')
 			{
@@ -370,16 +370,16 @@ var gq = {
 					
 					$.each(selectedSorted, function(a, quranBy)
 					{						
-						if (gq.data.quran[quranBy])
+						if (GlobalQuran.data.quran[quranBy])
 						{
-							verseObject = gq.data.quran[quranBy][i];
-							text[i]['list'][quranBy] = gq.quran.parse.load(quranBy, verseObject);
+							verseObject = GlobalQuran.data.quran[quranBy][i];
+							text[i]['list'][quranBy] = GlobalQuran.quran.parse.load(quranBy, verseObject);
 							text[i]['list'][quranBy].type = byList[quranBy].type;
 						}
 						else
 						{
-							gq.quran.remove(quranBy);
-							gq._gaqPush(['_trackEvent', 'Text', 'Error::`'+quranBy+'` not loaded in text']);
+							GlobalQuran.quran.remove(quranBy);
+							GlobalQuran._gaqPush(['_trackEvent', 'Text', 'Error::`'+quranBy+'` not loaded in text']);
 						}
 					});
 				}
@@ -396,11 +396,11 @@ var gq = {
 		list: function (format)
 		{
 			if (!format)
-				return gq.data.quranList;
+				return GlobalQuran.data.quranList;
 			else
 			{
 				list = {};
-				$.each(gq.data.quranList, function(i, info) {
+				$.each(GlobalQuran.data.quranList, function(i, info) {
 					if (format == info['format'])
 						list[i] = info;
 				});
@@ -415,7 +415,7 @@ var gq = {
 		 */
 		quranList: function ()
 		{
-			var list = gq.quran.list('text'),
+			var list = GlobalQuran.quran.list('text'),
 			newList = {};
 			
 			
@@ -429,7 +429,7 @@ var gq = {
 					newList[quranByID] = by;
 				
 				// check if language is been selected or not
-				newList[quranByID]['selected'] = gq.quran.isSelected(quranByID);
+				newList[quranByID]['selected'] = GlobalQuran.quran.isSelected(quranByID);
 			});
 			
 			return newList;
@@ -453,13 +453,13 @@ var gq = {
 				// create object for language, if not created yet
 				if (!newList[by.language_code])
 				{
-					newList[by.language_code] = gq.language.list()[by.language_code];
+					newList[by.language_code] = GlobalQuran.language.list()[by.language_code];
 					newList[by.language_code]['selected'] = false;
 				}
 				
 				// check if language is been selected or not
 				if (!newList[by.language_code]['selected'])
-					newList[by.language_code]['selected'] = gq.quran.isSelected(quranByID);
+					newList[by.language_code]['selected'] = GlobalQuran.quran.isSelected(quranByID);
 			});
 			
 			return newList;
@@ -474,7 +474,7 @@ var gq = {
 		{
 			langCode = langCode || '';
 			langCode = $.trim(langCode).toLowerCase();
-			var list = gq.quran.list('text'),
+			var list = GlobalQuran.quran.list('text'),
 			newList = {},
 			searchString;
 			
@@ -491,7 +491,7 @@ var gq = {
 					newList[quranByID] = by;				
 				
 				// check if language is been selected or not
-				newList[quranByID]['selected'] = gq.quran.isSelected(quranByID);
+				newList[quranByID]['selected'] = GlobalQuran.quran.isSelected(quranByID);
 			});
 			
 			return newList;
@@ -515,12 +515,12 @@ var gq = {
 		direction: function (quranBy)
 		{
 			if (by == 'quran-wordbyword')
-				return (gq.settings.wbwDirection == 'arabic2english') ? 'right' : 'left';
+				return (GlobalQuran.settings.wbwDirection == 'arabic2english') ? 'right' : 'left';
 			else if (by == 'quran-kids')
-				return (gq.settings.wbwDirection == 'arabic2english') ? 'right' : 'left';
+				return (GlobalQuran.settings.wbwDirection == 'arabic2english') ? 'right' : 'left';
 			
 			var languageCode = this.detail(quranBy).language_code;
-			return  (typeof(gq.language.list()[languageCode]) !== 'undefined') ? gq.language.list()[languageCode].dir : 'left';
+			return  (typeof(GlobalQuran.language.list()[languageCode]) !== 'undefined') ? GlobalQuran.language.list()[languageCode].dir : 'left';
 		},
 		
 		/**
@@ -529,7 +529,7 @@ var gq = {
 		 */
 		selected: function ()
 		{
-			return gq.settings.selectedBy;
+			return GlobalQuran.settings.selectedBy;
 		},
 		
 		/**
@@ -562,8 +562,8 @@ var gq = {
 			selected = this.selected(),
 			fromVerseNo, toVerseNo;
 			
-			dataBy = dataBy || gq.config.data.by;
-			byNumber = byNumber || gq.load._defaultByNumber();
+			dataBy = dataBy || GlobalQuran.config.data.by;
+			byNumber = byNumber || GlobalQuran.load._defaultByNumber();
 			
 			if (dataBy == 'juz')
 			{
@@ -588,11 +588,11 @@ var gq = {
 					
 			$.each(selected, function(i, quranBy) {
 
-				if (gq.data.quran[quranBy])
+				if (GlobalQuran.data.quran[quranBy])
 				{	
 					for (i=fromVerseNo; i<=toVerseNo; i++)
 					{
-						if (!gq.data.quran[quranBy][i])
+						if (!GlobalQuran.data.quran[quranBy][i])
 						{
 							notCached.push(quranBy);
 							break;
@@ -612,8 +612,8 @@ var gq = {
 		 */
 		reset: function ()
 		{
-			gq.settings.selectedBy = {};
-			gq.save();
+			GlobalQuran.settings.selectedBy = {};
+			GlobalQuran.save();
 		},
 		
 		/**
@@ -622,10 +622,10 @@ var gq = {
 		 */
 		length: function ()
 		{
-			if (!gq.settings.selectedBy || typeof(gq.settings.selectedBy) != 'object')
+			if (!GlobalQuran.settings.selectedBy || typeof(GlobalQuran.settings.selectedBy) != 'object')
 				return 0;
 			
-			return Object.keys(gq.settings.selectedBy).length;
+			return Object.keys(GlobalQuran.settings.selectedBy).length;
 		},
 		
 		/**
@@ -635,7 +635,7 @@ var gq = {
 		 */
 		isSelected: function (quranBy)
 		{
-			return gq.settings.selectedBy[quranBy] ? true : false;
+			return GlobalQuran.settings.selectedBy[quranBy] ? true : false;
 		},
 		
 		/**
@@ -645,9 +645,9 @@ var gq = {
 		 */
 		add: function (quranBy)
 		{
-			gq.settings.selectedBy[quranBy] = quranBy;
-			gq.save();
-			gq.bind.load('after', 'quran.add', window, quranBy);
+			GlobalQuran.settings.selectedBy[quranBy] = quranBy;
+			GlobalQuran.save();
+			GlobalQuran.bind.load('after', 'quran.add', window, quranBy);
 		},
 		
 		/**
@@ -657,9 +657,9 @@ var gq = {
 		 */
 		remove: function (quranBy)
 		{
-			delete gq.settings.selectedBy[quranBy];
-			gq.save();
-			gq.bind.load('after', 'quran.remove', window, quranBy);
+			delete GlobalQuran.settings.selectedBy[quranBy];
+			GlobalQuran.save();
+			GlobalQuran.bind.load('after', 'quran.remove', window, quranBy);
 		},
 		
 		/**
@@ -675,14 +675,14 @@ var gq = {
 			 */
 			load: function (quranBy, verseObject)
 			{	
-				var type = gq.data.quranList[quranBy].type;
+				var type = GlobalQuran.data.quranList[quranBy].type;
 				
 				verseObject.plainText = verseObject.verse;
 				
-				gq.bind.load('before', 'quran.parse', window, quranBy, verseObject);
+				GlobalQuran.bind.load('before', 'quran.parse', window, quranBy, verseObject);
 
-				if (type == 'quran' && /gq-tajweed/.test(quranBy))
-					this.parseGQTajweed(quranBy, verseObject);
+				if (type == 'quran' && /GlobalQuran-tajweed/.test(quranBy))
+					this.parseGlobalQuranTajweed(quranBy, verseObject);
 				else if (type == 'quran' && /tajweed/.test(quranBy))
 					this.parseTajweed(quranBy, verseObject);
 				else if (type == 'quran' && /wordbyword/.test(quranBy))
@@ -694,7 +694,7 @@ var gq = {
 				else
 					this.parseTranslation(quranBy, verseObject);
 				
-				gq.bind.load('after', 'quran.parse', window, quranBy, verseObject);
+				GlobalQuran.bind.load('after', 'quran.parse', window, quranBy, verseObject);
 				
 				return verseObject;
 			},
@@ -830,19 +830,19 @@ var gq = {
 				
 				var text = verseObject.verse;
 				
-				if (gq.settings.showSigns)
+				if (GlobalQuran.settings.showSigns)
 			    {
 			        text = this.pregReplace(' ([$HIGH_SALA-$HIGH_SEEN])', '<span class="sign">&nbsp;$1</span>', text);
-			        text = this.pregReplace('($SAJDAH)', gq.settings.ignoreInternalSigns ? '' : '<span class="internal-sign">$1</span>', text);
-			        text = this.pregReplace('$RUB_EL_HIZB', gq.settings.ignoreInternalSigns ? '' : '<span class="icon juz-sign"></span>', text);
+			        text = this.pregReplace('($SAJDAH)', GlobalQuran.settings.ignoreInternalSigns ? '' : '<span class="internal-sign">$1</span>', text);
+			        text = this.pregReplace('$RUB_EL_HIZB', GlobalQuran.settings.ignoreInternalSigns ? '' : '<span class="icon juz-sign"></span>', text);
 			    }
 			    else
 			    	text = this.pregReplace('[$HIGH_SALA-$RUB_EL_HIZB$SAJDAH]', '', text);
 			    
-			    if (!gq.settings.showAlef)
+			    if (!GlobalQuran.settings.showAlef)
 			    	text = this.pregReplace('$SUPERSCRIPT_ALEF', '', text);
 			    
-			    if (gq.settings.font == 'me_quran')
+			    if (GlobalQuran.settings.font == 'me_quran')
 			    {
 			        text = this.addSpaceTatweel(text);
 			        text = this.pregReplace('($LAM$HARAKA*)$TATWEEL$HAMZA_ABOVE($HARAKA*$ALEF)', '$1$HAMZA$2', text);
@@ -855,7 +855,7 @@ var gq = {
 			    text = this.addTatweel(text);
 			    text = this.pregReplace('$ALEF$MADDA', '$ALEF_WITH_MADDA_ABOVE', text);
 			    
-			    if (gq.settings.font != 'me_quran')
+			    if (GlobalQuran.settings.font != 'me_quran')
 			    {
 			        text = this.pregReplace('($SHADDA)([$KASRA$KASRATAN])', '$2$1', text);
 			        text = this.pregReplace('($LAM$HARAKA*$LAM$HARAKA*)($HEH)', '$1$TATWEEL$2', text);
@@ -889,16 +889,16 @@ var gq = {
 							return;
 						}
 					    
-						if (gq.settings.wbwDirection == 'english2arabic')
+						if (GlobalQuran.settings.wbwDirection == 'english2arabic')
 						{
-							if (gq.settings.wbwMouseOver)
+							if (GlobalQuran.settings.wbwMouseOver)
 								verse_html += '<span class="word"><span class="en tipsWord" title="'+verse[0]+'">'+verse[1]+'</span></span>';
 							else
 								verse_html += '<span class="word staticWord"><span class="en first ltr" dir="ltr">'+verse[1]+'</span><span class="ar quran-text second rtl" dir="rtl">'+verse[0]+'</span></span>';
 						}
 						else
 						{
-							if (gq.settings.wbwMouseOver)
+							if (GlobalQuran.settings.wbwMouseOver)
 								verse_html += '<span class="word"><span class="ar quran-text tipsWord" title="'+verse[1]+'">'+verse[0]+'</span></span>';
 							else
 								verse_html += '<span class="word staticWord"><span class="ar quran-text top first rtl" dir="rtl">'+verse[0]+'</span><span class="en second ltr" dir="ltr">'+verse[1]+'</span></span>'; 
@@ -934,16 +934,16 @@ var gq = {
 							return;
 						}					    
 					    
-						if (gq.settings.wbwDirection == 'english2arabic')
+						if (GlobalQuran.settings.wbwDirection == 'english2arabic')
 						{
-							if (gq.settings.wbwMouseOver)
+							if (GlobalQuran.settings.wbwMouseOver)
 								verse_html += '<span class="word wordColor'+color+'"><span class="en tipsWord" title="'+verse[0]+'">'+verse[1]+'</span></span>';
 							else
 								verse_html += '<span class="word wordColor'+color+' staticWord"><span class="en first ltr" dir="ltr">'+verse[1]+'</span><span class="ar quran-text second rtl" dir="rtl">'+verse[0]+'</span></span>';
 						}
 						else
 						{
-							if (gq.settings.wbwMouseOver)
+							if (GlobalQuran.settings.wbwMouseOver)
 								verse_html += '<span class="word wordColor'+color+'"><span class="ar quran-text tipsWord" title="'+verse[1]+'">'+verse[0]+'</span></span>';
 							else
 								verse_html += '<span class="word wordColor'+color+' staticWord"><span class="ar quran-text top first rtl" dir="rtl">'+verse[0]+'</span><span class="en second ltr" dir="ltr">'+verse[1]+'</span></span>'; 
@@ -978,12 +978,12 @@ var gq = {
 			},
 			
 			/**
-			 * parse the gq tajweed text
+			 * parse the GlobalQuran tajweed text
 			 * @param quranBy
 			 * @param object verseObject {surah: 2, ayah: 4, verse: 'verse text here..'}
 			 * @returns {String}
 			 */
-			parseGQTajweed: function (quranBy, verseObject)
+			parseGlobalQuranTajweed: function (quranBy, verseObject)
 			{
 				var text = verseObject.verse;
 				text = this.buck2arabic(text);
@@ -1098,18 +1098,18 @@ var gq = {
 		
 		init: function ()
 		{
-			if (gq.settings.selectedSearchBy && typeof(gq.settings.selectedSearchBy) == 'object' && Object.keys(gq.settings.selectedSearchBy).length > 0)
+			if (GlobalQuran.settings.selectedSearchBy && typeof(GlobalQuran.settings.selectedSearchBy) == 'object' && Object.keys(GlobalQuran.settings.selectedSearchBy).length > 0)
 				return false;
 			
-			gq.settings.selectedSearchBy = {};
+			GlobalQuran.settings.selectedSearchBy = {};
 			
-			by = gq.quran.list('text');
+			by = GlobalQuran.quran.list('text');
 			$.each(by, function(quranBy, detail)
 			{
 				if (detail.type == 'quran')
-					gq.search.addQuranBy(quranBy);
-				else if (gq.data.languageCountryList[quranBy.language_code])
-					gq.search.addQuranBy(quranBy);
+					GlobalQuran.search.addQuranBy(quranBy);
+				else if (GlobalQuran.data.languageCountryList[quranBy.language_code])
+					GlobalQuran.search.addQuranBy(quranBy);
 			});
 		},
 		
@@ -1129,18 +1129,18 @@ var gq = {
 				
 				if (verse.length > 1)
 				{
-					gq.settings.surah = Quran._fixSurahNum(parseInt(verse['0']));
-					gq.settings.ayah = Quran._fixAyahNum(gq.settings.surah, parseInt(verse['1']));
+					GlobalQuran.settings.surah = Quran._fixSurahNum(parseInt(verse['0']));
+					GlobalQuran.settings.ayah = Quran._fixAyahNum(GlobalQuran.settings.surah, parseInt(verse['1']));
 				}
 				else
 				{
 					verse = Quran.ayah.fromPage(keyword);
-					gq.settings.surah = verse.surah;
-					gq.settings.ayah = verse.ayah;
+					GlobalQuran.settings.surah = verse.surah;
+					GlobalQuran.settings.ayah = verse.ayah;
 				}
 				
-				gq.player.reset();
-				gq.load.get(gq.settings.surah, gq.settings.ayah);
+				GlobalQuran.player.reset();
+				GlobalQuran.load.get(GlobalQuran.settings.surah, GlobalQuran.settings.ayah);
 				
 				return true;
 			}				
@@ -1148,7 +1148,7 @@ var gq = {
 			this._keyword = keyword;
 			this._position = more ? this.next() : 0;
 			this._loading = true;
-			gq.search();
+			GlobalQuran.search();
 		},
 		
 		loading: function (set)
@@ -1163,12 +1163,12 @@ var gq = {
 		{
 			this._keyword = '';
 			this._position = 0;
-			gq.load.get(gq.surah(), gq.ayah());
+			GlobalQuran.load.get(GlobalQuran.surah(), GlobalQuran.ayah());
 		},
 		
 		text: function ()
 		{
-			return gq.data.search.quran;
+			return GlobalQuran.data.search.quran;
 		},
 		
 		keyword: function ()
@@ -1183,22 +1183,22 @@ var gq = {
 		
 		isNext: function ()
 		{
-			return gq.data.search.paging.next ? true : false;
+			return GlobalQuran.data.search.paging.next ? true : false;
 		},
 		
 		next: function ()
 		{
-			return gq.data.search.paging.next;
+			return GlobalQuran.data.search.paging.next;
 		},
 		
 		timeTook: function ()
 		{
-			return gq.data.search.timeTook;
+			return GlobalQuran.data.search.timeTook;
 		},
 		
 		totalRows: function ()
 		{
-			return gq.data.search.paging.total_rows;
+			return GlobalQuran.data.search.paging.total_rows;
 		},
 		
 		totalShowing: function ()
@@ -1208,24 +1208,24 @@ var gq = {
 		
 		selected: function ()
 		{
-			return gq.settings.selectedSearchBy;
+			return GlobalQuran.settings.selectedSearchBy;
 		},
 				
 		isSelected: function (quranBy)
 		{
-			return gq.settings.selectedSearchBy[quranBy] ? true : false;
+			return GlobalQuran.settings.selectedSearchBy[quranBy] ? true : false;
 		},
 		
 		addQuranBy: function (quranBy)
 		{
-			gq.settings.selectedSearchBy[quranBy] = quranBy;
-			gq.save();
+			GlobalQuran.settings.selectedSearchBy[quranBy] = quranBy;
+			GlobalQuran.save();
 		},
 		
 		removeQuranBy: function (quranBy)
 		{
-			delete gq.settings.selectedSearchBy[quranBy];
-			gq.save();
+			delete GlobalQuran.settings.selectedSearchBy[quranBy];
+			GlobalQuran.save();
 		},
 		
 		beginVerse: function ()
@@ -1245,21 +1245,21 @@ var gq = {
 		 */
 		init: function()
 		{
-			if (gq.settings.selectedRecitor && typeof(gq.settings.selectedRecitor) == 'object' && this.length() > 0)
+			if (GlobalQuran.settings.selectedRecitor && typeof(GlobalQuran.settings.selectedRecitor) == 'object' && this.length() > 0)
 			{
-				gq.recitor.remove('auto'); // incase it was added
+				GlobalQuran.recitor.remove('auto'); // incase it was added
 				return false;
 			}
 			
 			//backward compatibility
-			if (gq.settings.selectedRecitor && typeof(gq.settings.selectedRecitor) != 'object')
+			if (GlobalQuran.settings.selectedRecitor && typeof(GlobalQuran.settings.selectedRecitor) != 'object')
 			{
-				by = gq.settings.selectedRecitor;
+				by = GlobalQuran.settings.selectedRecitor;
 				this.reset();
 				var selectedArray = by.split('|');
 				$.each(selectedArray, function(a, quranBy) {
 					if (quranBy != 'auto')
-						gq.recitor.add(quranBy);					
+						GlobalQuran.recitor.add(quranBy);					
 				});
 			}
 			else
@@ -1271,7 +1271,7 @@ var gq = {
 		 */
 		load: function ()
 		{
-			gq.player.load('new');
+			GlobalQuran.player.load('new');
 		},
 		
 		/**
@@ -1280,7 +1280,7 @@ var gq = {
 		 */
 		list: function()
 		{
-			return gq.quran.list('audio');
+			return GlobalQuran.quran.list('audio');
 		},
 		
 		/**
@@ -1290,7 +1290,7 @@ var gq = {
 		 */
 		bitrateList: function (quranBy)
 		{			
-			row = gq.quran.detail(quranBy);
+			row = GlobalQuran.quran.detail(quranBy);
 			
 			if (!row)
 				return {'auto': 'mp3,ogg'};
@@ -1315,7 +1315,7 @@ var gq = {
 		 */
 		selected: function ()
 		{
-			return gq.settings.selectedRecitor;
+			return GlobalQuran.settings.selectedRecitor;
 		},
 		
 		/**
@@ -1325,7 +1325,7 @@ var gq = {
 		 */
 		selectedKbs: function (quranBy)
 		{
-			return gq.settings.selectedRecitor[quranBy];
+			return GlobalQuran.settings.selectedRecitor[quranBy];
 		},
 		
 		/**
@@ -1333,8 +1333,8 @@ var gq = {
 		 */
 		reset: function ()
 		{
-			gq.settings.selectedRecitor = {};
-			gq.save();
+			GlobalQuran.settings.selectedRecitor = {};
+			GlobalQuran.save();
 		},
 		
 		/**
@@ -1343,10 +1343,10 @@ var gq = {
 		 */
 		length: function ()
 		{
-			if (!gq.settings.selectedRecitor || typeof(gq.settings.selectedRecitor) != 'object')
+			if (!GlobalQuran.settings.selectedRecitor || typeof(GlobalQuran.settings.selectedRecitor) != 'object')
 				return 0;
 			
-			return Object.keys(gq.settings.selectedRecitor).length;
+			return Object.keys(GlobalQuran.settings.selectedRecitor).length;
 		},
 		
 		/**
@@ -1356,7 +1356,7 @@ var gq = {
 		 */
 		isSelected: function (quranBy)
 		{			
-			return gq.settings.selectedRecitor[quranBy] ? true : false;
+			return GlobalQuran.settings.selectedRecitor[quranBy] ? true : false;
 		},
 		
 		/**
@@ -1367,12 +1367,12 @@ var gq = {
 		add: function (quranBy, kbs)
 		{	
 			if (kbs)
-				gq.settings.selectedLastRecitorBytes = kbs;
+				GlobalQuran.settings.selectedLastRecitorBytes = kbs;
 			
-			gq.settings.selectedRecitor[quranBy] = kbs || 'auto';
-			gq.save();
+			GlobalQuran.settings.selectedRecitor[quranBy] = kbs || 'auto';
+			GlobalQuran.save();
 			
-			gq.bind.load('after', 'recitor.add', window, quranBy);
+			GlobalQuran.bind.load('after', 'recitor.add', window, quranBy);
 		},
 		
 		/**
@@ -1381,10 +1381,10 @@ var gq = {
 		 */
 		remove: function (quranBy)
 		{
-			delete gq.settings.selectedRecitor[quranBy];
-			gq.save();
+			delete GlobalQuran.settings.selectedRecitor[quranBy];
+			GlobalQuran.save();
 			
-			gq.bind.load('after', 'recitor.remove', window, quranBy);
+			GlobalQuran.bind.load('after', 'recitor.remove', window, quranBy);
 		}		
 	},
 	
@@ -1446,57 +1446,57 @@ var gq = {
 			},
 			ready: function (event)
 			{
-				gq.player.load('new'); // already getting load from recitation change
-				gq.bind.load('after', 'jplayer.ready', event, event);
+				GlobalQuran.player.load('new'); // already getting load from recitation change
+				GlobalQuran.bind.load('after', 'jplayer.ready', event, event);
 			},				
 			ended: function (event)
 			{		
-				if (!gq.player.isOS())
+				if (!GlobalQuran.player.isOS())
 				{
-					if (gq.settings.audioDelay && (gq.settings.audioDelay > 0 || gq.settings.audioDelay != false))
+					if (GlobalQuran.settings.audioDelay && (GlobalQuran.settings.audioDelay > 0 || GlobalQuran.settings.audioDelay != false))
 					{
-						var delay = (gq.settings.audioDelay == 'ayah') ? event.jPlayer.status.duration : gq.settings.audioDelay;
+						var delay = (GlobalQuran.settings.audioDelay == 'ayah') ? event.jPlayer.status.duration : GlobalQuran.settings.audioDelay;
 						delay = delay * 1000;
-						clearTimeout(gq.player._delayID);
-						gq.player._delayID = setTimeout('gq.player.next()', delay);
+						clearTimeout(GlobalQuran.player._delayID);
+						GlobalQuran.player._delayID = setTimeout('GlobalQuran.player.next()', delay);
 					}
 					else
 					{					        
-						gq.player.next();
+						GlobalQuran.player.next();
 					}
 				}
 				
 				$('.buffer').css('width', '0%');
-				gq.bind.load('after', 'jplayer.ended', event, event);
+				GlobalQuran.bind.load('after', 'jplayer.ended', event, event);
 			},
 			loadstart: function (event)
 			{
-				if (gq.player.status().seekPercent != 100)
+				if (GlobalQuran.player.status().seekPercent != 100)
 				{
 					$(".progressBar").addClass("audioLoading");
 				}
-				gq.bind.load('after', 'jplayer.loadstart', event, event);
+				GlobalQuran.bind.load('after', 'jplayer.loadstart', event, event);
 			},
 			loadeddata: function (event)
 			{
 				$(".progressBar").removeClass("audioLoading");
-				gq._gaqPush(['_trackEvent', 'Audio', 'load', event.jPlayer.status.src]);
-				gq.bind.load('after', 'jplayer.loaddata', event, event);
+				GlobalQuran._gaqPush(['_trackEvent', 'Audio', 'load', event.jPlayer.status.src]);
+				GlobalQuran.bind.load('after', 'jplayer.loaddata', event, event);
 			},
 			seeking: function()
 			{
 				$(".progressBar").addClass("audioLoading");
-				gq.bind.load('after', 'jplayer.seeking', event, event);
+				GlobalQuran.bind.load('after', 'jplayer.seeking', event, event);
 			},
 			seeked: function()
 			{
 				$(".progressBar").removeClass("audioLoading");
-				gq.bind.load('after', 'jplayer.seeked', event, event);
+				GlobalQuran.bind.load('after', 'jplayer.seeked', event, event);
 			},
 			progress: function (event)
 			{
 				var percent = 0;
-				var audio = gq.player.data().htmlElement.audio;
+				var audio = GlobalQuran.player.data().htmlElement.audio;
 				
 				if((typeof audio.buffered === "object") && (audio.buffered.length > 0))
 				{
@@ -1518,7 +1518,7 @@ var gq = {
 				
 				$('.buffer').css('width', percent+'%');
 				
-				gq.bind.load('after', 'jplayer.progress', event, event);
+				GlobalQuran.bind.load('after', 'jplayer.progress', event, event);
 			},
 			play: function (event)
 			{
@@ -1526,23 +1526,23 @@ var gq = {
 				$(".playingTime").text($.jPlayer.convertTime(event.jPlayer.status.currentTime));
 				$(".totalTime").text($.jPlayer.convertTime(event.jPlayer.status.duration));
 				$(".progressBar").slider("value", event.jPlayer.status.currentPercentRelative);
-				gq.bind.load('after', 'jplayer.play', event, event);
+				GlobalQuran.bind.load('after', 'jplayer.play', event, event);
 			},
 			pause: function (event)
 			{
-				var status = gq.player.status();
+				var status = GlobalQuran.player.status();
 
-				if (gq.player.isOS() && ((gq.player._iBug == 1) || (status.duration > 0 && $.jPlayer.convertTime(status.duration) != 'NaN' && $.jPlayer.convertTime(status.duration) != '00:00' && (status.currentTime == 0 || status.currentTime == status.duration))))
+				if (GlobalQuran.player.isOS() && ((GlobalQuran.player._iBug == 1) || (status.duration > 0 && $.jPlayer.convertTime(status.duration) != 'NaN' && $.jPlayer.convertTime(status.duration) != '00:00' && (status.currentTime == 0 || status.currentTime == status.duration))))
 				{						
-					if (gq.player._iBug == 1)
-						gq.player.load('play');
+					if (GlobalQuran.player._iBug == 1)
+						GlobalQuran.player.load('play');
 					else
-						gq.player.next();
+						GlobalQuran.player.next();
 								
-					gq.player._iBug++;
+					GlobalQuran.player._iBug++;
 				}
 				
-				gq.bind.load('after', 'jplayer.pause', event, event);
+				GlobalQuran.bind.load('after', 'jplayer.pause', event, event);
 			},
 			timeupdate: function (event)
 			{
@@ -1550,23 +1550,23 @@ var gq = {
 				$(".totalTime").text($.jPlayer.convertTime(event.jPlayer.status.duration));
 				$(".progressBar").slider("value", event.jPlayer.status.currentPercentRelative);
 				
-				gq.bind.load('after', 'jplayer.timeupdate', event, event);
+				GlobalQuran.bind.load('after', 'jplayer.timeupdate', event, event);
 			},
 			error: function(event)
 			{
-				gq._gaqPush(['_trackEvent', 'Audio', 'Error::'+event.jPlayer.error.type, event.jPlayer.error]);
+				GlobalQuran._gaqPush(['_trackEvent', 'Audio', 'Error::'+event.jPlayer.error.type, event.jPlayer.error]);
 				switch(event.jPlayer.error.type)
 				{
 					case $.jPlayer.error.URL:
-						gq._gaqPush(['_trackEvent', 'Audio', 'Error::MISSING'+$.jPlayer.error.URL]);
-						gq.player.next(); // A function you might create to move on to the next media item when an error occurs.
+						GlobalQuran._gaqPush(['_trackEvent', 'Audio', 'Error::MISSING'+$.jPlayer.error.URL]);
+						GlobalQuran.player.next(); // A function you might create to move on to the next media item when an error occurs.
 					break;
 					case $.jPlayer.error.NO_SOLUTION:
-						gq._gaqPush(['_trackEvent', 'Audio', 'Error::NO_SOLUTION']);
+						GlobalQuran._gaqPush(['_trackEvent', 'Audio', 'Error::NO_SOLUTION']);
 				    break;
 				}
 				
-				gq.bind.load('after', 'jplayer.error', event, event);
+				GlobalQuran.bind.load('after', 'jplayer.error', event, event);
 			}
 		},
 		
@@ -1575,49 +1575,49 @@ var gq = {
 		 */
 		init: function () 
 		{
-			if (!gq.config.player.enable)
+			if (!GlobalQuran.config.player.enable)
 				return; // player is off
 			
 			// set auto play value to playing.
-			gq.settings.playing = gq.config.player.autoPlay;
+			GlobalQuran.settings.playing = GlobalQuran.config.player.autoPlay;
 			
 			if (this.isOS()) // pre-settings for iphone/ipod/ipad/mac
 			{
-				gq.settings.playing = false; // cant auto play in iphone
-				gq.player.preload = -1;  // cant load two instance in iphone
+				GlobalQuran.settings.playing = false; // cant auto play in iphone
+				GlobalQuran.player.preload = -1;  // cant load two instance in iphone
 			}
 			
-			if (gq.config.offline)
-				gq.settings.playing = false; // cant auto play if offline use
+			if (GlobalQuran.config.offline)
+				GlobalQuran.settings.playing = false; // cant auto play if offline use
 			
 			this.setup();
 		},
 		
 		/**
-		 * setup the player, this function is being called from gq.player.init();
+		 * setup the player, this function is being called from GlobalQuran.player.init();
 		 */
 		setup: function ()
 		{	
-			gq.player.setting.volume = gq.settings.volume;
-			gq.player.setting.muted = gq.settings.muted;
+			GlobalQuran.player.setting.volume = GlobalQuran.settings.volume;
+			GlobalQuran.player.setting.muted = GlobalQuran.settings.muted;
 			
-			if (!$(gq.config.player.id).length)
+			if (!$(GlobalQuran.config.player.id).length)
 			{
-				var id = gq.config.player.id; id = id.replace(/#/, '');
+				var id = GlobalQuran.config.player.id; id = id.replace(/#/, '');
 				$('body').append('<div id="'+id+'"></div>');
 			}
 			
-			$(gq.config.player.id).jPlayer(gq.player.setting);
+			$(GlobalQuran.config.player.id).jPlayer(GlobalQuran.player.setting);
 			
-			if (gq.config.player.preload != -1)
+			if (GlobalQuran.config.player.preload != -1)
 			{
-				if (!$(gq.config.player.id2).length)
+				if (!$(GlobalQuran.config.player.id2).length)
 				{
-					var id = gq.config.player.id2; id = id.replace(/#/, '');
+					var id = GlobalQuran.config.player.id2; id = id.replace(/#/, '');
 					$('body').append('<div id="'+id+'"></div>');
 				}
 				
-				$(gq.config.player.id2).jPlayer(gq.player.setting);
+				$(GlobalQuran.config.player.id2).jPlayer(GlobalQuran.player.setting);
 			}
 			
 			$( ".progressBar" ).slider({
@@ -1626,7 +1626,7 @@ var gq = {
 				max: 100,
 				animate: true,
 				slide: function( event, ui ) {
-					gq.player.seek(ui.value);
+					GlobalQuran.player.seek(ui.value);
 				}
 			})
 			.bind('mousemove', function(e) {
@@ -1634,7 +1634,7 @@ var gq = {
 				var x = e.pageX - offset.left;
 				var w =  $(this).width();
 				var percent = 100*x/w;
-				var duration = gq.player.duration();
+				var duration = GlobalQuran.player.duration();
 				var time = percent * duration / 100;
 				$('.progressBar').attr('title', $.jPlayer.convertTime(time));
 			})
@@ -1645,10 +1645,10 @@ var gq = {
 				range: "min",
 				min: 0,
 				max: 100,
-				value: gq.settings.volume,
+				value: GlobalQuran.settings.volume,
 				animate: true,
 				slide: function( event, ui ) {
-					gq.player.volume(ui.value);
+					GlobalQuran.player.volume(ui.value);
 				}
 			})
 			.find('.ui-slider-handle').addClass('icon');
@@ -1674,7 +1674,7 @@ var gq = {
 		 */
 		load: function (action)
 		{
-			if (!gq.config.player.enable)
+			if (!GlobalQuran.config.player.enable)
 				return; // player is off
 			
 			if (action == 'new') // check if its new recitor or new bitrate, before reseting the settings.
@@ -1682,18 +1682,18 @@ var gq = {
 				this.reset();
 			}
 
-			if (!gq.config.player.preload || gq.config.player.preload == -1)
+			if (!GlobalQuran.config.player.preload || GlobalQuran.config.player.preload == -1)
 			{
 				current = this._getFiles('current');
-				$(gq.config.player.id).jPlayer("setMedia", current);
+				$(GlobalQuran.config.player.id).jPlayer("setMedia", current);
 				
-				if (gq.config.player.preload != -1)
+				if (GlobalQuran.config.player.preload != -1)
 				{
 					next = this._getFiles('next');
 					if (!next) // if reached to 6237 
 						this.reset();
 					else
-						$(gq.config.player.id2).jPlayer("setMedia", next); // just load only
+						$(GlobalQuran.config.player.id2).jPlayer("setMedia", next); // just load only
 				}
 				
 				this._currentPlayer = 1;
@@ -1703,11 +1703,11 @@ var gq = {
 				current = this._getFiles('current');
 				next = this._getFiles('next');
 				
-				$(gq.config.player.id).jPlayer("setMedia", current);
+				$(GlobalQuran.config.player.id).jPlayer("setMedia", current);
 				if (!next) // if reached to 6237 
 					this.reset();
 				else
-					$(gq.config.player.id2).jPlayer("setMedia", next);
+					$(GlobalQuran.config.player.id2).jPlayer("setMedia", next);
 				
 				this._currentPlayer = 1;
 			}
@@ -1715,7 +1715,7 @@ var gq = {
 			{
 				next = this._getFiles('next');
 				if (next) // dont need NOT here, like others. also plays player 1 again, if set this.reset();
-					$(gq.config.player.id).jPlayer("setMedia", next);
+					$(GlobalQuran.config.player.id).jPlayer("setMedia", next);
 				
 				this._currentPlayer = 2; // play player 2, while 1 gets load
 			}
@@ -1725,12 +1725,12 @@ var gq = {
 				if (!next) // if reached to 6237 
 					this.reset();
 				else
-					$(gq.config.player.id2).jPlayer("setMedia", next);
+					$(GlobalQuran.config.player.id2).jPlayer("setMedia", next);
 				
 				this._currentPlayer = 1; // play player 1, while 2 gets load
 			}
 		
-			if (gq.settings.playing && !gq.search.isActive()) // if playing, auto play
+			if (GlobalQuran.settings.playing && !GlobalQuran.search.isActive()) // if playing, auto play
 				this.play();
 		},
 		
@@ -1742,9 +1742,9 @@ var gq = {
 		_getPlayerID: function ()
 		{
 			if (this._currentPlayer == 0 || this._currentPlayer == 1)
-				return gq.config.player.id;
+				return GlobalQuran.config.player.id;
 			else
-				return gq.config.player.id2;
+				return GlobalQuran.config.player.id2;
 		},
 		
 		/**
@@ -1759,9 +1759,9 @@ var gq = {
 			var rPos = this._recitor.position;
 			var rLen = this._recitor.length;
 			
-			var surah = gq.surah();
-			var ayah = gq.ayah();
-			var verse = gq.verse();
+			var surah = GlobalQuran.surah();
+			var ayah = GlobalQuran.ayah();
+			var verse = GlobalQuran.verse();
 
 			if (get == 'next' && rLen > 1 && rPos <= rLen)
 			{
@@ -1774,7 +1774,7 @@ var gq = {
 			//single recitor
 			var recitor = this._recitor['row'+rPos];
 			
-			if (rPos == 1 && recitor.lastLoad == verse && ((gq.config.player.preload == true && this._currentPlayer != 0) || get == 'next')) // increment, sence its same ayah
+			if (rPos == 1 && recitor.lastLoad == verse && ((GlobalQuran.config.player.preload == true && this._currentPlayer != 0) || get == 'next')) // increment, sence its same ayah
 			{
 				verse++;
 				next = Quran.ayah.fromVerse(verse);
@@ -1790,16 +1790,16 @@ var gq = {
 				verse = 1;
 
 			
-			if (gq.config.player.preload == true || ((!gq.config.player.preload || gq.config.player.preload == -1) && get != 'next'))
+			if (GlobalQuran.config.player.preload == true || ((!GlobalQuran.config.player.preload || GlobalQuran.config.player.preload == -1) && get != 'next'))
 				this._recitor['row'+rPos].lastLoad = verse;
 		
 			if (verse == 6237)
 				return false; // there is no verse 6237
 			
 			if (recitor.mp3)
-				files.mp3 = gq.config.api.audioPath+recitor.name+'/mp3/'+recitor.kbs+'kbs/'+verse+'.mp3';
+				files.mp3 = GlobalQuran.config.api.audioPath+recitor.name+'/mp3/'+recitor.kbs+'kbs/'+verse+'.mp3';
 			if (recitor.ogg)
-				files.oga = gq.config.api.audioPath+recitor.name+'/ogg/'+recitor.kbs+'kbs/'+verse+'.ogg';
+				files.oga = GlobalQuran.config.api.audioPath+recitor.name+'/ogg/'+recitor.kbs+'kbs/'+verse+'.ogg';
 						
 			return files;
 		},
@@ -1811,35 +1811,35 @@ var gq = {
 		 */
 		_recitorReset: function ()
 		{
-			if (!gq.data.loaded)
+			if (!GlobalQuran.data.loaded)
 				return false; // need to load data first
 			
-			var recitorArray = gq.recitor.selected();
+			var recitorArray = GlobalQuran.recitor.selected();
 			
-			if (gq.recitor.length() == 0)
+			if (GlobalQuran.recitor.length() == 0)
 			{
-				gq.recitor.add('ar.alafasy');
+				GlobalQuran.recitor.add('ar.alafasy');
 								
-				list = gq.recitor.list();
+				list = GlobalQuran.recitor.list();
 				$.each(list, function(by, row)
 				{
-					if (gq.language.selected() != 'ar' && gq.language.selected() == row.language_code)
+					if (GlobalQuran.language.selected() != 'ar' && GlobalQuran.language.selected() == row.language_code)
 					{
-						gq.recitor.add(by);
+						GlobalQuran.recitor.add(by);
 						return true;
 					}
 				});
 			}			
 			
 			// setting the recitor array
-			var recitor = {auz: true, position: 1, length: gq.recitor.length()};
+			var recitor = {auz: true, position: 1, length: GlobalQuran.recitor.length()};
 			
-			recitorArray = gq.recitor.selected();
+			recitorArray = GlobalQuran.recitor.selected();
 
 			i = 0;
 			$.each(recitorArray, function(recitorName, kbs) {
 				++i; // increment on start, because i starts with 0
-				recitorInfo = gq.player._recitorInfo(recitorName);
+				recitorInfo = GlobalQuran.player._recitorInfo(recitorName);
 				recitor['row'+i] = recitorInfo;
 				recitor['row'+i].name = recitorName;
 				recitor['row'+i].lastLoad = -1;
@@ -1868,8 +1868,8 @@ var gq = {
 					auz: false
 				};
 
-			row = gq.data.quranList[recitorName];
-			kbs = gq.recitor.selectedKbs(recitorName);
+			row = GlobalQuran.data.quranList[recitorName];
+			kbs = GlobalQuran.recitor.selectedKbs(recitorName);
 			
 			media = row.media;
 			media = media ? $.parseJSON(media) : {};
@@ -1878,7 +1878,7 @@ var gq = {
 			{
 				$.each(media, function(key, mediaRow) {
 					kbs = mediaRow.kbs;
-					if (gq.config.player.autoBitrate == 'low')
+					if (GlobalQuran.config.player.autoBitrate == 'low')
 						return; // exit loop
 				});
 			}
@@ -1931,7 +1931,7 @@ var gq = {
 		 */
 		isContinue: function ()
 		{
-			return gq.settings.playing;
+			return GlobalQuran.settings.playing;
 		},
 		
 		/**
@@ -1953,10 +1953,10 @@ var gq = {
 			if (!this.isPlaying())
 				$(this._getPlayerID()).jPlayer('play');
 			
-			gq.settings.playing = true;
-			gq.save();
-			gq._gaqPush(['_trackEvent', 'Audio', 'Play', this.recitorBy()]);
-			gq.bind.load('after', 'player.play');
+			GlobalQuran.settings.playing = true;
+			GlobalQuran.save();
+			GlobalQuran._gaqPush(['_trackEvent', 'Audio', 'Play', this.recitorBy()]);
+			GlobalQuran.bind.load('after', 'player.play');
 		},
 		
 		/**
@@ -1965,10 +1965,10 @@ var gq = {
 		pause: function ()
 		{	
 			$(this._getPlayerID()).jPlayer('pause');
-			gq.settings.playing = false;
-			gq.save();
-			gq._gaqPush(['_trackEvent', 'Audio', 'Pause', this.recitorBy()]);
-			gq.bind.load('after', 'player.pause');
+			GlobalQuran.settings.playing = false;
+			GlobalQuran.save();
+			GlobalQuran._gaqPush(['_trackEvent', 'Audio', 'Pause', this.recitorBy()]);
+			GlobalQuran.bind.load('after', 'player.pause');
 		},
 		
 		/**
@@ -1978,8 +1978,8 @@ var gq = {
 		{	
 			$(this._getPlayerID()).jPlayer('stop');
 			this.reset();
-			gq._gaqPush(['_trackEvent', 'Audio', 'Stop', this.recitorBy()]);
-			gq.bind.load('after', 'player.stop');
+			GlobalQuran._gaqPush(['_trackEvent', 'Audio', 'Stop', this.recitorBy()]);
+			GlobalQuran.bind.load('after', 'player.stop');
 		},
 		
 		/**
@@ -1991,13 +1991,13 @@ var gq = {
 			var rLen = this._recitor.length;
 			var lastLoad = this._recitor['row'+rPos].lastLoad;
 			
-			var next = Quran.ayah.next(gq.surah(), gq.ayah());
+			var next = Quran.ayah.next(GlobalQuran.surah(), GlobalQuran.ayah());
 			var page = Quran.ayah.page(next.surah, next.ayah);
 			var juz  = Quran.ayah.juz(next.surah, next.ayah);
 			var surah = next.surah;
 			var ayah  =  next.ayah;
 			var verse = Quran.verseNo.ayah(next.surah, next.ayah);
-			var conf = gq.settings;
+			var conf = GlobalQuran.settings;
 	
 			if (rLen > 1 && rPos != rLen)
 			{
@@ -2005,7 +2005,7 @@ var gq = {
 				this.load('play');
 				return;
 			}
-			else if (gq.surah() != 9 && gq.ayah() == 1 && (lastLoad == 0 || (gq.surah() != 1 && lastLoad == 1))) // for auz,bis and ayah
+			else if (GlobalQuran.surah() != 9 && GlobalQuran.ayah() == 1 && (lastLoad == 0 || (GlobalQuran.surah() != 1 && lastLoad == 1))) // for auz,bis and ayah
 			{
 				if (rLen > 1 && rPos == rLen) // reset to first recitor
 					this._recitor.position = 1; 
@@ -2017,7 +2017,7 @@ var gq = {
 				this._recitor.position = 1;
 						
 			
-			if (gq.config.player.preload == true && rLen == 1 && lastLoad != verse && lastLoad != 0 && lastLoad != 1) // for single recitor
+			if (GlobalQuran.config.player.preload == true && rLen == 1 && lastLoad != verse && lastLoad != 0 && lastLoad != 1) // for single recitor
 			{
 				this.load('play');
 				return;
@@ -2040,44 +2040,44 @@ var gq = {
 				this._i++;
 				return;
 			}
-			else if (surah != gq.surah() && conf.repeat && conf.repeatEach == 'surah' && (!conf.repeatTimes || conf.repeatTimes >= this._i))
+			else if (surah != GlobalQuran.surah() && conf.repeat && conf.repeatEach == 'surah' && (!conf.repeatTimes || conf.repeatTimes >= this._i))
 			{
-				if (gq.config.player.preload != true)
+				if (GlobalQuran.config.player.preload != true)
 					this._recitor['row1'].lastLoad = -1;
-				gq.load.get(gq.surah(), 1);
+				GlobalQuran.load.get(GlobalQuran.surah(), 1);
 				this._i++;
 				return;
 			}
-			else if (page != gq.page() && conf.repeat && conf.repeatEach == 'page' && (!conf.repeatTimes || conf.repeatTimes >= this._i))
+			else if (page != GlobalQuran.page() && conf.repeat && conf.repeatEach == 'page' && (!conf.repeatTimes || conf.repeatTimes >= this._i))
 			{
-				if (gq.config.player.preload != true)
+				if (GlobalQuran.config.player.preload != true)
 					this._recitor['row1'].lastLoad = -1;
-				load = Quran.ayah.fromPage(gq.page());
-				gq.load.get(load.surah, load.ayah);
+				load = Quran.ayah.fromPage(GlobalQuran.page());
+				GlobalQuran.load.get(load.surah, load.ayah);
 				this._i++;
 				return;
 			}
-			else if (juz != gq.juz() && conf.repeat && conf.repeatEach == 'juz' && (!conf.repeatTimes || conf.repeatTimes >= this._i))
+			else if (juz != GlobalQuran.juz() && conf.repeat && conf.repeatEach == 'juz' && (!conf.repeatTimes || conf.repeatTimes >= this._i))
 			{
-				if (gq.config.player.preload != true)
+				if (GlobalQuran.config.player.preload != true)
 					this._recitor['row1'].lastLoad = -1;
-				load = Quran.ayah.fromJuz(gq.juz());
-				gq.load.get(load.surah, load.ayah);
+				load = Quran.ayah.fromJuz(GlobalQuran.juz());
+				GlobalQuran.load.get(load.surah, load.ayah);
 				this._i++;
 				return;
 			}
 			else
 			{	
-				if (verse == Quran.verseNo.ayah(gq.surah(), gq.ayah()) && verse >= 6236)
+				if (verse == Quran.verseNo.ayah(GlobalQuran.surah(), GlobalQuran.ayah()) && verse >= 6236)
 				{
-					if (gq.settings.playing && verse >= 6236)
+					if (GlobalQuran.settings.playing && verse >= 6236)
 						this.stop();
 					return;
 				}
 				
-				gq.next('ayah');
-				gq.bind.load('after', 'load.ayah');
-				//gq.load.get(surah, ayah);
+				GlobalQuran.next('ayah');
+				GlobalQuran.bind.load('after', 'load.ayah');
+				//GlobalQuran.load.get(surah, ayah);
 				this._i = 0;
 				return;
 			}
@@ -2092,19 +2092,19 @@ var gq = {
 			var rLen = this._recitor.length;
 			var lastLoad = this._recitor['row'+rPos].lastLoad;
 			
-			var prev = Quran.ayah.prev(gq.surah(), gq.ayah());
+			var prev = Quran.ayah.prev(GlobalQuran.surah(), GlobalQuran.ayah());
 			var page = Quran.ayah.page(prev.surah, prev.ayah);
 			var juz  = Quran.ayah.juz(prev.surah, prev.ayah);
 			var surah = prev.surah;
 			var ayah  =  prev.ayah;
 			var verse = Quran.verseNo.ayah(prev.surah, prev.ayah);
-			var conf = gq.settings;
+			var conf = GlobalQuran.settings;
 			
 			this._currentPlayer = 0;
 			this._i = 0;
 			
 			//FIXME doesnt work properly on preload enabled, so for now we not repeating auz,bis for ayahs on prev
-			if (!gq.config.player.preload && gq.config.player.preload == -1 && gq.surah() != 9 && gq.ayah() == 1 && ((lastLoad != 0 && this._recitor.auz) || (lastLoad != 1 && !this._recitor.auz) || ((lastLoad == 1 && rPos > 1) || (this._recitor.auz && lastLoad == 0 && rPos > 1)))) //&& (lastLoad == gq.verse() || (gq.surah() != 1 && lastLoad == 1))) // for auz,bis and ayah
+			if (!GlobalQuran.config.player.preload && GlobalQuran.config.player.preload == -1 && GlobalQuran.surah() != 9 && GlobalQuran.ayah() == 1 && ((lastLoad != 0 && this._recitor.auz) || (lastLoad != 1 && !this._recitor.auz) || ((lastLoad == 1 && rPos > 1) || (this._recitor.auz && lastLoad == 0 && rPos > 1)))) //&& (lastLoad == GlobalQuran.verse() || (GlobalQuran.surah() != 1 && lastLoad == 1))) // for auz,bis and ayah
 			{
 				if (!conf.repeat || (conf.repeat && conf.repeatEach != 'ayah')) // ayah repeat on bis gives problem
 				{					
@@ -2117,21 +2117,21 @@ var gq = {
 					
 					if (lastLoad == 1 && this._recitor.auz)
 					{
-						if (gq.config.player.preload == true)
+						if (GlobalQuran.config.player.preload == true)
 							this._prevRestRecitor(this._recitor.position, verse);						
 						this._recitor['row'+this._recitor.position].lastLoad = 0;
 					}
-					else if (lastLoad == gq.verse())
+					else if (lastLoad == GlobalQuran.verse())
 					{
-						if (gq.config.player.preload == true)
+						if (GlobalQuran.config.player.preload == true)
 							this._prevRestRecitor(this._recitor.position, this._recitor.auz ? 0 : 1);
 						this._recitor['row'+this._recitor.position].lastLoad = 1;
 					} 
-					else if (lastLoad > gq.verse())
+					else if (lastLoad > GlobalQuran.verse())
 					{
-						if (gq.config.player.preload == true)
+						if (GlobalQuran.config.player.preload == true)
 							this._prevRestRecitor(this._recitor.position, 1);
-						this._recitor['row'+this._recitor.position].lastLoad = gq.verse();
+						this._recitor['row'+this._recitor.position].lastLoad = GlobalQuran.verse();
 					}
 					
 					this.load('play');
@@ -2142,7 +2142,7 @@ var gq = {
 			if (rLen > 1 && rPos > 1)
 			{
 				this._recitor.position--;
-				this._recitor['row'+this._recitor.position].lastLoad = gq.verse();
+				this._recitor['row'+this._recitor.position].lastLoad = GlobalQuran.verse();
 				this.load('play');
 				return;
 			}
@@ -2154,7 +2154,7 @@ var gq = {
 						
 			if (conf.repeat && conf.repeatEach == 'ayah' && (!conf.repeatTimes || conf.repeatTimes >= this._i))
 			{
-				this._recitor['row'+this._recitor.position].lastLoad = gq.verse();
+				this._recitor['row'+this._recitor.position].lastLoad = GlobalQuran.verse();
 				// loop through recitors, if more then one recitor is selected.
 				if (rLen > 1)
 				{
@@ -2165,48 +2165,48 @@ var gq = {
 				this._i = (this._i > 1) ? this._i-1 : 1;
 				return;
 			}
-			else if (surah != gq.surah() && conf.repeat && conf.repeatEach == 'surah' && (!conf.repeatTimes || conf.repeatTimes >= this._i))
+			else if (surah != GlobalQuran.surah() && conf.repeat && conf.repeatEach == 'surah' && (!conf.repeatTimes || conf.repeatTimes >= this._i))
 			{
-				if (gq.surah() == 114)
+				if (GlobalQuran.surah() == 114)
 					verse = 6236;
 				else
-					verse = Quran.verseNo.surah(gq.surah()+1)-1;
+					verse = Quran.verseNo.surah(GlobalQuran.surah()+1)-1;
 				
 				this._recitor.position = this._recitor.length;
 				this._recitor['row'+this._recitor.position].lastLoad = verse;
 				
 				load = Quran.ayah.fromVerse(verse);
-				gq.load.get(load.surah, load.ayah);
+				GlobalQuran.load.get(load.surah, load.ayah);
 				this._i = (this._i > 1) ? this._i-1 : 1;
 				return;
 			}
-			else if (page != gq.page() && conf.repeat && conf.repeatEach == 'page' && (!conf.repeatTimes || conf.repeatTimes >= this._i))
+			else if (page != GlobalQuran.page() && conf.repeat && conf.repeatEach == 'page' && (!conf.repeatTimes || conf.repeatTimes >= this._i))
 			{
-				if (gq.page() == 604)
+				if (GlobalQuran.page() == 604)
 					verse = 6236;
 				else
-					verse = Quran.verseNo.page(gq.page()+1)-1;
+					verse = Quran.verseNo.page(GlobalQuran.page()+1)-1;
 				
 				this._recitor.position = this._recitor.length;
 				this._recitor['row'+this._recitor.position].lastLoad = verse;
 				
 				load = Quran.ayah.fromVerse(verse);		
-				gq.load.get(load.surah, load.ayah);
+				GlobalQuran.load.get(load.surah, load.ayah);
 				this._i = (this._i > 1) ? this._i-1 : 1;
 				return;
 			}
-			else if (juz != gq.juz() && conf.repeat && conf.repeatEach == 'juz' && (!conf.repeatTimes || conf.repeatTimes >= this._i))
+			else if (juz != GlobalQuran.juz() && conf.repeat && conf.repeatEach == 'juz' && (!conf.repeatTimes || conf.repeatTimes >= this._i))
 			{
-				if (gq.juz() == 30)
+				if (GlobalQuran.juz() == 30)
 					verse = 6236;
 				else
-					verse = Quran.verseNo.juz(gq.juz()+1)-1;
+					verse = Quran.verseNo.juz(GlobalQuran.juz()+1)-1;
 				
 				this._recitor.position = this._recitor.length;
 				this._recitor['row'+this._recitor.position].lastLoad = verse;
 				
 				load = Quran.ayah.fromVerse(verse);	
-				gq.load.get(load.surah, load.ayah);
+				GlobalQuran.load.get(load.surah, load.ayah);
 				this._i = (this._i > 1) ? this._i-1 : 1;
 				return;
 			}
@@ -2214,10 +2214,10 @@ var gq = {
 			{
 				this._recitor['row'+this._recitor.position].lastLoad = verse;
 				
-				if (verse == Quran.verseNo.ayah(gq.surah(), gq.ayah()) && verse == 1)
+				if (verse == Quran.verseNo.ayah(GlobalQuran.surah(), GlobalQuran.ayah()) && verse == 1)
 					return;
 
-				gq.load.get(surah, ayah);
+				GlobalQuran.load.get(surah, ayah);
 				this._i = 0;
 				return;
 			}
@@ -2259,7 +2259,7 @@ var gq = {
 					$(this._getPlayerID()).jPlayer('pause', number);				
 			}
 			
-			gq.bind.load('after', 'player.seek', window, number, usingSeconds);
+			GlobalQuran.bind.load('after', 'player.seek', window, number, usingSeconds);
 		},
 		
 		/**
@@ -2268,12 +2268,12 @@ var gq = {
 		 */
 		volume: function (volume)
 		{
-			$(gq.config.player.id).jPlayer('volume', volume);
-			$(gq.config.player.id2).jPlayer('volume', volume);
-			gq.settings.volume = volume;
-			gq.save();
+			$(GlobalQuran.config.player.id).jPlayer('volume', volume);
+			$(GlobalQuran.config.player.id2).jPlayer('volume', volume);
+			GlobalQuran.settings.volume = volume;
+			GlobalQuran.save();
 			
-			gq.bind.load('after', 'player.volume', window, volume);
+			GlobalQuran.bind.load('after', 'player.volume', window, volume);
 		},
 		
 		/**
@@ -2281,12 +2281,12 @@ var gq = {
 		 */
 		mute: function ()
 		{			
-			$(gq.config.player.id).jPlayer('mute');
-			$(gq.config.player.id2).jPlayer('mute');
-			gq.settings.muted = true;
-			gq.save();
+			$(GlobalQuran.config.player.id).jPlayer('mute');
+			$(GlobalQuran.config.player.id2).jPlayer('mute');
+			GlobalQuran.settings.muted = true;
+			GlobalQuran.save();
 			
-			gq.bind.load('after', 'player.muted');
+			GlobalQuran.bind.load('after', 'player.muted');
 		},
 		
 		/**
@@ -2294,12 +2294,12 @@ var gq = {
 		 */
 		unmute: function ()
 		{
-			$(gq.config.player.id).jPlayer('unmute');
-			$(gq.config.player.id2).jPlayer('unmute');
-			gq.settings.muted = false;
-			gq.save();
+			$(GlobalQuran.config.player.id).jPlayer('unmute');
+			$(GlobalQuran.config.player.id2).jPlayer('unmute');
+			GlobalQuran.settings.muted = false;
+			GlobalQuran.save();
 			
-			gq.bind.load('after', 'player.unmuted');
+			GlobalQuran.bind.load('after', 'player.unmuted');
 		},
 		
 		/**
@@ -2308,9 +2308,9 @@ var gq = {
 		 */
 		repeat: function (bool)
 		{
-			gq.settings.repeat = bool;
-			gq.save();
-			gq.bind.load('after', 'player.repeat', window, bool);
+			GlobalQuran.settings.repeat = bool;
+			GlobalQuran.save();
+			GlobalQuran.bind.load('after', 'player.repeat', window, bool);
 		},
 		
 		/**
@@ -2319,9 +2319,9 @@ var gq = {
 		 */
 		repeatEach: function (repeat)
 		{
-			gq.settings.repeatEach = repeat;
-			gq.save();
-			gq.bind.load('after', 'player.repeatEach', window, repeat);
+			GlobalQuran.settings.repeatEach = repeat;
+			GlobalQuran.save();
+			GlobalQuran.bind.load('after', 'player.repeatEach', window, repeat);
 		},
 		
 		/**
@@ -2330,9 +2330,9 @@ var gq = {
 		 */
 		repeatTimes: function (times)
 		{
-			gq.settings.repeatTimes = times;
-			gq.save();
-			gq.bind.load('after', 'player.repeatTimes', window, times);
+			GlobalQuran.settings.repeatTimes = times;
+			GlobalQuran.save();
+			GlobalQuran.bind.load('after', 'player.repeatTimes', window, times);
 		},
 		
 		/**
@@ -2341,9 +2341,9 @@ var gq = {
 		 */
 		audioDelay: function (delay)
 		{
-			gq.settings.audioDelay = delay;
-			gq.save();
-			gq.bind.load('after', 'player.audioDelay', window, delay);
+			GlobalQuran.settings.audioDelay = delay;
+			GlobalQuran.save();
+			GlobalQuran.bind.load('after', 'player.audioDelay', window, delay);
 		},
 		
 		/**
@@ -2396,16 +2396,16 @@ var gq = {
 				$(playerID).jPlayer("destroy").remove();
 			else
 			{
-				if ($(gq.config.player.id).length)
-					$(gq.config.player.id).jPlayer("destroy").remove();
-				if ($(gq.config.player.id2).length)
-					$(gq.config.player.id2).jPlayer("destroy").remove();
+				if ($(GlobalQuran.config.player.id).length)
+					$(GlobalQuran.config.player.id).jPlayer("destroy").remove();
+				if ($(GlobalQuran.config.player.id2).length)
+					$(GlobalQuran.config.player.id2).jPlayer("destroy").remove();
 			}
 		}
 	},
 	
 	/**
-	 * font object holds the methods to change around the quran font text, after running the method make sure you run gq.quran.load() for seeing the effect take pace
+	 * font object holds the methods to change around the quran font text, after running the method make sure you run GlobalQuran.quran.load() for seeing the effect take pace
 	 */
 	font: {
 		
@@ -2415,10 +2415,10 @@ var gq = {
 		 */
 		setFamily: function (fontFamily)
 		{
-			gq.settings.font = fontFamily;
-			gq.save();
+			GlobalQuran.settings.font = fontFamily;
+			GlobalQuran.save();
 			
-			gq.bind.load('after', 'font.family', window, fontFamily);
+			GlobalQuran.bind.load('after', 'font.family', window, fontFamily);
 		},
 		
 		/**
@@ -2427,10 +2427,10 @@ var gq = {
 		 */
 		setSize: function (size)
 		{
-			gq.settings.fontSize = size;
-			gq.save();
+			GlobalQuran.settings.fontSize = size;
+			GlobalQuran.save();
 			
-			gq.bind.load('after', 'font.size', window, size);
+			GlobalQuran.bind.load('after', 'font.size', window, size);
 		},
 		
 		/**
@@ -2440,7 +2440,7 @@ var gq = {
 		 */
 		getFamily: function (quranBy)
 		{			
-			if (gq.settings.font == 'auto' && gq.quran.isSelected(quranBy) && gq.quran.detail(quranBy).type == 'quran')
+			if (GlobalQuran.settings.font == 'auto' && GlobalQuran.quran.isSelected(quranBy) && GlobalQuran.quran.detail(quranBy).type == 'quran')
 			{
 				if (/mac/i.test(navigator.platform)) // isMac
 						return 'Scheherazade';
@@ -2449,10 +2449,10 @@ var gq = {
 				else if (/tajweed/.test(quranBy)) // isTajweed
 					return '_PDMS_Saleem_QuranFont';
 				else
-					return 'KFGQPC Uthman Taha Naskh';
+					return 'KFGlobalQuranPC Uthman Taha Naskh';
 			}
 			
-			return (gq.settings.font != 'auto') ? gq.settings.font : '';			
+			return (GlobalQuran.settings.font != 'auto') ? GlobalQuran.settings.font : '';			
 		},
 		
 		/**
@@ -2461,14 +2461,14 @@ var gq = {
 		 */
 		getSize: function ()
 		{
-			return gq.settings.fontSize;
+			return GlobalQuran.settings.fontSize;
 		}
 	},
 	
 	/**
 	 * if argument was empty, then it will just return the current juz number, else it will set it.
 	 * @param juz (optional)
-	 * @returns {mixed} return current juz number if argument was not set (if set and current page is not same page, then it will return false and run gq.load)
+	 * @returns {mixed} return current juz number if argument was not set (if set and current page is not same page, then it will return false and run GlobalQuran.load)
 	 */
 	juz: function (juz)
 	{		
@@ -2490,7 +2490,7 @@ var gq = {
 				this.save();
 				this.url.update();
 				this.player.reset();
-				gq.bind.load('after', 'load.ayah');
+				GlobalQuran.bind.load('after', 'load.ayah');
 				
 			}
 		}
@@ -2501,7 +2501,7 @@ var gq = {
 	/**
 	 * if argument was empty, then it will just return the current page number, else it will set it.
 	 * @param page (optional)
-	 * @returns {mixed} return current page number if argument was not set (if set and current page is not same page, then it will return false and run gq.load)
+	 * @returns {mixed} return current page number if argument was not set (if set and current page is not same page, then it will return false and run GlobalQuran.load)
 	 */
 	page: function (page)
 	{		
@@ -2524,7 +2524,7 @@ var gq = {
 				this.save();
 				this.url.update();
 				this.player.reset();
-				gq.bind.load('after', 'load.ayah');
+				GlobalQuran.bind.load('after', 'load.ayah');
 				
 			}
 		}
@@ -2535,7 +2535,7 @@ var gq = {
 	/**
 	 * if argument was empty, then it will just return the current surah number, else it will set it.
 	 * @param surah (optional)
-	 * @returns {mixed} return current surah number if argument was not set (if set and current page is not same page, then it will return false and run gq.load)
+	 * @returns {mixed} return current surah number if argument was not set (if set and current page is not same page, then it will return false and run GlobalQuran.load)
 	 */
 	surah: function (surah)
 	{		
@@ -2553,7 +2553,7 @@ var gq = {
 			{		
 				this.settings.ayah = 1;
 				this.player.reset();
-				gq.bind.load('after', 'load.ayah');
+				GlobalQuran.bind.load('after', 'load.ayah');
 			}
 		}
 		
@@ -2564,7 +2564,7 @@ var gq = {
 	 * if argument was empty, then it will just return the current ayah number, else it will set it.
 	 * @param surah (optional)
 	 * @param ayah (optional)
-	 * @returns {mixed} return current ayah number if argument was not set (if set and current page is not same page, then it will return false and run gq.load)
+	 * @returns {mixed} return current ayah number if argument was not set (if set and current page is not same page, then it will return false and run GlobalQuran.load)
 	 */
 	ayah: function (surah, ayah)
 	{		
@@ -2585,7 +2585,7 @@ var gq = {
 				this.player.load('new');
 				this.save();
 				this.url.update();
-				gq.bind.load('after', 'load.ayah');
+				GlobalQuran.bind.load('after', 'load.ayah');
 			}
 		}
 		
@@ -2593,18 +2593,18 @@ var gq = {
 	},
 	
 	/**
-	 * check if current page, juz, surah is same as existing, or is it different. checks with gq.config.data.by
+	 * check if current page, juz, surah is same as existing, or is it different. checks with GlobalQuran.config.data.by
 	 * @param surah
 	 * @param ayah
 	 * @returns {Boolean}
 	 */
 	_isCurrent: function (surah, ayah)
 	{
-		if (gq.config.data.by == 'juz')
+		if (GlobalQuran.config.data.by == 'juz')
 			return (this.juz() == Quran.ayah.juz(surah, ayah));
-		else if (gq.config.data.by == 'surah')
+		else if (GlobalQuran.config.data.by == 'surah')
 			return (this.surah() == surah);
-		else if (gq.config.data.by == 'complete')
+		else if (GlobalQuran.config.data.by == 'complete')
 			return true;
 		else // page
 			return (this.page() == Quran.ayah.page(surah, ayah));
@@ -2625,14 +2625,14 @@ var gq = {
 	},
 	
 	/**
-	 * move to next page, surah or juz. depend what is passed by moveBy or set in gq.config.data.by
+	 * move to next page, surah or juz. depend what is passed by moveBy or set in GlobalQuran.config.data.by
 	 * 
 	 * @param moveBy (optional)
 	 * @returns void
 	 */
 	next: function (moveBy)
 	{
-		moveBy = moveBy || gq.config.data.by;
+		moveBy = moveBy || GlobalQuran.config.data.by;
 		
 		if (moveBy == 'ayah')
 			return this.load._nextAyah();
@@ -2645,14 +2645,14 @@ var gq = {
 	},
 	
 	/**
-	 * move to previous page, surah or juz. depend what is passed by moveBy or set in gq.config.data.by
+	 * move to previous page, surah or juz. depend what is passed by moveBy or set in GlobalQuran.config.data.by
 	 * 
 	 * @param moveBy (optional)
 	 * @returns void
 	 */
 	prev: function (moveBy)
 	{
-		moveBy = moveBy || gq.config.data.by;
+		moveBy = moveBy || GlobalQuran.config.data.by;
 		
 		if (moveBy == 'ayah')
 			return this.load._prevAyah();
@@ -2673,7 +2673,7 @@ var gq = {
 	 */
 	ayahList: function (listBy, byNumber)
 	{		
-		listBy = listBy || gq.config.data.by;
+		listBy = listBy || GlobalQuran.config.data.by;
 		byNumber = byNumber || this._defaultByNumber();
 		
 		// if not searching and if data is request, then build ayahList
@@ -2692,7 +2692,7 @@ var gq = {
 	 */
 	save: function () {
 		this._cookieSave(); // save settings
-		gq.bind.load('after', 'save');
+		GlobalQuran.bind.load('after', 'save');
 	},
 	
 	/**
@@ -2706,20 +2706,20 @@ var gq = {
 		 */
 		onStart: function (callback)
 		{	
-			gq.bind.load('before', 'start');
-			gq.bind.load('before', 'load');
+			GlobalQuran.bind.load('before', 'start');
+			GlobalQuran.bind.load('before', 'load');
 			
-			gq._cookieRead();
-			gq.url.load();
+			GlobalQuran._cookieRead();
+			GlobalQuran.url.load();
 		
-			this.dataOnly(gq.config.data.by, this._defaultByNumber(), function (response)
+			this.dataOnly(GlobalQuran.config.data.by, this._defaultByNumber(), function (response)
 			{
-				gq.player.init(); // player
+				GlobalQuran.player.init(); // player
 				
-				if (!gq.quran.length() && typeof(response) == 'object' && response.quran)
+				if (!GlobalQuran.quran.length() && typeof(response) == 'object' && response.quran)
 				{
 					$.each(response.quran, function(defaultQuranBy, ignore) {
-						gq.quran.add(defaultQuranBy);
+						GlobalQuran.quran.add(defaultQuranBy);
 					});
 					
 					this.url.save(); // cause defaultQuranBy set here
@@ -2730,19 +2730,19 @@ var gq = {
 				if (callback)
 					callback.call(window, isSuccess);
 				
-				gq.bind.load('after', 'load', window, isSuccess);
-				gq.bind.load('after', 'load.ayah');
+				GlobalQuran.bind.load('after', 'load', window, isSuccess);
+				GlobalQuran.bind.load('after', 'load.ayah');
 				
-				gq.bind.load('after', 'start', window, isSuccess);
+				GlobalQuran.bind.load('after', 'start', window, isSuccess);
 				
-				gq.load.preload();
+				GlobalQuran.load.preload();
 				
 			}, true);
 		},
 		
 		/**
 		 * loads the data by surah and ayah number and saves the position in bookmark
-		 * [Note] if gq.config.data.enable is set to false, then it will bookmark the locaiton only and run the callback
+		 * [Note] if GlobalQuran.config.data.enable is set to false, then it will bookmark the locaiton only and run the callback
 		 * 
 		 * @param surah
 		 * @param ayah
@@ -2751,44 +2751,44 @@ var gq = {
 		 */
 		get: function (surah, ayah, callback)
 		{
-			if (!gq.config.data.enable)
+			if (!GlobalQuran.config.data.enable)
 				return false;
 			
-			gq.bind.load('before', 'load');
+			GlobalQuran.bind.load('before', 'load');
 			
-			gq.settings.surah = surah || 1;
-			gq.settings.ayah = ayah || 1;
-			gq.settings.juz = Quran.ayah.juz(surah, ayah);
-			gq.settings.page = Quran.ayah.page(surah, ayah);
-			gq.data.ayahList =  Quran.ayah.listFromPage(gq.settings.page);
-			gq.search._keyword = false; // disable search
-			gq.url.save();
-			gq.player.reset();
+			GlobalQuran.settings.surah = surah || 1;
+			GlobalQuran.settings.ayah = ayah || 1;
+			GlobalQuran.settings.juz = Quran.ayah.juz(surah, ayah);
+			GlobalQuran.settings.page = Quran.ayah.page(surah, ayah);
+			GlobalQuran.data.ayahList =  Quran.ayah.listFromPage(GlobalQuran.settings.page);
+			GlobalQuran.search._keyword = false; // disable search
+			GlobalQuran.url.save();
+			GlobalQuran.player.reset();
 			
-			gq.save();
-			gq._gaqPush(['_trackPageview', gq.url.page()]);
+			GlobalQuran.save();
+			GlobalQuran._gaqPush(['_trackPageview', GlobalQuran.url.page()]);
 			
 			var combineCallback = function (response)
 			{
 				var isSuccess = (typeof(response) == 'object');	
 				
-				gq.bind.load('after', 'load', window, isSuccess);
+				GlobalQuran.bind.load('after', 'load', window, isSuccess);
 				
 				if (callback)
 					callback.call(window, isSuccess);
 				
-				gq.bind.load('after', 'load.ayah');
+				GlobalQuran.bind.load('after', 'load.ayah');
 				
-				gq.player.load('play');
+				GlobalQuran.player.load('play');
 				
-				gq.load.preload();
+				GlobalQuran.load.preload();
 			};
 			
 			
-			if (!gq.config.data.enable) // if data is not enable, then just run the callbacks only
+			if (!GlobalQuran.config.data.enable) // if data is not enable, then just run the callbacks only
 				combineCallback.call(window, true);
 			else
-				this.dataOnly(gq.config.data.by, this._defaultByNumber(), combineCallback);
+				this.dataOnly(GlobalQuran.config.data.by, this._defaultByNumber(), combineCallback);
 		},
 		
 		/**
@@ -2802,11 +2802,11 @@ var gq = {
 		 */
 		dataOnly: function (dataBy, byNumber, callback, loadAll)
 		{	
-			if (!gq.config.data.enable)
+			if (!GlobalQuran.config.data.enable)
 				return false;
 			
 			// if its offline mode
-			if (gq.config.offline)
+			if (GlobalQuran.config.offline)
 			{
 				this.offline(callback, loadAll);
 				return true;
@@ -2816,7 +2816,7 @@ var gq = {
 				return false;
 			
 			var notCachedQuranID = true,
-			url = gq.config.api.url;			
+			url = GlobalQuran.config.api.url;			
 			
 			if (loadAll)
 				url += 'all/';
@@ -2824,32 +2824,32 @@ var gq = {
 			// if not searching and if data is request, then build ayahList
 			if (dataBy == 'juz')
 			{
-				gq.data.ayahList = Quran.ayah.listFromJuz(byNumber);
+				GlobalQuran.data.ayahList = Quran.ayah.listFromJuz(byNumber);
 				url += 'juz/'+byNumber;
 			}
 			else if (dataBy == 'surah')
 			{
-				gq.data.ayahList = Quran.ayah.listFromSurah(byNumber);
+				GlobalQuran.data.ayahList = Quran.ayah.listFromSurah(byNumber);
 				url += 'surah/'+byNumber;
 			}
 			else if (dataBy == 'complete')
 			{
-				gq.data.ayahList = {}; // ayah list of complete quran, not needed. This is useful for preload.
+				GlobalQuran.data.ayahList = {}; // ayah list of complete quran, not needed. This is useful for preload.
 				url += 'complete';
 			}
 			else
 			{
-				gq.data.ayahList = Quran.ayah.listFromPage(byNumber);
+				GlobalQuran.data.ayahList = Quran.ayah.listFromPage(byNumber);
 				url += 'page/'+byNumber;
 			}
 			
-			notCachedQuranID = gq.quran.selectedStringNotCached(dataBy, byNumber); //TODO check cache data with the requested data set
+			notCachedQuranID = GlobalQuran.quran.selectedStringNotCached(dataBy, byNumber); //TODO check cache data with the requested data set
 			url += '/'+notCachedQuranID;
 			
 			/*if (this.settings.selectedLanguage) // TODO language selection here
 			requestUrl += '/'+this.settings.selectedLanguage;*/
 			
-			if (!gq.config.data.enable) // if no data need to be output, then run request only once
+			if (!GlobalQuran.config.data.enable) // if no data need to be output, then run request only once
 				notCachedQuranID = false;
 
 			if (notCachedQuranID || loadAll)
@@ -2875,7 +2875,7 @@ var gq = {
 		_getJSON: function (url, callback)
 		{
 			var combineCallback = function (response) {
-				gq.load._addData(response);
+				GlobalQuran.load._addData(response);
 				if (callback)
 					callback.call(window, response);
 			};
@@ -2886,8 +2886,8 @@ var gq = {
 				jsonpCallback: 'quranData',
 				'error': function(XMLHttpRequest, textStatus, errorThrown)
 				{   
-					gq.bind.load('after', 'load.error', window, XMLHttpRequest, textStatus, errorThrown);
-					gq._gaqPush(['_trackEvent', 'Error', 'Oopss!!!, Something went wrong.']);
+					GlobalQuran.bind.load('after', 'load.error', window, XMLHttpRequest, textStatus, errorThrown);
+					GlobalQuran._gaqPush(['_trackEvent', 'Error', 'Oopss!!!, Something went wrong.']);
 				}
 			});
 
@@ -2904,12 +2904,12 @@ var gq = {
 		{
 			if (typeof(response) == 'object')			
 			{
-				gq.data = $.extend(true, gq.data, response);
-				gq.data.loaded = true;
+				GlobalQuran.data = $.extend(true, GlobalQuran.data, response);
+				GlobalQuran.data.loaded = true;
 			}			
 			
 			if (response.languageSelected)
-				gq.settings.selectedLanguage = response.languageSelected;
+				GlobalQuran.settings.selectedLanguage = response.languageSelected;
 		},
 		
 		/**
@@ -2919,7 +2919,7 @@ var gq = {
 		 */
 		refresh: function (callback)
 		{
-			this.get(gq.surah(), gq.ayah(), callback);
+			this.get(GlobalQuran.surah(), GlobalQuran.ayah(), callback);
 		},
 		
 		/**
@@ -2931,7 +2931,7 @@ var gq = {
 		 */
 		offline: function (callback, loadAll)
 		{
-			var selected = gq.quran.selected();
+			var selected = GlobalQuran.quran.selected();
 			
 			$.each(selected, function(i, quranBy)
 			{
@@ -2965,58 +2965,58 @@ var gq = {
 		},
 		
 		/**
-		 * preloading data according to the gq.config.data.preload settings.
+		 * preloading data according to the GlobalQuran.config.data.preload settings.
 		 */
 		preload: function ()
 		{
-			if (!gq.config.data.preload) 
+			if (!GlobalQuran.config.data.preload) 
 				return; // disabled
 			
 			var loadBy, byNumber;
 			
-			if (gq.config.data.preload === true)
-				loadBy = gq.config.data.by;
+			if (GlobalQuran.config.data.preload === true)
+				loadBy = GlobalQuran.config.data.by;
 			else
-				loadBy = gq.config.data.preload;
+				loadBy = GlobalQuran.config.data.preload;
 			
 			if (loadBy == 'complete')
 				byNumber = 1;
 			else if (loadBy == 'juz')
-				byNumber = (loadBy == gq.config.data.by) ? Quran._fixJuzNum(gq.juz()+1) : gq.juz();
+				byNumber = (loadBy == GlobalQuran.config.data.by) ? Quran._fixJuzNum(GlobalQuran.juz()+1) : GlobalQuran.juz();
 			else if (loadBy == 'surah')
-				byNumber = (loadBy == gq.config.data.by) ? Quran._fixSurahNum(gq.surah()+1) : gq.surah();
+				byNumber = (loadBy == GlobalQuran.config.data.by) ? Quran._fixSurahNum(GlobalQuran.surah()+1) : GlobalQuran.surah();
 			else
-				byNumber = (loadBy == gq.config.data.by) ? Quran._fixPageNum(gq.page()+1) : gq.page();
+				byNumber = (loadBy == GlobalQuran.config.data.by) ? Quran._fixPageNum(GlobalQuran.page()+1) : GlobalQuran.page();
 			
 				
-			gq.bind.load('before', 'preload');
+			GlobalQuran.bind.load('before', 'preload');
 			
 			this.dataOnly(loadBy, byNumber, function (response) {
-				gq.bind.load('after', 'preload', window, response);
+				GlobalQuran.bind.load('after', 'preload', window, response);
 			});
 		},
 		
 		search: function (callback)
 		{
-			var url = gq.config.api.url;	
-			gq.search.loading(true);
+			var url = GlobalQuran.config.api.url;	
+			GlobalQuran.search.loading(true);
 			
-			url += 'search/'+gq.search.keyword()+'/'+gq.search.position();
+			url += 'search/'+GlobalQuran.search.keyword()+'/'+GlobalQuran.search.position();
 			
-			if (gq.search.position() == 0)
-				gq.url.save();
+			if (GlobalQuran.search.position() == 0)
+				GlobalQuran.url.save();
 		
-			gq.save();
-			gq._gaqPush(['_trackPageview', gq.url.page()]);
+			GlobalQuran.save();
+			GlobalQuran._gaqPush(['_trackPageview', GlobalQuran.url.page()]);
 				
 			this._getJSON(url, function(response) {			
-				gq.search.init();
-				gq.search.loading(false);
-				if (gq.search.totalRows() > 0)
+				GlobalQuran.search.init();
+				GlobalQuran.search.loading(false);
+				if (GlobalQuran.search.totalRows() > 0)
 				{
 					for (var verseNo in response.search.quran)
 					{
-						gq.search._positionStartVerse = verseNo;
+						GlobalQuran.search._positionStartVerse = verseNo;
 						break;
 					}
 				}
@@ -3034,12 +3034,12 @@ var gq = {
 		{
 			var byNumber;
 			
-			if (gq.config.data.by == 'juz')
-				byNumber = Quran._fixJuzNum(gq.settings.juz);
-			else if (gq.config.data.by == 'surah')
-				byNumber = Quran._fixSurahNum(gq.settings.surah);
+			if (GlobalQuran.config.data.by == 'juz')
+				byNumber = Quran._fixJuzNum(GlobalQuran.settings.juz);
+			else if (GlobalQuran.config.data.by == 'surah')
+				byNumber = Quran._fixSurahNum(GlobalQuran.settings.surah);
 			else
-				byNumber = Quran._fixPageNum(gq.settings.page);
+				byNumber = Quran._fixPageNum(GlobalQuran.settings.page);
 		
 			return byNumber;
 		},
@@ -3050,22 +3050,22 @@ var gq = {
 		 */
 		_nextAyah: function ()
 		{
-			var verse = Quran.ayah.next(gq.surah(), gq.ayah());
+			var verse = Quran.ayah.next(GlobalQuran.surah(), GlobalQuran.ayah());
 			
 			// if player is playing, then move to next ayah using player next
-			if (gq.player.isContinue())
+			if (GlobalQuran.player.isContinue())
 			{
-				gq.player.next();
+				GlobalQuran.player.next();
 				return verse;
 			}
 			
-			if (verse.surah == gq.surah() && verse.ayah == gq.ayah())
+			if (verse.surah == GlobalQuran.surah() && verse.ayah == GlobalQuran.ayah())
 				return verse; // ayah already exist on the page
 		
-			gq.settings.surah = verse.surah;
-			gq.settings.ayah = verse.ayah;
+			GlobalQuran.settings.surah = verse.surah;
+			GlobalQuran.settings.ayah = verse.ayah;
 					
-			if (gq.ayah(verse.surah, verse.ayah))
+			if (GlobalQuran.ayah(verse.surah, verse.ayah))
 				return verse; // ayah already exist on the page
 			else
 				return false;	
@@ -3077,22 +3077,22 @@ var gq = {
 		 */
 		_prevAyah: function ()
 		{
-			var verse = Quran.ayah.prev(gq.surah(), gq.ayah());
+			var verse = Quran.ayah.prev(GlobalQuran.surah(), GlobalQuran.ayah());
 			
 			// if player is playing, then move to previous ayah using player previous
-			if (gq.player.isContinue())
+			if (GlobalQuran.player.isContinue())
 			{
-				gq.player.prev();
+				GlobalQuran.player.prev();
 				return verse;
 			}
 			
-			if (verse.surah == gq.surah() && verse.ayah == gq.ayah())
+			if (verse.surah == GlobalQuran.surah() && verse.ayah == GlobalQuran.ayah())
 				return verse; // ayah already exist on the page
 
-			gq.settings.surah = verse.surah;
-			gq.settings.ayah = verse.ayah;
+			GlobalQuran.settings.surah = verse.surah;
+			GlobalQuran.settings.ayah = verse.ayah;
 					
-			if (gq.ayah(verse.surah, verse.ayah))
+			if (GlobalQuran.ayah(verse.surah, verse.ayah))
 				return verse; // ayah already exist on the page
 			else
 				return false;
@@ -3104,7 +3104,7 @@ var gq = {
 		 */
 		_nextPage: function ()
 		{
-			return gq.page(gq.page()+1);
+			return GlobalQuran.page(GlobalQuran.page()+1);
 		},
 		
 		/**
@@ -3113,7 +3113,7 @@ var gq = {
 		 */
 		_prevPage: function ()
 		{
-			return gq.page(gq.page()-1);
+			return GlobalQuran.page(GlobalQuran.page()-1);
 		},
 		
 		/**
@@ -3121,7 +3121,7 @@ var gq = {
 		 * @returns {void}
 		 */
 		_nextSurah: function () {
-			return gq.surah(gq.surah()+1);
+			return GlobalQuran.surah(GlobalQuran.surah()+1);
 		},
 		
 		/**
@@ -3129,7 +3129,7 @@ var gq = {
 		 * @returns {void}
 		 */
 		_prevSurah: function () {
-			return gq.surah(gq.surah()-1);
+			return GlobalQuran.surah(GlobalQuran.surah()-1);
 		},
 
 		/**
@@ -3137,7 +3137,7 @@ var gq = {
 		 * @returns {void}
 		 */
 		_nextJuz: function () {
-			return gq.juz(gq.juz()+1);
+			return GlobalQuran.juz(GlobalQuran.juz()+1);
 		},
 		
 		/**
@@ -3145,7 +3145,7 @@ var gq = {
 		 * @returns {void}
 		 */
 		_prevJuz: function () {
-			return gq.juz(gq.juz()-1);
+			return GlobalQuran.juz(GlobalQuran.juz()-1);
 		}
 	},
 	
@@ -3171,10 +3171,10 @@ var gq = {
 			{
 				path = location.pathname;
 				
-				if (gq.config.url.startWith != '/')
+				if (GlobalQuran.config.url.startWith != '/')
 				{
 					path = window.location+'';
-					path = path.split(gq.config.url.startWith);
+					path = path.split(GlobalQuran.config.url.startWith);
 					
 					if (path[1] !== undefined)
 						path = path[1];
@@ -3192,42 +3192,42 @@ var gq = {
 
 			if (count > 2 && path['1'] == 'search')
 			{
-				if (gq.search.keyword() == path['2'] && gq.search.position() == 0)
+				if (GlobalQuran.search.keyword() == path['2'] && GlobalQuran.search.position() == 0)
 					return false;
 				
-				gq.search._keyword = path['2'];
-				gq.search._position = 0;
+				GlobalQuran.search._keyword = path['2'];
+				GlobalQuran.search._position = 0;
 				
 				return true;
 			}
-			else if (count > 2 && gq.settings.page != path['2'])
+			else if (count > 2 && GlobalQuran.settings.page != path['2'])
 			{
-				gq.quran.reset();
+				GlobalQuran.quran.reset();
 				selectedBy = path['1'].split('+');
 
 				$.each (selectedBy, function(i, quranBy)
 				{
-					gq.quran.add(quranBy);
+					GlobalQuran.quran.add(quranBy);
 				});
 				
 				verse = path['2'].split(':');
 				
 				if (verse.length > 1)
 				{
-					gq.settings.surah = Quran._fixSurahNum(parseInt(verse['0']));
-					gq.settings.ayah = Quran._fixAyahNum(gq.settings.surah, parseInt(verse['1']));
+					GlobalQuran.settings.surah = Quran._fixSurahNum(parseInt(verse['0']));
+					GlobalQuran.settings.ayah = Quran._fixAyahNum(GlobalQuran.settings.surah, parseInt(verse['1']));
 				}
 				else
 				{
 					verse = Quran.ayah.fromPage(path['2']);
-					gq.settings.surah = verse.surah;
-					gq.settings.ayah = verse.ayah;
+					GlobalQuran.settings.surah = verse.surah;
+					GlobalQuran.settings.ayah = verse.ayah;
 				}
 				
-				gq.settings.page = Quran.ayah.page(gq.settings.surah, gq.settings.ayah);
-				gq.settings.juz  = Quran.ayah.juz(gq.settings.surah, gq.settings.ayah);
+				GlobalQuran.settings.page = Quran.ayah.page(GlobalQuran.settings.surah, GlobalQuran.settings.ayah);
+				GlobalQuran.settings.juz  = Quran.ayah.juz(GlobalQuran.settings.surah, GlobalQuran.settings.ayah);
 				
-				gq.player.reset();
+				GlobalQuran.player.reset();
 			
 				return true;
 			}
@@ -3237,20 +3237,20 @@ var gq = {
 				
 				if (verse.length > 1)
 				{
-					gq.settings.surah = Quran._fixSurahNum(parseInt(verse['0']));
-					gq.settings.ayah = Quran._fixAyahNum(gq.settings.surah, parseInt(verse['1']));
+					GlobalQuran.settings.surah = Quran._fixSurahNum(parseInt(verse['0']));
+					GlobalQuran.settings.ayah = Quran._fixAyahNum(GlobalQuran.settings.surah, parseInt(verse['1']));
 				}
 				else
 				{
 					verse = Quran.ayah.fromPage(path['1']);
-					gq.settings.surah = verse.surah;
-					gq.settings.ayah = verse.ayah;
+					GlobalQuran.settings.surah = verse.surah;
+					GlobalQuran.settings.ayah = verse.ayah;
 				}
 				
-				gq.settings.page = Quran.ayah.page(gq.settings.surah, gq.settings.ayah);
-				gq.settings.juz  = Quran.ayah.juz(gq.settings.surah, gq.settings.ayah);
+				GlobalQuran.settings.page = Quran.ayah.page(GlobalQuran.settings.surah, GlobalQuran.settings.ayah);
+				GlobalQuran.settings.juz  = Quran.ayah.juz(GlobalQuran.settings.surah, GlobalQuran.settings.ayah);
 				
-				gq.player.reset();
+				GlobalQuran.player.reset();
 			
 				return true;
 			}
@@ -3263,18 +3263,18 @@ var gq = {
 		 */
 		save: function ()
 		{
-			if (!gq.config.url.enable) // disabled
+			if (!GlobalQuran.config.url.enable) // disabled
 				return;
 			
 			var url;
 			
-			if (gq.url._is_from_load)
+			if (GlobalQuran.url._is_from_load)
 			{
-				gq.url._is_from_load = false;
+				GlobalQuran.url._is_from_load = false;
 				return;
 			}
 			
-			if (gq.config.url.by == 'page' || !this.is_html5()) //TODO by page, surah, juz!!!
+			if (GlobalQuran.config.url.by == 'page' || !this.is_html5()) //TODO by page, surah, juz!!!
 				url = this.page();
 			else
 				url = this.ayah();
@@ -3290,7 +3290,7 @@ var gq = {
 		 */
 		update: function ()
 		{
-			if (this.is_html5() && gq.config.url.by == 'ayah')
+			if (this.is_html5() && GlobalQuran.config.url.by == 'ayah')
 				history.replaceState(null, null, this.ayah());
 		},
 		
@@ -3317,8 +3317,8 @@ var gq = {
 			
 			if (this.is_html5())
 			{
-				if (gq.config.url.startWith != '/')
-					path = gq.config.url.startWith;
+				if (GlobalQuran.config.url.startWith != '/')
+					path = GlobalQuran.config.url.startWith;
 			}
 			else
 				path = '#';
@@ -3333,15 +3333,15 @@ var gq = {
 		 */
 		page: function (page)
 		{			
-			if (gq.search.isActive())
-				return this.base()+'/search/'+gq.search.keyword();
+			if (GlobalQuran.search.isActive())
+				return this.base()+'/search/'+GlobalQuran.search.keyword();
 			else
 			{
 				url = '/';
-				by = gq.quran.selectedString();
+				by = GlobalQuran.quran.selectedString();
 				if (by)
 					url += by+'/';
-				url += page || gq.settings.page;
+				url += page || GlobalQuran.settings.page;
 				return this.base()+url;
 			}
 		},
@@ -3355,16 +3355,16 @@ var gq = {
 		 */
 		ayah: function (surah, ayah, quranBy)
 		{
-			if (gq.search.isActive())
-				return this.base()+'/'+gq.settings.surah+':'+gq.settings.ayah;
+			if (GlobalQuran.search.isActive())
+				return this.base()+'/'+GlobalQuran.settings.surah+':'+GlobalQuran.settings.ayah;
 			else
 			{
 				url = '/';
-				by = quranBy || gq.quran.selectedString();
+				by = quranBy || GlobalQuran.quran.selectedString();
 				if (by)
 					url += by+'/';
 				if (!surah)
-					url += gq.settings.surah+':'+gq.settings.ayah;
+					url += GlobalQuran.settings.surah+':'+GlobalQuran.settings.ayah;
 				else
 					url += surah+':'+ayah;
 				return this.base()+url;
@@ -3377,7 +3377,7 @@ var gq = {
 		 */
 		is_html5: function ()
 		{
-			return !!(window.history && window.history.pushState && gq.config.url.html5);
+			return !!(window.history && window.history.pushState && GlobalQuran.config.url.html5);
 		},
 		
 		/**
@@ -3387,14 +3387,14 @@ var gq = {
 		{
 			$(window).bind('hashchange', function(e)
 			{
-				if (gq.url.load())
+				if (GlobalQuran.url.load())
 				{
-					gq.url._is_from_load = true;
+					GlobalQuran.url._is_from_load = true;
 					
-					if (gq.search.isActive())
-						gq.load.search();
+					if (GlobalQuran.search.isActive())
+						GlobalQuran.load.search();
 					else
-						gq.load.get(gq.settings.surah, gq.settings.ayah);
+						GlobalQuran.load.get(GlobalQuran.settings.surah, GlobalQuran.settings.ayah);
 				};
 			});
 			
@@ -3408,14 +3408,14 @@ var gq = {
 				if (initialPop) 
 					return;
 				
-				if (gq.url.load())
+				if (GlobalQuran.url.load())
 				{
-					gq.url._is_from_load = true;
+					GlobalQuran.url._is_from_load = true;
 					
-					if (gq.search.isActive())
-						gq.load.search();
+					if (GlobalQuran.search.isActive())
+						GlobalQuran.load.search();
 					else
-						gq.load.get(gq.settings.surah, gq.settings.ayah);
+						GlobalQuran.load.get(GlobalQuran.settings.surah, GlobalQuran.settings.ayah);
 				};				
 			});
 		}
@@ -3529,8 +3529,8 @@ var gq = {
 		},
 		
 		/**
-		 * @see gq.bind.addAfter() for the documentation.
-		 * @alias gq.bind.addAfter()
+		 * @see GlobalQuran.bind.addAfter() for the documentation.
+		 * @alias GlobalQuran.bind.addAfter()
 		 */
 		add: function(id, name, func)
 		{
@@ -3600,8 +3600,8 @@ var gq = {
 			// delete all 
 			$.each(this._customBindFunctions.before, function (name, list)
 			{
-				gq.bind.removeBefore(id, name);		// delete before
-				gq.bind.removeAfter(id, name);			// delete after
+				GlobalQuran.bind.removeBefore(id, name);		// delete before
+				GlobalQuran.bind.removeAfter(id, name);			// delete after
 			});
 		}
 	},
@@ -3655,7 +3655,7 @@ var gq = {
 		
 		$.each(data, function(key, val) {
 			if (typeof(val) == 'object' || typeof(val) == 'array')
-				settings += '"'+key+'":'+gq._cookieSave(val)+',';
+				settings += '"'+key+'":'+GlobalQuran._cookieSave(val)+',';
 			else if (typeof(val) != 'string')
 				settings += '"'+key+'":'+val+','; // no quote's
 			else

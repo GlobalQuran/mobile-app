@@ -34,3 +34,7 @@ ion-content {
 .bar-button-default, .toolbar-title {
   color: getColor(light);
 }
+
+ion-tabs[primary-s4] ion-tabbar .tab-button[aria-selected=true] {
+    color: getColor(secondary) !important;
+}

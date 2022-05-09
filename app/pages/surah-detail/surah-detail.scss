@@ -18,15 +18,24 @@
     background: getColor(primary-s3);
   }
   .ayah-number {
-    font-size: 12px;
-    line-height: 4em;
+    font-weight: bold;
+    margin-top: 1.6rem;
     text-anchor: middle;
+    color: getColor(primary);
+    background: getColor(secondary-s1);
+    border-radius: 50%;
+  }
+
+  .container{
+    background: getColor(light);
   }
 }
 .ayahNo {
   background-color: getColor(light);
+  height: inherit !important;
 }
 .ayahText {
+  background-color: getColor(light);
   border-bottom: 1px solid lighten(getColor(primary-s3), 50);
 }
 
@@ -37,7 +46,7 @@
   .quranic-text {
     color      : getColor(primary-s1);
     line-height: 2em;
-    font-size  : 3em;
+    font-size  : 2em;
     text-align : right;
     font-family: "GlobalQuran";
     @include antialiasing(antialiased);
